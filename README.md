@@ -97,7 +97,20 @@ ng g module content/layout --module app
 ng g component content/layout/header --module content/layout --spec=false
 ```
 
+```
+ng g component content/layout/footer --module content/layout --spec=false  -is
+```
 
+
+## Content
+
+```
+ng g component content/pages/header/action --module content/pages --spec=false -is
+```
+
+```
+ng g component content/pages/header/profile --module content/pages --spec=false -is
+```
 
 
 

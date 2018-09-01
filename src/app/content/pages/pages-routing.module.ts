@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
+// COMPONENTES
 import { PagesComponent } from './pages.component';
 
 const routes: Routes = [

@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import {
+	NavigationCancel,
+	NavigationEnd,
+	NavigationStart,
+	RouteConfigLoadEnd,
+	RouteConfigLoadStart,
+	Router
+} from '@angular/router';
 
 @Component({
   selector: 'cw-header',

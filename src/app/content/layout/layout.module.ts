@@ -5,18 +5,24 @@ import { RouterModule } from '@angular/router';
 
 // COMPONENTES
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 // BOOTSTRAP
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    NgbModule
-  ],
-  declarations: [
-     HeaderComponent
+   exports: [
+      FooterComponent
+   ],
+   imports: [
+      CommonModule,
+      RouterModule,
+      NgbModule
+   ],
+   declarations: [
+      HeaderComponent,
+      FooterComponent
    ]
 })
 export class LayoutModule { }
