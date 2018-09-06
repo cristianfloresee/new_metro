@@ -1,16 +1,10 @@
-import { Component, OnInit, HostBinding, ChangeDetectionStrategy } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
    selector: 'cw-footer',
-   templateUrl: './footer.component.html',
-   changeDetection: ChangeDetectionStrategy.OnPush
+   templateUrl: './footer.component.html'
 })
-export class FooterComponent implements OnInit {
-   @HostBinding('class') classes = 'm-grid__item m-footer';
-
+export class FooterComponent {
    constructor() { }
-
-   ngOnInit(): void {}
 
 }

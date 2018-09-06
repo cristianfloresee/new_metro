@@ -1,27 +1,31 @@
 
 
-// MODULOS ANGULAR
+//MODULOS ANGULAR
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// RUTAS
+//RUTAS
 import { AppRoutingModule } from './app-routing.module';
 
-// COMPONENTES
+//COMPONENTES
 import { AppComponent } from './app.component';
 
-// BOOTSTRAP
+//BOOTSTRAP
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-// MODULOS
+//ANGULAR MATERIAL
+import 'hammerjs';
+import { GestureConfig, MatProgressSpinnerModule } from '@angular/material';
+
+//MODULOS
 import { LayoutModule } from './content/layout/layout.module';
 import { PartialsModule } from './content/partials/partials.module';
 import { CoreModule } from './core/core.module';
 import { AuthenticationModule } from './core/auth/authentication/authentication.module';
 
-// PERFECT SCROLLBAR
+//PERFECT SCROLLBAR
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -35,11 +39,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       AppComponent
    ],
    imports: [
-      BrowserAnimationsModule,
+      //MODULOS ANGULAR
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
+      BrowserAnimationsModule,
+      //BOOTSTRAP
       NgbModule.forRoot(),
+      //ANGULAR MATERIAL
+      MatProgressSpinnerModule,
+      //MODULOS
       LayoutModule,
       PartialsModule,
       CoreModule,

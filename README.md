@@ -5,7 +5,7 @@ ng new client --routing  --style scss --prefix cw
 
 ## Instalación de Dependencias
 ```
-npm install  @ng-bootstrap/ng-bootstrap moment lodash ngx-perfect-scrollbar --save
+npm install  @ng-bootstrap/ng-bootstrap moment lodash ngx-perfect-scrollbar @ngx-loading-bar/core @angular/material @angular/cdk @angular/animations hammerjs --save
 ```
 
 
@@ -89,13 +89,30 @@ En esta última debe asegurarse de que src/tsconfig.json tenga lo siguiente:
 ng g component content/pages --module content/pages --spec=false -is
 ```
 
-## Layout
+# 2 Instalar Componentes del Modulo Layout
 ```
 ng g module content/layout --module app
 ```
 ```
 ng g component content/layout/header --module content/layout --spec=false
 ```
+
+## 2.1 Instalar Componentes del Header
+```
+ng g component content/layout/header/brand --module content/layout --spec=false -is
+ng g component content/layout/header/menu-horizontal --module content/layout --spec=false -is
+ng g component content/layout/header/topbar --module content/layout --spec=false -is
+```
+
+## 2.1.1 Instalar Componentes del Topbar
+```
+ng g component content/layout/header/topbar/user-profile --module content/layout --spec=false -is
+ng g component content/layout/header/topbar/quick-action --module content/layout --spec=false -is
+ng g component content/layout/header/topbar/search-dropdown --module content/layout --spec=false -is
+ng g component content/layout/header/topbar/notification --module content/layout --spec=false
+
+```
+
 
 ```
 ng g component content/layout/footer --module content/layout --spec=false  -is
