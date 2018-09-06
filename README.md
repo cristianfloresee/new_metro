@@ -29,18 +29,10 @@ export class YourAppModule {
 Importar BrowserAnimationsModule al app.module-ts:
 
 
-## Dependencias que no se necesitan
-
-```
-npm install @angular/material angular/cdk --save
-```
-
 ## Generación de modulos
 Crear modulo que es parte del app.module
 
 + Modulos Content:
-
-
 
 ```
 ng g module content/partials --module app
@@ -92,9 +84,11 @@ ng g component content/pages --module content/pages --spec=false -is
 # 2 Instalar Componentes del Modulo Layout
 ```
 ng g module content/layout --module app
+
 ```
 ```
 ng g component content/layout/header --module content/layout --spec=false
+ng g component content/layout/footer --module content/layout --spec=false  -is
 ```
 
 ## 2.1 Instalar Componentes del Header
@@ -104,7 +98,7 @@ ng g component content/layout/header/menu-horizontal --module content/layout --s
 ng g component content/layout/header/topbar --module content/layout --spec=false -is
 ```
 
-## 2.1.1 Instalar Componentes del Topbar
+## 2.1.1 Instalar Componentes del Header > Topbar
 ```
 ng g component content/layout/header/topbar/user-profile --module content/layout --spec=false -is
 ng g component content/layout/header/topbar/quick-action --module content/layout --spec=false -is
@@ -114,28 +108,28 @@ ng g component content/layout/header/topbar/notification --module content/layout
 ```
 
 
-```
-ng g component content/layout/footer --module content/layout --spec=false  -is
-```
 
 
-## Content
+## Instalar Componentes de Pages
+
+```
+ng g c pages/main --flat --spec=false
+```
+--flat: genera el componente en pages pero los archivos quedan sueltos.
+--spec=false: no crea el archivo spec
+
+## Instalar Componentes de Pages > Header
 
 ```
 ng g component content/pages/header/action --module content/pages --spec=false -is
-```
-
-```
 ng g component content/pages/header/profile --module content/pages --spec=false -is
 ```
 
 
 
-```
-ng g c pages/main --flat --spec=false
-```
-genera el componente en pages pero los archivos quedan sueltos.
-no crea el archivo spec
+
+
+
 
 Crear Servicio
 ```
