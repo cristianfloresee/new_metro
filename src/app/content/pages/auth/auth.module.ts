@@ -6,9 +6,11 @@ import { RouterModule } from '@angular/router';
 
 //COMPONENTES
 import { AuthComponent } from './auth.component';
+import { LoginComponent } from './login/login.component';
 
 //ANGULAR MATERIAL
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule } from '@angular/material';
+
 
 @NgModule({
    imports: [
@@ -30,7 +32,8 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule 
    ],
    declarations: [
       //COMPONENTES
-      AuthComponent
+      AuthComponent,
+      LoginComponent
    ]
 })
 export class AuthModule { }

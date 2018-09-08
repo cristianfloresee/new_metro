@@ -91,6 +91,7 @@ ng g module content/layout --module app
 
 ng g module content/pages/auth --module app
 ng g component content/pages/auth -is --spec=false
+ng g component content/pages/auth/login --spec=false
 ```
 ng g component content/layout/header --module content/layout --spec=false
 ng g component content/layout/footer --module content/layout --spec=false  -is

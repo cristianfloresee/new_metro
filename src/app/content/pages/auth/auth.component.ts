@@ -23,11 +23,11 @@ export class AuthComponent implements OnInit, OnDestroy {
    ) { }
 
    ngOnInit(): void {
-      this.el.nativeElement.parentElement.className = 'm-content--skin-light m-header--static';
+      this.el.nativeElement.closest('body').className = 'm-content--skin-light m-header--static';
    }
 
    ngOnDestroy(): void {
-      this.el.nativeElement.parentElement.className = 'm-page--fluid m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-scroll-top--shown';
+      this.el.nativeElement.closest('body').className  = 'm-page--fluid m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-scroll-top--shown';
    }
 
    register() {
