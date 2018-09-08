@@ -53,6 +53,8 @@ ng g module core --module app
 ng g module core/auth/authentication --module app
 ```
 
+ng g directive core/directives/menu-horizontal-offcanvas --module core --spec=false
+
 + Sobre Lazy Load
 
 En la definición de rutas de modulos de carga diferida, la ruta puede ser relativa o absoluta;
@@ -86,6 +88,9 @@ ng g component content/pages --module content/pages --spec=false -is
 ng g module content/layout --module app
 
 ```
+
+ng g module content/pages/auth --module app
+ng g component content/pages/auth -is --spec=false
 ```
 ng g component content/layout/header --module content/layout --spec=false
 ng g component content/layout/footer --module content/layout --spec=false  -is

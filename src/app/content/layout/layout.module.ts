@@ -22,7 +22,7 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
 //BOOTSTRAP
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //ANGULAR MATERIAL
-//import { MatProgressBarModule, MatTabsModule, MatButtonModule, MatTooltipModule } from '@angular/material';
+import { MatProgressBarModule, MatTabsModule, MatButtonModule, MatTooltipModule } from '@angular/material';
 //PERFECT-SCROLLBAR
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -60,10 +60,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       //BOOTSTRAP
       NgbModule,
       //ANGULAR MATERIAL
-		// MatProgressBarModule,
-		// MatTabsModule,
-		// MatButtonModule,
-		// MatTooltipModule,
+		MatProgressBarModule,
+		MatTabsModule,
+		MatButtonModule,
+		MatTooltipModule,
       //PERFECT-SCROLL
       PerfectScrollbarModule,
       //LOADING-BAR

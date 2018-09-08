@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
    selector: 'cw-notification',
    templateUrl: './notification.component.html',
-   styleUrls: ['./notification.component.scss']
+   styleUrls: ['./notification.component.scss'],
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent implements OnInit {
 
-   animateShake: any;
-   animateBlink: any;
+   @Input() animateShake: any;
+	@Input() animateBlink: any;
+
 
    constructor() {
 
@@ -17,6 +19,7 @@ export class NotificationComponent implements OnInit {
       setInterval(() => {
          this.animateShake = 'm-animate-shake';
          this.animateBlink = 'm-animate-blink';
+         console.log("ejecuto..");
       }, 3000);
       setInterval(() => (this.animateShake = this.animateBlink = ''), 6000);
    }

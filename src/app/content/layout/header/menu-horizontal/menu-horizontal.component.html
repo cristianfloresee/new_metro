@@ -1,3 +1,122 @@
-<p>
-  menu-horizontal works!
-</p>
+<!--===================== MENÚ HORIZONTAL =====================-->
+<ul class="m-menu__nav m-menu__nav--submenu-arrow">
+   <ng-container *ngFor="let item of header_config">
+      <ng-container *ngIf="item.title" [ngTemplateOutlet]="m_menu" [ngTemplateOutletContext]="{ item: item }"></ng-container>
+   </ng-container>
+</ul>
+<!-- FIN MENÚ HORIZONTAL-->
+
+
+<!--===================== PARENT ITEM ===================== (RECURSIVO) -->
+<ng-template #m_menu let-item="item" let-parentItem="parentItem">
+   <li attr.aria-haspopup="true" [attr.m-menu-submenu-toggle]="getItemAttrSubmenuToggle(item)" class="{{ getItemCssClasses(item) }}">
+
+
+      <!--===================== SUBMENU =====================-->
+      <ng-container *ngIf="item.submenu">
+         <a href="javascript:;" class="m-menu__link m-menu__toggle">
+
+            <ng-container [ngTemplateOutlet]="m_menu_item_inner" [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
+
+            <!--  MENÚ PRINCIPAL -->
+            <i *ngIf="item.root" class="m-menu__hor-arrow la la-angle-down"></i>
+            <i *ngIf="item.root" class="m-menu__ver-arrow la la-angle-right"></i>
+            <!-- SUBMENÚ -->
+            <i *ngIf="!item.root" class="m-menu__hor-arrow la la-angle-right"></i>
+            <i *ngIf="!item.root" class="m-menu__ver-arrow la la-angle-right"></i>
+         </a>
+      </ng-container>
+
+      <!--===================== SIN SUBMENU =====================-->
+      <ng-container *ngIf="!item.submenu">
+         <a [routerLink]="item.page" [ngClass]="{ 'm-menu__toggle': item.root }" class="m-menu__link" [matTooltip]="item.tooltip"
+            matTooltipPosition="left">
+            <ng-container [ngTemplateOutlet]="m_menu_item_inner" [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
+         </a>
+      </ng-container>
+
+
+      <!--===================== SUBMENU (HIJO / RECURSIVIDAD) =====================-->
+      <ng-container *ngIf="item.submenu">
+         <div class="m-menu__submenu" [ngClass]="getItemMenuSubmenuClass(item)" [ngStyle]="{ 'width': item.submenu.width }">
+            <span class="m-menu__arrow" [ngClass]="{ 'm-menu__arrow--adjust': item.root }"></span>
+
+            <ul *ngIf="item.submenu.items" class="m-menu__subnav">
+               <ng-container *ngFor="let child of item.submenu.items">
+
+                  <ng-container [ngTemplateOutlet]="m_menu" [ngTemplateOutletContext]="{ item: child, parentItem: item }">
+                  </ng-container>
+
+               </ng-container>
+            </ul>
+
+            <div *ngIf="item.submenu.type === 'mega' && item.submenu.columns" class="m-menu__subnav">
+               <ul class="m-menu__content">
+                  <ng-container *ngFor="let child of item.submenu.columns">
+                     <ng-container [ngTemplateOutlet]="m_menu_column" [ngTemplateOutletContext]="{ item: child }"></ng-container>
+                  </ng-container>
+               </ul>
+            </div>
+
+         </div>
+      </ng-container>
+   </li>
+</ng-template>
+<!-- FIN PARENT ITEM -->
+
+
+
+<!--===================== ITEM INTERNO =====================-->
+<ng-template #m_menu_item_inner let-item="item" let-parentItem="parentItem">
+   <!-- SI EL ITEM TIENE UN ICONO -->
+   <i *ngIf="item.icon" class="m-menu__link-icon" [ngClass]="item.icon"></i>
+
+   <!--===================== ITEM SIN BADGE =====================-->
+   <ng-container *ngIf="!item.badge; else m_menu_link_badge">
+      <span class="m-menu__item-here"></span>
+      <span class="m-menu__link-text">
+         {{item.title}}
+      </span>
+   </ng-container>
+   <!-- FIN ITEM SIN BADGE -->
+
+   <!--===================== ITEM CON BADGE =====================-->
+   <ng-template #m_menu_link_badge>
+      <span class="m-menu__link-title">
+         <span class="m-menu__link-wrap">
+            <span class="m-menu__link-text">{{item.title}}</span>
+            <span class="m-menu__link-badge">
+               <span class="m-badge" [ngClass]="item.badge.type">{{item.badge.value}}</span>
+            </span>
+         </span>
+      </span>
+   </ng-template>
+   <!-- FIN ITEM CON BADGE -->
+
+</ng-template>
+<!-- FIN ITEM INTERNO -->
+
+
+
+<!--===================== COLUMNA DE ITEM =====================-->
+<ng-template #m_menu_column let-item="item">
+   <li class="m-menu__item">
+
+      <h3 class="m-menu__heading m-menu__toggle">
+         <span class="m-menu__link-text">
+            {{item.heading.title}}
+         </span>
+         <i class="m-menu__ver-arrow la la-angle-right"></i>
+      </h3>
+      <ng-container *ngIf="item.items">
+         <ul class="m-menu__inner">
+            <ng-container *ngFor="let child of item.items">
+               <ng-container [ngTemplateOutlet]="m_menu" [ngTemplateOutletContext]="{ item: child, parentItem: item }">
+               </ng-container>
+            </ng-container>
+         </ul>
+      </ng-container>
+
+   </li>
+</ng-template>
+<!-- FIN COLUMNA DE ITEM -->

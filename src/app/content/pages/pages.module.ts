@@ -6,10 +6,10 @@ import { CommonModule } from '@angular/common';
 
 // MODULOS
 import { PagesRoutingModule } from './pages-routing.module';
-import { PagesComponent } from './pages.component';
 import { LayoutModule } from '../layout/layout.module';
 
 // COMPONENTES
+import { PagesComponent } from './pages.component';
 import { ActionComponent } from './header/action/action.component';
 import { ProfileComponent } from './header/profile/profile.component';
 

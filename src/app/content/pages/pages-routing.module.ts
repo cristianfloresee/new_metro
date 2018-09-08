@@ -8,7 +8,11 @@ const routes: Routes = [
    {
       path: '',
       component: PagesComponent,
-   }
+   },
+   {
+		path: 'login',
+		loadChildren: './auth/auth.module#AuthModule'
+	},
 ];
 
 @NgModule({
