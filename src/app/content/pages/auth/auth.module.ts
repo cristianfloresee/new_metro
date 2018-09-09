@@ -1,7 +1,7 @@
 //MODULOS ANGULAR
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 //COMPONENTES
@@ -10,6 +10,9 @@ import { LoginComponent } from './login/login.component';
 
 //ANGULAR MATERIAL
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule } from '@angular/material';
+import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -17,6 +20,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule 
       //MODULOS ANGULAR
       CommonModule,
       FormsModule,
+      ReactiveFormsModule,
       //ANGULAR MATERIAL
       MatButtonModule,
 		MatInputModule,
@@ -33,7 +37,10 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule 
    declarations: [
       //COMPONENTES
       AuthComponent,
-      LoginComponent
+      LoginComponent,
+      AuthNoticeComponent,
+      ForgotPasswordComponent,
+      RegisterComponent
    ]
 })
 export class AuthModule { }

@@ -1,68 +1,85 @@
 <div class="m-login__signin">
-	<div class="m-login__title">
-		<h3>Inicia Sesión</h3>
-	</div>
+   <div class="m-login__title">
+      <h3>Iniciar Sesión</h3>
+   </div>
 
-	<!-- <m-auth-notice></m-auth-notice> -->
+   <div [hidden]="!message" class="m-alert m-alert--outline m-alert--outline-2x alert fade show" [ngClass]="{'alert-danger': type === 'error', 'alert-success': type === 'success', 'alert-info': type === 'info'}"
+      role="alert" #alertNotice>
+      <span [innerHTML]="message"></span>
+   </div>
 
-	<!--begin::Form-->
-	<form class="m-login__form m-form" name="form" (ngSubmit)="f.form.valid && submit()" #f="ngForm" novalidate>
-		<div class="form-group">
-			<mat-form-field>
-				<mat-label>Correo Electrónico</mat-label>
-				<input matInput type="email" name="email" placeholder="Email address" autocomplete="off" [(ngModel)]="model.email" #email="ngModel" email="true" required>
-			</mat-form-field>
-		</div>
-		<div class="form-group">
-			<mat-form-field>
-				<mat-label>Contraseña</mat-label>
-				<input matInput minlength="4" type="password" name="password" placeholder="Password" autocomplete="off" [(ngModel)]="model.password" #password="ngModel" required>
-			</mat-form-field>
-		</div>
-	</form>
-	<!--end::Form-->
 
-	<!--begin::Action-->
-	<div class="m-login__action m-login__action--fit">
-		<a href="javascript:;" (click)="forgotPasswordPage($event)" class="m-link">
-			<span>¿Olvidó su contraseña?</span>
-		</a>
-		<!-- <m-spinner-button [options]="spinner" (click)="submit()">Sign In</m-spinner-button> -->
-	</div>
-	<!--end::Action-->
+   <!--===================== FORMULARIO =====================-->
+   <form class="m-login__form m-form" name="form" (ngSubmit)="f.form.valid && submit()" #f="ngForm" novalidate>
 
-	<!--begin::Divider-->
-	<div class="m-login__form-divider">
-		<div class="m-divider">
-			<span></span>
-			<span>O INGRESE CON</span>
-			<span></span>
-		</div>
-	</div>
-	<!--end::Divider-->
+      <div class="form-group">
+         <mat-form-field>
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput type="email" name="email" placeholder="Correo Electrónico" autocomplete="" [(ngModel)]="model.email"
+               #email="ngModel" email="true" required="">
+               <!-- <input class="form-control" id="exampleInputEmail1" type="email" name="email"
+               placeholder="Enter email" autocomplete="off"  formControlName="email" required=""/> -->
+         </mat-form-field>
+      </div>
 
-	<!--begin::Options-->
-	<div class="m-login__options">
-		<a href="javascript:;" mat-raised-button color="primary">
-			<span>
-				<i class="fab fa-facebook-f"></i>&nbsp;
-				<span>Facebook</span>
-			</span>
-		</a>
+      <div class="form-group">
+         <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input matInput minlength="4" type="password" name="password" placeholder="Password" autocomplete="off"
+               [(ngModel)]="model.password" #password="ngModel" required="">
+         </mat-form-field>
+      </div>
 
-		<a href="javascript:;" mat-raised-button color="accent">
-			<span>
-				<i class="fab fa-twitter"></i>&nbsp;
-				<span>Twitter</span>
-			</span>
-		</a>
+   </form>
+   <!-- FIN FORMULARIO -->
 
-		<a href="javascript:;" mat-raised-button color="warn">
-			<span>
-				<i class="fab fa-google"></i>&nbsp;
-				<span>Google</span>
-			</span>
-		</a>
-	</div>
-	<!--end::Options-->
+
+   <!--===================== ACCIONES =====================-->
+   <div class="m-login__action m-login__action--fit">
+      <a href="javascript:;" (click)="forgotPasswordPage()" class="m-link">
+         <span>¿Olvidó su contraseña?</span>
+      </a>
+      <!-- <m-spinner-button [options]="spinner" (click)="submit()">Sign In</m-spinner-button> -->
+      <button mat-raised-button color="accent" (click)="submit()">Ingresar</button>
+   </div>
+   <!-- FIN ACCIONES -->
+
+
+   <!--===================== LÍNEA HORIZONTAL =====================-->
+   <div class="m-login__form-divider">
+      <div class="m-divider">
+         <span></span>
+         <span>O INGRESE CON</span>
+         <span></span>
+      </div>
+   </div>
+   <!--FIN LÍNEA HORIZONTAL -->
+
+
+   <!--===================== INGRESO USANDO REDES SOCIALES =====================-->
+   <div class="m-login__options">
+      <a href="javascript:;" mat-raised-button color="primary">
+         <span>
+            <i class="fab fa-facebook-f"></i>&nbsp;
+            <span>Facebook</span>
+         </span>
+      </a>
+
+      <a href="javascript:;" mat-raised-button color="accent">
+         <span>
+            <i class="fab fa-twitter"></i>&nbsp;
+            <span>Twitter</span>
+         </span>
+      </a>
+
+      <a href="javascript:;" mat-raised-button color="warn">
+         <span>
+            <i class="fab fa-google"></i>&nbsp;
+            <span>Google</span>
+         </span>
+      </a>
+   </div>
+   <!--FIN REDES SOCIALES -->
+
+
 </div>

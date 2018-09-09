@@ -1,11 +1,4 @@
-import {
-   Component,
-   OnInit,
-   Input,
-   HostBinding,
-   OnDestroy,
-   ElementRef
-} from '@angular/core';
+import { Component, OnInit, Input, HostBinding, OnDestroy, ElementRef } from '@angular/core';
 
 @Component({
    selector: 'cw-auth',
@@ -27,10 +20,10 @@ export class AuthComponent implements OnInit, OnDestroy {
    }
 
    ngOnDestroy(): void {
-      this.el.nativeElement.closest('body').className  = 'm-page--fluid m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-scroll-top--shown';
+      this.el.nativeElement.closest('body').className = 'm-page--fluid m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default m-scroll-top--shown';
    }
 
-   register() {
+   registerPage() {
       this.action = 'register';
    }
 
