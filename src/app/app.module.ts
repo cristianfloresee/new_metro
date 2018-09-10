@@ -21,7 +21,7 @@ import { GestureConfig, MatProgressSpinnerModule } from '@angular/material';
 import { LayoutModule } from './content/layout/layout.module';
 import { PartialsModule } from './content/partials/partials.module';
 import { CoreModule } from './core/core.module';
-import { AuthenticationModule } from './core/auth/authentication/authentication.module';
+import { AuthenticationModule } from './core/authentication/authentication.module';
 
 //PERFECT SCROLLBAR
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';

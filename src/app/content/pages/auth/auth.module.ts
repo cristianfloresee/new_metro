@@ -10,10 +10,12 @@ import { LoginComponent } from './login/login.component';
 
 //ANGULAR MATERIAL
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule } from '@angular/material';
+//COMPONENTES
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
 
+//SERVICIOS
 
 @NgModule({
    imports: [
@@ -23,9 +25,9 @@ import { RegisterComponent } from './register/register.component';
       ReactiveFormsModule,
       //ANGULAR MATERIAL
       MatButtonModule,
-		MatInputModule,
-		MatFormFieldModule,
-		MatCheckboxModule,
+      MatInputModule,
+      MatFormFieldModule,
+      MatCheckboxModule,
       //ROUTER
       RouterModule.forChild([
          {

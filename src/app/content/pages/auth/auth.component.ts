@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, HostBinding, OnDestroy, ElementRef } from '@angular/core';
+//NOTICE SERVICE
 
 @Component({
    selector: 'cw-auth',
