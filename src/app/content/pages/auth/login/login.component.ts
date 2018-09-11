@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
    constructor(
       fb: FormBuilder,
-      sessionSrv: SessionService
+      public sessionSrv: SessionService
    ) {
       this.type = 'success';
       this.message = `Usa la cuenta <strong>admin@demo.com</strong> y la contraseña
@@ -42,11 +42,16 @@ export class LoginComponent implements OnInit {
    }
 
    ngOnInit() {
+
    }
 
    //AL PRESIONAR BOTÓN LOGIN
    submit() {
-      console.log(this.loginForm.value);
+      return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
+      .subscribe(result => {
+         console.log("result: ", result);
+      })
+      //console.log(this.loginForm.value);
    }
 
    // validate(f: NgForm) {

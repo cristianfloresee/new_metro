@@ -13,8 +13,13 @@ export class SessionService {
 
    }
 
-   login() {
+   login(email, password) {
+      console.log("funcion login del service...");
       let url = API_URL;
-      return this.http.get(url + '');
+      return this.http.post(url + 'login', {email, password});
+   }
+
+   logout(){
+
    }
 }
