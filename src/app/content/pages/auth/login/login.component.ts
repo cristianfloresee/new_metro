@@ -10,6 +10,8 @@ import { SessionService } from '../../../../core/authentication/services/session
 //LIBRERÍA TERCEROS
 //import * as objectPath from 'object-path';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
    selector: 'cw-login',
    templateUrl: './login.component.html',
@@ -29,7 +31,8 @@ export class LoginComponent implements OnInit {
 
    constructor(
       fb: FormBuilder,
-      public sessionSrv: SessionService
+      public sessionSrv: SessionService,
+      private toastr: ToastrService
    ) {
       this.type = 'success';
       this.message = `Usa la cuenta <strong>demo@demo.com</strong> y la contraseña
@@ -47,10 +50,16 @@ export class LoginComponent implements OnInit {
 
    //AL PRESIONAR BOTÓN LOGIN
    submit() {
-      return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
-      .subscribe(result => {
-         console.log("result: ", result);
-      })
+      this.toastr.success('Hello world!', 'Toastr fun!', {
+         closeButton: true,
+         progressBar: true,
+         progressAnimation: 'increasing'
+      });
+      // return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
+      // .subscribe(result => {
+      //    console.log("result: ", result);
+      //    this.toastr.success('Hello world!', 'Toastr fun!');
+      // })
       //console.log(this.loginForm.value);
    }
 

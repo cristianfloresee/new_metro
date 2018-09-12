@@ -36,6 +36,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 //SERVICIOS
 import { UserService } from './core/services/API/user.service';
 
+//NGX-TOASTR
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
    declarations: [
       AppComponent
@@ -50,6 +53,8 @@ import { UserService } from './core/services/API/user.service';
       NgbModule.forRoot(),
       //NGX-SWEETALERT2
       //SweetAlert2Module.forRoot(),
+      //NGX-TOASTR
+      ToastrModule.forRoot(),
       //ANGULAR MATERIAL
       MatProgressSpinnerModule,
       //MODULOS

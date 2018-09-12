@@ -28,7 +28,8 @@
                   ],
                   "styles": [
                      "src/app/sass/styles.scss",
-                     "src/assets/css/bootstrap.min.css"
+                     "src/assets/css/bootstrap.min.css",
+                     "node_modules/ngx-toastr/toastr.css"
                   ],
                   "scripts": [
                      "src/assets/js/bootstrap.min.js"

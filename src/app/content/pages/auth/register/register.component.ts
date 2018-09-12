@@ -10,8 +10,9 @@ import { Subject } from 'rxjs';
 import { User } from '../../../../core/models/user.model';
 //SERVICIOS
 import { UserService } from '../../../../core/services/API/user.service';
-//SWEETAERT2
-import swal from 'sweetalert2'
+//NGX-TOASTR
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
    selector: 'cw-register',
    templateUrl: './register.component.html',
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit {
    registerForm: FormGroup;
 
    constructor(
+      private toastr: ToastrService,
       public fb: FormBuilder,
       public router: Router,
       public userSrv: UserService
@@ -77,15 +79,12 @@ export class RegisterComponent implements OnInit {
       return this.userSrv.createUser(user)
          .subscribe(result => {
             console.log("result: ", result);
-            swal({
-               title: 'Error!',
-               text: 'Do you want to continue',
-               type: 'success',
-               confirmButtonText: 'Cool'
-             }).then(()=>{
-
-                this.loginPage();
-             })
+            this.loginPage();
+            this.toastr.success('Acción realizada', 'Usuario creado correctamente', {
+               closeButton: true,
+               progressBar: true,
+               progressAnimation: 'increasing'
+            });
          })
    }
 
