@@ -10,8 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 //COMPONENTES
 import { AppComponent } from './app.component';
 
-//BOOTSTRAP
+//NG-BOOTSTRAP
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+//NGX-SWEETALERT2
+//import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 //ANGULAR MATERIAL
 import 'hammerjs';
@@ -23,12 +26,15 @@ import { PartialsModule } from './content/partials/partials.module';
 import { CoreModule } from './core/core.module';
 import { AuthenticationModule } from './core/authentication/authentication.module';
 
-//PERFECT SCROLLBAR
+//NGX-PERFECT-SCROLLBAR
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
    // suppressScrollX: true
 };
+
+//SERVICIOS
+import { UserService } from './core/services/API/user.service';
 
 @NgModule({
    declarations: [
@@ -42,6 +48,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       BrowserAnimationsModule,
       //BOOTSTRAP
       NgbModule.forRoot(),
+      //NGX-SWEETALERT2
+      //SweetAlert2Module.forRoot(),
       //ANGULAR MATERIAL
       MatProgressSpinnerModule,
       //MODULOS
@@ -54,7 +62,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       {
          provide: PERFECT_SCROLLBAR_CONFIG,
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-      }
+      },
+      //SERVICIOS
+      UserService
    ],
    bootstrap: [AppComponent]
 })

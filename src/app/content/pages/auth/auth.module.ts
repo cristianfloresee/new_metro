@@ -14,6 +14,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule 
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { RegisterComponent } from './register/register.component';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 //SERVICIOS
 
@@ -28,6 +29,8 @@ import { RegisterComponent } from './register/register.component';
       MatInputModule,
       MatFormFieldModule,
       MatCheckboxModule,
+      //
+      SweetAlert2Module,
       //ROUTER
       RouterModule.forChild([
          {

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       public sessionSrv: SessionService
    ) {
       this.type = 'success';
-      this.message = `Usa la cuenta <strong>admin@demo.com</strong> y la contraseña
+      this.message = `Usa la cuenta <strong>demo@demo.com</strong> y la contraseña
       <strong>demo</strong> para continuar.`;
 
       this.loginForm = fb.group({

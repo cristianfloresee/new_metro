@@ -1,8 +1,17 @@
+//ANGULAR IMPORTS
 import { Component, OnInit, Input, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
+//NG2-VALIDATION
 import { CustomValidators } from 'ng2-validation';
+//RXJS
 import { Subject } from 'rxjs';
-
+//MODELOS
+import { User } from '../../../../core/models/user.model';
+//SERVICIOS
+import { UserService } from '../../../../core/services/API/user.service';
+//SWEETAERT2
+import swal from 'sweetalert2'
 @Component({
    selector: 'cw-register',
    templateUrl: './register.component.html',
@@ -16,16 +25,22 @@ export class RegisterComponent implements OnInit {
    model: any = { email: '' };
    registerForm: FormGroup;
 
-   constructor(fb: FormBuilder) {
+   constructor(
+      public fb: FormBuilder,
+      public router: Router,
+      public userSrv: UserService
+   ) {
       this.registerForm = fb.group({
-         'names': ['', Validators.required],
+         'name': ['', Validators.required],
          'lastname': ['', Validators.required],
          'middlename': ['', Validators.required],
-         'email': ['', [Validators.required, CustomValidators.email]],
          'document': ['', Validators.required],
+         'email': ['', [Validators.required, CustomValidators.email]],
+         'phone': ['', Validators.required],
          'username': ['', Validators.required],
          'password': ['', Validators.required],
-         'password2': ['', Validators.required]
+         'password2': ['', Validators.required],
+         'conditions': [false, Validators.required]
       },
          { validator: this.equalPasswords('password', 'password2') }
 
@@ -45,9 +60,33 @@ export class RegisterComponent implements OnInit {
       console.log(this.registerForm.value);
       console.log(this.registerForm.valid);
       console.log(this.registerForm);
-      if(this.registerForm.invalid){
+
+
+      const { name, lastname, middlename, document, email, phone, username, password } = this.registerForm.value;
+      let user = new User(name, lastname, middlename, document, email, phone, username, password);
+
+
+      if (this.registerForm.invalid) {
          console.log("formulario invalido...");
+
+         return;
       }
+
+
+
+      return this.userSrv.createUser(user)
+         .subscribe(result => {
+            console.log("result: ", result);
+            swal({
+               title: 'Error!',
+               text: 'Do you want to continue',
+               type: 'success',
+               confirmButtonText: 'Cool'
+             }).then(()=>{
+
+                this.loginPage();
+             })
+         })
    }
 
    //COMPRUEBA SI LAS CONTRASEÑAS SON IGUALES
@@ -59,13 +98,6 @@ export class RegisterComponent implements OnInit {
          if (pass1 === pass2) return null;
          return { areEquals: true }
       }
-   }
-
-   equalPassword(control: AbstractControl) {
-      const pass1 = control.get('password');
-      const pass2 = control.get('password2');
-      if ((pass2 != null) && (pass1 === pass2)) return null;
-      return { areEquals: true };
    }
 
 }

@@ -54,10 +54,10 @@
    <form [formGroup]="registerForm" class="m-login__form m-form">
 
       <div class="form-group has-feedback">
-         <input class="form-control" type="text" placeholder="Nombres" formControlName="names" maxlength="30"
+         <input class="form-control" type="text" placeholder="Nombres" formControlName="name" maxlength="30"
             autocomplete="nope" required />
          <!--===================== ERRORES NOMBRES =====================-->
-         <span class="text-danger" *ngIf="registerForm.controls['names'].hasError('required') && (registerForm.controls['names'].dirty || registerForm.controls['names'].touched)">
+         <span class="text-danger" *ngIf="registerForm.controls['name'].hasError('required') && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)">
             Este campo es requerido
          </span>
          <!-- FIN ERRORES NOMBRES -->
@@ -98,6 +98,17 @@
       </div>
 
       <div class="form-group has-feedback">
+            <input class="form-control" type="text" placeholder="Número Telefónico" formControlName="phone" minlegth="4"
+               maxlength="20" autocomplete="nope" required />
+            <!--===================== ERRORES APELLIDO PATERNO =====================-->
+            <span class="text-danger" *ngIf="registerForm.controls['phone'].hasError('required') && (registerForm.controls['phone'].dirty || registerForm.controls['phone'].touched)">
+               Este campo es requerido
+            </span>
+            <!-- FIN ERRORES APELLIDO PATERNO  -->
+         </div>
+
+
+      <div class="form-group has-feedback">
          <input class="form-control" type="text" placeholder="Número de Documento" formControlName="document" maxlength="35"
             autocomplete="nope" required />
          <!--===================== ERRORES DE DOCUMENTO =====================-->
@@ -128,8 +139,8 @@
       </div>
 
       <div class="form-group has-feedback">
-         <input class="form-control" type="password" placeholder="Repita Contraseña" formControlName="password2" maxlength="35"
-            autocomplete="nope" required />
+         <input class="form-control" type="password" placeholder="Repita Contraseña" formControlName="password2"
+            maxlength="35" autocomplete="nope" required />
          <!--===================== ERRORES CONTRASEÑA =====================-->
          <span class="text-danger" *ngIf="registerForm.controls['password2'].hasError('required') && (registerForm.controls['password2'].dirty || registerForm.controls['password2'].touched)">
             Este campo es requerido
@@ -139,6 +150,17 @@
          </span>
          <!-- FIN ERRORES CONTRASEÑA -->
       </div>
+
+      <div class="form-group">
+         <mat-checkbox formControlName="conditions" required>Acepto los
+            <a href="javascript:;">términos y condiciones</a>
+         </mat-checkbox>
+      </div>
+
+
+      <!-- <button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']">
+         Do it!
+      </button> -->
 
    </form>
    <!-- FIN FORMULARIO -->
