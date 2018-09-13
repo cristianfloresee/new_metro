@@ -3,58 +3,63 @@
       <h3>Iniciar Sesión</h3>
    </div>
 
-   <div [hidden]="!message" class="m-alert m-alert--outline m-alert--outline-2x alert fade show" [ngClass]="{'alert-danger': type === 'error', 'alert-success': type === 'success', 'alert-info': type === 'info'}"
+   <div *ngIf="!error_response.show" class="m-alert m-alert--outline m-alert--outline-2x alert fade show" [ngClass]="{'alert-danger': type === 'error', 'alert-success': type === 'success', 'alert-info': type === 'info'}"
       role="alert" #alertNotice>
-      <span [innerHTML]="message"></span>
+      <span>Use la cuenta <strong>demo@demo.com</strong> y la contraseña <strong>demo</strong> para continuar.</span>
+   </div>
+
+
+   <div class="m-alert m-alert--icon alert alert-warning" role="alert" *ngIf="error_response.show">
+      <div class="m-alert__icon">
+         <i class="flaticon-danger"></i>
+      </div>
+      <div class="m-alert__text">
+         <strong>{{error_response.title}}</strong> {{error_response.message}}
+      </div>
    </div>
 
 
    <!--===================== FORMULARIO =====================-->
-   <form [formGroup]="loginForm" class="m-login__form m-form">
-
-      <!-- <div class="form-group">
-         <mat-form-field>
-            <mat-label>Correo Electrónico</mat-label>
-            <input matInput type="email" name="email" placeholder="Correo Electrónico" autocomplete="nope" [(ngModel)]="model.email"
-               #email="ngModel" email="true" required="">
-         </mat-form-field>
-      </div> -->
-
-      <!-- <div class="form-group">
-         <mat-form-field>
-            <mat-label>Contraseña</mat-label>
-            <input matInput minlength="4" type="password" name="password" placeholder="Password" autocomplete="nope"
-               [(ngModel)]="model.password" #password="ngModel" required="">
-         </mat-form-field>
-      </div> -->
-      <div class="form-group has-feedback">
-         <input class="form-control" type="email" placeholder="Correo Electrónico" formControlName="email" maxlength="35"
-            autocomplete="nope" required />
-
-         <!--===================== ERRORES DE EMAIL =====================-->
-         <span class="text-danger" *ngIf="loginForm.controls['email'].hasError('required') && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
-            Este campo es requerido
-         </span>
-         <span class="text-danger" *ngIf="loginForm.controls['email'].hasError('email') && (loginForm.controls['email'].dirty && loginForm.controls['email'].touched)">
-            Este campo debe ser una dirección de correo electrónico válida
-         </span>
-         <!-- FIN ERRORES DE EMAIL -->
-      </div>
-      <div class="form-group has-feedback">
-         <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" minlegth="4"
-            maxlength="15" autocomplete="new-password" required />
-         <!--===================== ERRORES DE PASSWORD =====================-->
-         <span class="text-danger" *ngIf="loginForm.controls['password'].hasError('required') && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
-            Este campo es requerido
-         </span>
-         <span class="text-danger" *ngIf="loginForm.controls['password'].hasError('minlength') && (loginForm.controls['password'].dirty && loginForm.controls['password'].touched)">
-            La contraseña debe tener al menos 4 carácteres
-         </span>
-         <!-- FIN ERRORES DE PASSWORD  -->
-      </div>
-
-   </form>
    <!-- FIN FORMULARIO -->
+
+   <!--begin::Form-->
+   <form class="m-form m-form--state m-form--label-align-right" placeholder="Correo Electrónico" [formGroup]="loginForm" style="margin: 4rem auto">
+      <div class="m-portlet__body">
+
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : loginForm.controls.email.invalid && loginForm.controls.email.touched }">
+            <label class="form-control-label">Correo Eletrónico:</label>
+            <input type="text" class="form-control m-input" formControlName="email" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE EMAIL =====================-->
+            <div class="form-control-feedback" *ngIf="loginForm.controls['email'].hasError('required') && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">Este
+               campo es requerido.
+            </div>
+            <div class="form-control-feedback" *ngIf="loginForm.controls['email'].hasError('email') && (loginForm.controls['email'].dirty && loginForm.controls['email'].touched)">Este
+               campo debe ser una dirección de correo electrónico válida.
+            </div>
+            <!-- FIN ERRORES DE EMAIL -->
+         </div>
+
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : loginForm.controls.password.invalid && loginForm.controls.password.touched }">
+            <!-- has-success / has-danger-->
+            <label>Contraseña:</label>
+            <input type="password" class="form-control m-input" formControlName="password" minlegth="4" maxlength="25"
+               autocomplete="new-password">
+            <!--===================== ERRORES DE PASSWORD =====================-->
+            <div class="form-control-feedback" *ngIf="loginForm.controls['password'].hasError('required') && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+               Este campo es requerido.
+            </div>
+            <div class="form-control-feedback" *ngIf="loginForm.controls['password'].hasError('minlength') && (loginForm.controls['password'].dirty && loginForm.controls['password'].touched)">
+               La contraseña debe tener al menos 4 carácteres.
+            </div>
+            <!-- FIN ERRORES DE PASSWORD  -->
+         </div>
+      </div>
+   </form>
+
+   <!--end::Form-->
+
 
 
    <!--===================== ACCIONES =====================-->
@@ -64,7 +69,7 @@
       </a>
       <!-- <m-spinner-button [options]="spinner" (click)="submit()">Sign In</m-spinner-button> -->
       <!-- <button mat-raised-button color="accent" (click)="submit()">Ingresar</button> -->
-      <button class="btn btn-primary" (click)="submit()">Ingresar</button>
+      <button class="btn btn-primary" (click)="submit()" [disabled]="loginForm.invalid">Ingresar</button>
    </div>
    <!-- FIN ACCIONES -->
 
@@ -73,7 +78,7 @@
    <div class="m-login__form-divider">
       <div class="m-divider">
          <span></span>
-         <span>O INGRESE CON</span>
+         <span>o ingrese con</span>
          <span></span>
       </div>
    </div>

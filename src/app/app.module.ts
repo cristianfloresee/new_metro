@@ -38,6 +38,7 @@ import { UserService } from './core/services/API/user.service';
 
 //NGX-TOASTR
 import { ToastrModule } from 'ngx-toastr';
+import { LoaderService } from './core/services/loader.service';
 
 @NgModule({
    declarations: [
@@ -69,7 +70,8 @@ import { ToastrModule } from 'ngx-toastr';
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
       },
       //SERVICIOS
-      UserService
+      UserService,
+      LoaderService
    ],
    bootstrap: [AppComponent]
 })

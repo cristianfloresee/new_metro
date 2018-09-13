@@ -9,7 +9,7 @@ import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 
 //ANGULAR MATERIAL
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatProgressSpinnerModule } from '@angular/material';
 //COMPONENTES
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -29,6 +29,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
       MatInputModule,
       MatFormFieldModule,
       MatCheckboxModule,
+      MatProgressSpinnerModule,
       //
       SweetAlert2Module,
       //ROUTER

@@ -5,12 +5,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 //RXJS
 import { Subject } from 'rxjs';
+//SERVICIOS
 import { SessionService } from '../../../../core/authentication/services/session.service';
-
+import { LoaderService } from '../../../../core/services/loader.service';
 //LIBRERÍA TERCEROS
 //import * as objectPath from 'object-path';
 
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
 
 @Component({
    selector: 'cw-login',
@@ -27,12 +30,14 @@ export class LoginComponent implements OnInit {
    type;
    message;
 
-   errors: any = [];
+   error_response = { show: false, title: '', message: '' };
 
    constructor(
       fb: FormBuilder,
       public sessionSrv: SessionService,
-      private toastr: ToastrService
+      public loaderSrv: LoaderService,
+      private toastr: ToastrService,
+      public router: Router
    ) {
       this.type = 'success';
       this.message = `Usa la cuenta <strong>demo@demo.com</strong> y la contraseña
@@ -44,54 +49,42 @@ export class LoginComponent implements OnInit {
       });
    }
 
-   ngOnInit() {
+   ngOnInit() { }
 
-   }
 
-   //AL PRESIONAR BOTÓN LOGIN
    submit() {
-      this.toastr.success('Hello world!', 'Toastr fun!', {
-         closeButton: true,
-         progressBar: true,
-         progressAnimation: 'increasing'
-      });
-      // return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
-      // .subscribe(result => {
-      //    console.log("result: ", result);
-      //    this.toastr.success('Hello world!', 'Toastr fun!');
-      // })
+      // this.toastr.success('Hello world!', 'Toastr fun!', {
+      //    closeButton: true,
+      //    progressBar: true,
+      //    progressAnimation: 'increasing'
+      // });
+      this.loaderSrv.show();
+      return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
+         .subscribe(
+            result => {
+               console.log("result: ", result);
+               this.error_response.show = false;
+               this.router.navigate(['/']);
+               this.loaderSrv.hide();
+            },
+            error => {
+               this.loaderSrv.hide();
+               console.log("errori: ", error);
+               // if (error.status == 0) {
+               //    this.error_response.show = true;
+               //    this.error_response.title = 'Error!';
+               //    this.error_response.message = 'Tenemos un problema en nuestros servidores.'
+               //    console.log("Tenemos un problema en nuestros servidores");
+               // }
+               // else if(error.message = '(email) or password incorrect.'){
+               //    console.log("email or password incdsads");
+               //    this.error_response.show = true;
+               //    this.error_response.title = 'Error!';
+               //    this.error_response.message = 'correo electrónico o contraseña no válidos.'
+               // }
+            })
       //console.log(this.loginForm.value);
    }
-
-   // validate(f: NgForm) {
-   //    if (f.form.status === 'VALID') {
-   //       return true;
-   //    }
-
-
-
-   //    this.errors = [];
-   //    if (objectPath.get(f, 'form.controls.email.errors.email')) {
-   //       this.errors.push('Email is not valid');
-   //    }
-   //    if (objectPath.get(f, 'form.controls.email.errors.required')) {
-   //       this.errors.push('Email is required');
-   //    }
-
-   //    if (objectPath.get(f, 'form.controls.password.errors.required')) {
-   //       this.errors.push('Password is not valid');
-   //    }
-   //    if (objectPath.get(f, 'form.controls.password.errors.minlength')) {
-   //       this.errors.push('Password minimum length is 7');
-   //    }
-
-   //    // if (this.errors.length > 0) {
-   //    // 	this.authNoticeService.setNotice(this.errors.join('<br/>'), 'error');
-   //    // 	this.spinner.active = false;
-   //    // }
-
-   //    return false;
-   // }
 
    //REEDIRECCIONAMIENTO A LA PÁGINA DE RECUPERACIÓN DE CONTRASEÑA
    forgotPasswordPage() {
@@ -99,4 +92,11 @@ export class LoginComponent implements OnInit {
       this.actionChange.next(this.action);
    }
 
+   sumot() {
+      this.toastr.error('Hello world!', 'Toastr fun!', {
+         closeButton: true,
+         progressBar: true,
+         progressAnimation: 'increasing'
+      });
+   }
 }
