@@ -1,4 +1,4 @@
-import { Injectable,  } from '@angular/core'; //Renderer2, ElementRef
+import { Injectable, } from '@angular/core'; //Renderer2, ElementRef
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -12,8 +12,6 @@ export class LoaderService {
    }
 
    hide() {
-      setTimeout(() => {
-         this.status.next(false);
-      }, 1000)
+      setTimeout(() => this.status.next(false), 1000)
    }
 }

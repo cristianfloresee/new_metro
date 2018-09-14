@@ -53,11 +53,6 @@ export class LoginComponent implements OnInit {
 
 
    submit() {
-      // this.toastr.success('Hello world!', 'Toastr fun!', {
-      //    closeButton: true,
-      //    progressBar: true,
-      //    progressAnimation: 'increasing'
-      // });
       this.loaderSrv.show();
       return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
          .subscribe(
@@ -68,8 +63,8 @@ export class LoginComponent implements OnInit {
                this.loaderSrv.hide();
             },
             error => {
+               console.log("error:", error);
                this.loaderSrv.hide();
-               console.log("error: ", error);
                if (error.status == 0) {
                   this.error_response.show = true;
                   this.error_response.title = 'Error!';
@@ -80,7 +75,7 @@ export class LoginComponent implements OnInit {
                   this.error_response.title = 'Error!';
                   this.error_response.message = 'correo electrónico o contraseña no válidos.'
                }
-            })
+            });
    }
 
    //REEDIRECCIONAMIENTO A LA PÁGINA DE RECUPERACIÓN DE CONTRASEÑA
