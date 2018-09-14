@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../../../../core/authentication/services/session.service';
 
 @Component({
   selector: 'cw-user-profile',
@@ -6,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sessionSrv: SessionService) { }
 
   ngOnInit() {
   }
 
+  logout(){
+     console.log("logout...");
+     this.sessionSrv.logout();
+  }
 }

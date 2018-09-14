@@ -12,6 +12,8 @@ import { LayoutModule } from '../layout/layout.module';
 import { PagesComponent } from './pages.component';
 import { ActionComponent } from './header/action/action.component';
 import { ProfileComponent } from './header/profile/profile.component';
+import { GuardService } from '../../core/services/guard.service';
+
 
 @NgModule({
    imports: [

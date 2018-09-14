@@ -1,9 +1,20 @@
 @import "variables";
 @import "fonts/fonts";
-
 body,
 html {
     height: 100%;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.m-topbar__welcome{
+   display: table-cell;
+   vertical-align: middle;
+   font-size: 1rem;
+   font-weight: 500;
+   color: #b1b5c1;
 }
 
 .m-splash-screen {

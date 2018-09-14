@@ -17,4 +17,6 @@ export class UserService {
       const { name, last_name, middle_name, document_no, email, phone_no, username, password } = user;
       return this.http.post(API_URL + '/users/create', { name, last_name, middle_name, document_no, email, phone_no, username, password });
    }
+
+
 }

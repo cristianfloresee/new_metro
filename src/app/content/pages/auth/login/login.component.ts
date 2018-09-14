@@ -69,21 +69,18 @@ export class LoginComponent implements OnInit {
             },
             error => {
                this.loaderSrv.hide();
-               console.log("errori: ", error);
-               // if (error.status == 0) {
-               //    this.error_response.show = true;
-               //    this.error_response.title = 'Error!';
-               //    this.error_response.message = 'Tenemos un problema en nuestros servidores.'
-               //    console.log("Tenemos un problema en nuestros servidores");
-               // }
-               // else if(error.message = '(email) or password incorrect.'){
-               //    console.log("email or password incdsads");
-               //    this.error_response.show = true;
-               //    this.error_response.title = 'Error!';
-               //    this.error_response.message = 'correo electrónico o contraseña no válidos.'
-               // }
+               console.log("error: ", error);
+               if (error.status == 0) {
+                  this.error_response.show = true;
+                  this.error_response.title = 'Error!';
+                  this.error_response.message = 'Tenemos un problema en nuestros servidores.'
+               }
+               else if (error.message = '(email) or password incorrect.') {
+                  this.error_response.show = true;
+                  this.error_response.title = 'Error!';
+                  this.error_response.message = 'correo electrónico o contraseña no válidos.'
+               }
             })
-      //console.log(this.loginForm.value);
    }
 
    //REEDIRECCIONAMIENTO A LA PÁGINA DE RECUPERACIÓN DE CONTRASEÑA

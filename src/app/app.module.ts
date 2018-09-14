@@ -39,6 +39,7 @@ import { UserService } from './core/services/API/user.service';
 //NGX-TOASTR
 import { ToastrModule } from 'ngx-toastr';
 import { LoaderService } from './core/services/loader.service';
+import { GuardService } from './core/services/guard.service';
 
 @NgModule({
    declarations: [
@@ -71,7 +72,8 @@ import { LoaderService } from './core/services/loader.service';
       },
       //SERVICIOS
       UserService,
-      LoaderService
+      LoaderService,
+      GuardService
    ],
    bootstrap: [AppComponent]
 })
