@@ -1,6 +1,7 @@
+//ANGULAR
 import { Component, OnInit, Input, Output, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CustomValidators } from 'ng2-validation';
+//RXJS
 import { Subject } from 'rxjs';
 @Component({
    selector: 'cw-forgot-password',
@@ -19,7 +20,7 @@ export class ForgotPasswordComponent implements OnInit {
 
    constructor(fb: FormBuilder) {
       this.passwordForm = fb.group({
-         'email': ['', Validators.compose([Validators.required, CustomValidators.email])]
+         'email': ['', [Validators.required, Validators.email]]
       });
    }
 

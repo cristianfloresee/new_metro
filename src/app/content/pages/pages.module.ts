@@ -1,6 +1,6 @@
 // MODULOS ANGULAR
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -12,14 +12,16 @@ import { LayoutModule } from '../layout/layout.module';
 import { PagesComponent } from './pages.component';
 import { ActionComponent } from './header/action/action.component';
 import { ProfileComponent } from './header/profile/profile.component';
-import { GuardService } from '../../core/services/guard.service';
+import { CoreModule } from '../../core/core.module';
 
 
 @NgModule({
    imports: [
       CommonModule,
       HttpClientModule,
+      ReactiveFormsModule,
       FormsModule,
+      CoreModule,
       PagesRoutingModule,
       LayoutModule
    ],

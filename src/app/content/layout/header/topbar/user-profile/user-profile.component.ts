@@ -1,19 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../../../../../core/authentication/services/session.service';
+import { SessionService } from '../../../../../core/services/API/session.service';
+//MODELOS
+import { User } from '../../../../../core/models/user.model';
 
 @Component({
-  selector: 'cw-user-profile',
-  templateUrl: './user-profile.component.html'
+   selector: 'cw-user-profile',
+   templateUrl: './user-profile.component.html'
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private sessionSrv: SessionService) { }
+   constructor(
+      private _sessionSrv: SessionService,
+   ) {
 
-  ngOnInit() {
-  }
+   }
 
-  logout(){
-     console.log("logout...");
-     this.sessionSrv.logout();
-  }
+   ngOnInit() {
+   }
+
+   logout() {
+      this._sessionSrv.logout();
+   }
+
 }

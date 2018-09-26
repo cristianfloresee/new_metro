@@ -1,7 +1,7 @@
-//MODULOS ANGULAR
+//ANGULAR
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //RUTAS
@@ -12,9 +12,6 @@ import { AppComponent } from './app.component';
 
 //NG-BOOTSTRAP
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-//NGX-SWEETALERT2
-//import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 //ANGULAR MATERIAL
 import 'hammerjs';
@@ -35,26 +32,33 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 //SERVICIOS
 import { UserService } from './core/services/API/user.service';
+import { InterceptorService } from './core/services/interceptor.service';
 
 //NGX-TOASTR
 import { ToastrModule } from 'ngx-toastr';
 import { LoaderService } from './core/services/loader.service';
-import { GuardService } from './core/services/guard.service';
+import { RoleService } from './core/services/role.service';
+import { PageService } from './core/services/page.service';
+import { SubheaderService } from './core/services/layout/subheader.service';
+//GUARDS
+import { LoginGuard } from './core/services/guards/login.guard';
+import { AdminGuard } from './core/services/guards/admin.guard';
+import { TeacherGuard } from './core/services/guards/teacher.guard';
+
+
 
 @NgModule({
    declarations: [
       AppComponent
    ],
    imports: [
-      //MODULOS ANGULAR
+      //ANGULAR
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
       BrowserAnimationsModule,
       //BOOTSTRAP
       NgbModule.forRoot(),
-      //NGX-SWEETALERT2
-      //SweetAlert2Module.forRoot(),
       //NGX-TOASTR
       ToastrModule.forRoot(),
       //ANGULAR MATERIAL
@@ -70,10 +74,23 @@ import { GuardService } from './core/services/guard.service';
          provide: PERFECT_SCROLLBAR_CONFIG,
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
       },
+      //INTERCEPTOR
+      [
+         {
+           provide: HTTP_INTERCEPTORS,
+           useClass: InterceptorService,
+           multi: true
+         }
+       ],
       //SERVICIOS
       UserService,
       LoaderService,
-      GuardService
+      RoleService,
+      PageService,
+      SubheaderService,
+      LoginGuard,
+      AdminGuard,
+      TeacherGuard
    ],
    bootstrap: [AppComponent]
 })

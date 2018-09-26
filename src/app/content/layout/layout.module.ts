@@ -13,6 +13,7 @@ import { MenuHorizontalComponent } from './header/menu-horizontal/menu-horizonta
 import { TopbarComponent } from './header/topbar/topbar.component';
 //COMPONENTES LAYOUT > HEADER > TOPBAR
 import { UserProfileComponent } from './header/topbar/user-profile/user-profile.component';
+import { UserRoleComponent } from './header/topbar/user-role/user-role.component';
 import { QuickActionComponent } from './header/topbar/quick-action/quick-action.component';
 import { NotificationComponent } from './header/topbar/notification/notification.component';
 import { SearchDropdownComponent } from './header/topbar/search-dropdown/search-dropdown.component';
@@ -27,6 +28,11 @@ import { MatProgressBarModule, MatTabsModule, MatButtonModule, MatTooltipModule 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { LanguageSelectorComponent } from './header/topbar/language-selector/language-selector.component';
+import { CoreModule } from '../../core/core.module';
+import { SubheaderComponent } from './subheader/subheader.component';
+import { AsideComponent } from './aside/aside.component';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
    // suppressScrollX: true
 };
@@ -36,12 +42,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       //COMPONENTES LAYOUT
       HeaderComponent,
       FooterComponent,
+      SubheaderComponent,
+      AsideComponent,
       //COMPONENTES LAYOUT > HEADER
       BrandComponent,
       MenuHorizontalComponent,
       TopbarComponent,
       //COMPONENTES LAYOUT > HEADER > TOPBAR
       UserProfileComponent,
+      UserRoleComponent,
       QuickActionComponent,
       NotificationComponent,
       SearchDropdownComponent
@@ -57,6 +66,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       CommonModule,
       RouterModule,
       FormsModule,
+      CoreModule,
       //BOOTSTRAP
       NgbModule,
       //ANGULAR MATERIAL
@@ -73,6 +83,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       //COMPONENTES LAYOUT
       HeaderComponent,
       FooterComponent,
+      SubheaderComponent,
+      AsideComponent,
       //COMPONENTES LAYOUT > HEADER
       BrandComponent,
       MenuHorizontalComponent,
@@ -81,7 +93,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       UserProfileComponent,
       QuickActionComponent,
       NotificationComponent,
-      SearchDropdownComponent
+      SearchDropdownComponent,
+      UserRoleComponent,
+      LanguageSelectorComponent,
+      SubheaderComponent,
+      AsideComponent
    ]
 })
 export class LayoutModule { }

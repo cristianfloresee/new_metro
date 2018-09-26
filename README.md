@@ -55,6 +55,7 @@ ng g module core/auth/authentication --module app
 
 ng g directive core/directives/menu-horizontal-offcanvas --module core --spec=false
 
+ng g pipe core/pipes/urlImage --spec=false
 + Sobre Lazy Load
 
 En la definición de rutas de modulos de carga diferida, la ruta puede ser relativa o absoluta;
@@ -77,19 +78,45 @@ En esta última debe asegurarse de que src/tsconfig.json tenga lo siguiente:
 }
 ```
 
-## Generación de Componentes
+## 1.1 Creación del Modulo Page
+
+
+## 1.1 Creación del Modulo Core
 
 ```
 ng g component content/pages --module content/pages --spec=false -is
 ```
 
-# 2 Instalar Componentes del Modulo Layout
+
+## 1.1 Creación del Modulo Layout
+
 ```
 ng g module content/layout --module app
+ng g component content/layout/header --spec=false
+ng g component content/layout/footer --spec=false -is
+ng g component content/layout/subheader --spec=false
+ng g component content/layout/aside --spec=false
+```
+### 1.1.1 Componentes del Header
+
+```
+ng g component content/layout/header/brand --module content/layout --spec=false -is
+ng g component content/layout/header/menu-horizontal --module content/layout --spec=false -is
+ng g component content/layout/header/topbar --module content/layout --spec=false -is
+```
+
+#### 1.1.1.1 Componentes del Header > Topbar
+```
+ng g component content/layout/header/topbar/user-profile --spec=false -is
+ng g component content/layout/header/topbar/user-role --spec=false -is
+ng g component content/layout/header/topbar/quick-action --spec=false -is
+ng g component content/layout/header/topbar/search-dropdown --spec=false -is
+ng g component content/layout/header/topbar/notification --spec=false
 
 ```
 
-ng g module content/pages/auth --module app
+##  1.2 Creación del Modulo Authentication
+ng g module content/pages/auth --spec false
 ng g component content/pages/auth -is --spec=false
 ng g component content/pages/auth/login --spec=false
 ng g component content/pages/auth/auth-notice --spec=false
@@ -98,34 +125,23 @@ ng g component content/pages/auth/register --spec=false
 
 
 
+## 1.3 Creación del Modulo Dashboard
+ng g module content/pages/dashboard --spec=false
+ng g component content/pages/dashboard -is --spec=false
+
+## Creación Modulo Admin
+
+ng g module content/pages/admin --spec false
+ng g component content/pages/admin -is --spec=false
 
 
+## Creación Modulo Estudiante
+ng g module content/pages/student --spec false
+ng g component content/pages/student -is --spec=false
 
-
-
-
-```
-ng g component content/layout/header --module content/layout --spec=false
-ng g component content/layout/footer --module content/layout --spec=false  -is
-```
-
-## 2.1 Instalar Componentes del Header
-```
-ng g component content/layout/header/brand --module content/layout --spec=false -is
-ng g component content/layout/header/menu-horizontal --module content/layout --spec=false -is
-ng g component content/layout/header/topbar --module content/layout --spec=false -is
-```
-
-## 2.1.1 Instalar Componentes del Header > Topbar
-```
-ng g component content/layout/header/topbar/user-profile --module content/layout --spec=false -is
-ng g component content/layout/header/topbar/quick-action --module content/layout --spec=false -is
-ng g component content/layout/header/topbar/search-dropdown --module content/layout --spec=false -is
-ng g component content/layout/header/topbar/notification --module content/layout --spec=false
-
-```
-
-
+## Creación Modulo Profesor
+ng g module content/pages/teacher --spec false
+ng g component content/pages/teacher -is --spec=false
 
 
 ## Instalar Componentes de Pages
@@ -144,6 +160,9 @@ ng g component content/pages/header/profile --module content/pages --spec=false 
 ```
 
 
+Creación de Guards
+ng g guard core/services/guards/login --spec false
+ng g guard core/services/guards/admin --spec false
 
 
 

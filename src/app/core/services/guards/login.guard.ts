@@ -1,11 +1,12 @@
+//ANGULAR
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from '@angular/router';
-import { UserService } from "./API/user.service";
-import { SessionService } from "../authentication/services/session.service";
-
+//SERVICIOS
+import { UserService } from "../API/user.service";
+import { SessionService } from "../API/session.service";
 
 @Injectable()
-export class GuardService implements CanActivate {
+export class LoginGuard implements CanActivate {
 
    constructor(
       public userSrv: UserService,

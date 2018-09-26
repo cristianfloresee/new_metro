@@ -1,8 +1,8 @@
 import { Component, OnInit, HostBinding, AfterViewInit, ElementRef } from '@angular/core';
 import * as objectPath from 'object-path';
 
-import { MenuHorizontalOffcanvasDirective } from '../../../../core/directives/menu-horizontal-offcanvas.directive';
 import { MenuHorizontalDirective } from '../../../../core/directives/menu-horizontal.directive';
+import { RoleService } from '../../../../core/services/role.service';
 
 @Component({
    selector: 'cw-menu-horizontal',
@@ -12,9 +12,14 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 
    //@HostBinding('attr.mMenuHorizontalOffcanvas') mMenuHorOffcanvas: MenuHorizontalOffcanvasDirective;
    @HostBinding('attr.mMenuHorizontal') mMenuHorizontal: MenuHorizontalDirective; //PERMITE ABRIR LOS MENÚS
+
+
    header_config;
+   role;
+
    constructor(
-      private el: ElementRef
+      private el: ElementRef,
+      private roleSrv: RoleService
    ) {
       this.header_config = [
          {
@@ -114,7 +119,16 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 
    }
 
-   ngOnInit() { }
+   ngOnInit() {
+      // this.roleSrv.current_role.subscribe((role)=>{
+      //    console.log("new role desde el menu horizontal: ", role);
+      //    this.role = role;
+      // })
+
+      this.roleSrv.role$.subscribe((role) => {
+         this.role = role;
+      })
+   }
 
    ngAfterViewInit() {
       //this.mMenuHorOffcanvas = new MenuHorizontalOffcanvasDirective(this.el);

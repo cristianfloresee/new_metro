@@ -32,7 +32,8 @@
                      "src/assets/css/toastr.custom.css"
                   ],
                   "scripts": [
-                     "src/assets/js/bootstrap.min.js"
+                     "src/assets/js/scripts.bundle.js",
+                     "src/assets/js/vendors.bundle.js"
                   ]
                },
                "configurations": {

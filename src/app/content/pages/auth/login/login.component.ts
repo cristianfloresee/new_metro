@@ -2,11 +2,10 @@
 import { Component, OnInit, Output, Input, ViewChild, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 //import { NgForm } from '@angular/forms';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CustomValidators } from 'ng2-validation';
 //RXJS
 import { Subject } from 'rxjs';
 //SERVICIOS
-import { SessionService } from '../../../../core/authentication/services/session.service';
+import { SessionService } from '../../../../core/services/API/session.service';
 import { LoaderService } from '../../../../core/services/loader.service';
 //LIBRERÍA TERCEROS
 //import * as objectPath from 'object-path';
@@ -44,8 +43,8 @@ export class LoginComponent implements OnInit {
       <strong>demo</strong> para continuar.`;
 
       this.loginForm = fb.group({
-         'email': ['', Validators.compose([Validators.required, CustomValidators.email])],
-         'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+         'email': ['', [Validators.required, Validators.email]],
+         'password': ['', [Validators.required, Validators.minLength(4)]]
       });
    }
 

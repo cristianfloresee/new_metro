@@ -19,7 +19,7 @@ export class NotificationComponent implements OnInit {
       setInterval(() => {
          this.animateShake = 'm-animate-shake';
          this.animateBlink = 'm-animate-blink';
-         console.log("ejecuto..");
+         //console.log("ejecuto..");
       }, 3000);
       setInterval(() => (this.animateShake = this.animateBlink = ''), 6000);
    }

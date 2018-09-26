@@ -7,7 +7,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
    selector: 'cw-header',
    templateUrl: './header.component.html',
    styleUrls: ['./header.component.scss'],
-   changeDetection: ChangeDetectionStrategy.OnPush//??
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
 
@@ -19,6 +19,13 @@ export class HeaderComponent implements OnInit {
       //ME FALTA LAYOUTREFSERVICE......................
    ) {
 
+      this.initLoadingBar();
+   }
+
+   ngOnInit() {
+   }
+
+   initLoadingBar() {
       this.router.events.subscribe(event => {
          if (event instanceof NavigationStart) this.loader.start();
          if (event instanceof RouteConfigLoadStart) this.loader.increment(35);
@@ -26,9 +33,6 @@ export class HeaderComponent implements OnInit {
          if (event instanceof NavigationEnd || event instanceof NavigationCancel) this.loader.complete();
       });
 
-   }
-
-   ngOnInit() {
    }
 
 }
