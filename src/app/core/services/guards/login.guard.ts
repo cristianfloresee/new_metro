@@ -12,16 +12,14 @@ export class LoginGuard implements CanActivate {
       public userSrv: UserService,
       public sessionSrv: SessionService,
       public router: Router
-   ){
+   ) {
 
    }
-   canActivate(){
-      if(this.sessionSrv.isLogged()){
-         console.log("paso el guard");
-          return true;
-      }
-      else{
-         console.log("bloqueado por el guard.");
+
+   canActivate() {
+      if (this.sessionSrv.isLogged()) return true;
+      else {
+         console.log(`url bloqued by login guard...`);
          this.router.navigate(['/login']);
          return false;
       }

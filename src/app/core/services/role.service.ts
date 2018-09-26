@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 //RXJS
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { ROLE_URL } from '../../config/constants';
+import * as objectPath from 'object-path';
 
 
 
@@ -23,7 +24,10 @@ export class RoleService {
 
 
    constructor() {
-      this.changeAvailableRoles(JSON.parse(localStorage.getItem('user')).roles);
+
+      let m = (objectPath.get(JSON.parse(localStorage.getItem('user')), 'roles'));
+      //console.log("KIAP: ", m);
+      //this.changeAvailableRoles(JSON.parse(localStorage.getItem('user')).roles);
    }
 
    //RECIBE EL ID_ROLE (1,2,3)
