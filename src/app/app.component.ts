@@ -10,7 +10,7 @@ import { LoaderService } from './core/services/loader.service';
 import { filter } from 'rxjs/operators';
 import { PageService } from './core/services/page.service';
 import { RoleService } from './core/services/role.service';
-import { ROLE_URL } from './config/constants';
+
 
 
 @Component({
@@ -49,25 +49,12 @@ export class AppComponent implements OnInit {
       this.router.events
          .pipe(filter(event => event instanceof NavigationEnd))
          .subscribe((event) => {
-            let url = event['urlAfterRedirects'].slice(1);
+            let url = event['urlAfterRedirects']
+            //let url = event['urlAfterRedirects'];
             this._roleSrv.checkUrlRole(url);
 
             console.log("nombre de la página: ", this._pageSrv.getCurrentPageConfig());
 
-            //VE SI LA URL CARGADA CORRESPONDE A UNA URL INICIAL DE ROL
-            // if (ROLE_URL.find(role => role.url == url)) {
-            //    this._roleSrv.holi(url);
-            // }
-
-
-            //let index_role = ROLE_URL.find(role => role.url == url);
-
-
-            // if (index_role !== undefined) {
-            //    console.log(`URL ${url}, index ${index_role}`)
-            //    //this._roleSrv.setRole(index_role)
-            //    this._roleSrv.changeRole(index_role)
-            // }
 
             //this.layoutConfigService.setModel({ page: objectPath.get(this.pageConfigService.getCurrentPageConfig(), 'config') }, true);
          });

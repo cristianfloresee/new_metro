@@ -7,6 +7,8 @@ ng new client --routing  --style scss --prefix cw
 ```
 npm install  @ng-bootstrap/ng-bootstrap moment lodash ngx-perfect-scrollbar @ngx-loading-bar/core @angular/material @angular/cdk @angular/animations hammerjs --save
 ```
+npm install socket.io-client --save
+npm install @types/socket.io-client --save-dev
 
 
 Configuro ng-bootstrap

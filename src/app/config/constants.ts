@@ -17,20 +17,7 @@ export const API = {
 };
 
 //ROLES
-export const ROLE_URL = [
-   { id_role: 1, name: 'Administrador', url: 'admin' },
-   { id_role: 2, name: 'Profesor', url: 'teacher' },
-   { id_role: 3, name: 'Estudiante', url: 'student' },
-]
-
-
-export const ROLES = {
-   1: { name: 'Administrador', url: 'admin' },
-   2: { name: 'Profesor', url: 'teacher' },
-   3: { name: 'Estudiante', url: 'student' },
-};
-
-export const ROLEW = [
+export const ROLES = [
    { id_role: 1, name: 'Administrador', url: 'admin' },
    { id_role: 2, name: 'Profesor', url: 'teacher' },
    { id_role: 3, name: 'Estudiante', url: 'student' },
@@ -45,17 +32,16 @@ export const SKIP_INTERCEPTOR = [
 export const IMAGE_SERVER = '';
 
 //ERRORES DE FORMULARIO
-const ERROR_FORMS = {
+export const ERROR_FORMS = {
    TOKEN_INVALID: 'El token de sesión es inválido.',
    SERVER_ERROR: 'Tenemos algunos problemas con nuestros servidores en este momento.'
 }
 
 export const PAGE_TITLES = {
-   '/': {
-      title: 'Inicio'
-   },
-   'profile': {
-      title: 'Perfil de Usuario'
-   }
+   '/': { title: 'Inicio' },
+   'admin': { title: 'Inicio' },
+   'teacher': { title: 'Inicio' },
+   'student': { title: 'Inicio' },
+   'profile': { title: 'Perfil de Usuario' }
 }
 

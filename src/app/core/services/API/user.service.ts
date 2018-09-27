@@ -3,27 +3,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //CONSTANTES
 import { API } from '../../../config/constants';
-
 //SERVICIOS
 import { SessionService } from './session.service';
 //RXJS
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-//import { _throw } from 'rxjs/observable/throw';
-//import 'rxjs/add/observable/throw';
 //SWEETALERT2
 import Swal from 'sweetalert2';
 //MODELOS
 import { User } from '../../models/user.model';
-
-
 
 @Injectable()
 export class UserService {
 
    constructor(
       public http: HttpClient,
-      public _sessionSrv: SessionService
+      public _sessionSrv: SessionService,
    ) {
 
    }

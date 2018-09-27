@@ -42,8 +42,8 @@ import { PageService } from './core/services/page.service';
 import { SubheaderService } from './core/services/layout/subheader.service';
 //GUARDS
 import { LoginGuard } from './core/services/guards/login.guard';
-import { AdminGuard } from './core/services/guards/admin.guard';
-import { TeacherGuard } from './core/services/guards/teacher.guard';
+import { AdminGuard } from './core/services/guards/role-admin.guard';
+import { TeacherGuard } from './core/services/guards/role-teacher.guard';
 
 
 

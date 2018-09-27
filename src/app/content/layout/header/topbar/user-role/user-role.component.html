@@ -5,7 +5,7 @@
 </a> -->
 <ng-container *ngLet="roleSrv.role$ | async as index_role">
    <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-      {{roles[index_role]?.name}}
+      {{index_role.name}}
    </a>
    <div class="m-dropdown__wrapper">
       <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
@@ -26,7 +26,7 @@
 
                   <!-- ##SOLUCIONAR: HACER QUE EL DROPDOWN NO SE CIERRE TAN BRUSCAMENTE -->
                   <ng-container *ngFor="let role of roles; let i=index">
-                     <li class="m-nav__item m-dropdown__toggle" [ngClass]="{ 'm-nav__item--active': index_role == i }"
+                     <li class="m-nav__item m-dropdown__toggle" [ngClass]="{ 'm-nav__item--active': index_role.index == i }"
                         (click)="changeRole(i)">
                         <a class="m-nav__link pointer">
                            <span class="m-nav__link-icon"></span>
