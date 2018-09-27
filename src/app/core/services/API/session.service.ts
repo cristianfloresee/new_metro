@@ -17,6 +17,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 //MODELOS
 import { User } from '../../models/user.model';
+import { RoleService } from '../role.service';
 
 @Injectable()
 export class SessionService {
@@ -29,7 +30,8 @@ export class SessionService {
 
    constructor(
       public handler: HttpBackend,
-      public router: Router
+      public router: Router,
+      private _roleSrv: RoleService
    ) {
       this.http = new HttpClient(handler);
       this.loadStorage();
@@ -43,7 +45,8 @@ export class SessionService {
 
       return this.http.post(API.LOGIN, { email, password })
          .pipe(
-            map((response: any) => {
+            map((response: any) => {  //token, user
+               this._roleSrv.changeAvailableRoles(response.user.roles);
                this.saveStorage(response.user, response.token)
                return true;
             })
@@ -56,6 +59,7 @@ export class SessionService {
          this.token = '';
          this.menu = [];
          this.userSubject.next(null);
+         this._roleSrv.cleanRoles();
          localStorage.removeItem('token');
          localStorage.removeItem('menu');
          localStorage.removeItem('user');

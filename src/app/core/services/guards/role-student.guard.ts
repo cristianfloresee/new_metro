@@ -18,8 +18,8 @@ export class StudentGuard implements CanLoad {
 
       let roles = objectPath.get(this._sessionSrv.userSubject.value, 'roles');
       if (roles && roles.length != 0) {
-         if (roles.find(role => role.id_role == 3)) return true;
-         switch (roles[0].id_role) {
+         if (roles.find(role => role == 3)) return true;
+         switch (roles[0]) {
             case 1:
                this.router.navigate(['/admin']);
                return false;

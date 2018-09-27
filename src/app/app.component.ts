@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
          .pipe(filter(event => event instanceof NavigationEnd))
          .subscribe((event) => {
             let url = event['urlAfterRedirects'].slice(1);
-
+            this._roleSrv.checkUrlRole(url);
 
             console.log("nombre de la página: ", this._pageSrv.getCurrentPageConfig());
 
@@ -62,13 +62,7 @@ export class AppComponent implements OnInit {
 
             //let index_role = ROLE_URL.find(role => role.url == url);
 
-            let role = ROLE_URL.find(role => role.url == url);
-            let id_role = role ? role.id_role : null;
 
-            if(id_role){
-               console.log(`ID ROLE ${id_role}...`);
-               this._roleSrv.changeRole(id_role)
-            }
             // if (index_role !== undefined) {
             //    console.log(`URL ${url}, index ${index_role}`)
             //    //this._roleSrv.setRole(index_role)

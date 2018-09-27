@@ -15,7 +15,7 @@ import { RoleService } from '../../../core/services/role.service';
 export class AsideComponent implements OnInit {
    menu: any = MENU;
    currentRouteUrl: string = '';
-   current_role;
+   current_id_role;
    admin = MENU_ADMIN;
    constructor(
       private router: Router,
@@ -32,7 +32,7 @@ export class AsideComponent implements OnInit {
       //    this.current_role = role;
       // })
       this.roleSrv.role$.subscribe((role) => {
-         this.current_role = role;
+         this.current_id_role = role; //1 ADMIN, 2 TEACHER, 3 STUDENT
       })
    }
 

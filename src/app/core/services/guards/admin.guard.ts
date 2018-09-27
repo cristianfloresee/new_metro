@@ -1,8 +1,3 @@
-//SE ASUME QUE:
-//ROLE 1: ADMIN
-//ROLE 2: PROFESOR
-//ROLE 3: ESTUDIANTE
-
 //ANGULAR
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
@@ -20,25 +15,20 @@ export class AdminGuard implements CanLoad {
    ) { }
 
    canLoad() {
-
-      //ADMIN TEACHER STUDENT
-
       let roles = objectPath.get(this._sessionSrv.userSubject.value, 'roles');
       if (roles && roles.length != 0) {
-         if (roles.find(role => role.id_role == 1)) return true;
-         switch (roles[0].id_role) {
+         if (roles.find(role => role == 1)) return true;
+         console.log(`url bloqued by admin guard...`);
+         switch (roles[0]) {
             case 2:
                this.router.navigate(['/teacher']);
                return false;
             case 3:
                this.router.navigate(['/student']);
                return false;
-
-            default:
-               this.router.navigate(['/login']);
-               return false;
          }
       }
+      console.log(`url bloqued by admin guard...`);
       this.router.navigate(['/login']);
       return false;
    }

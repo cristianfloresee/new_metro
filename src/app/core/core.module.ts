@@ -8,6 +8,7 @@ import { MenuHorizontalDirective } from './directives/menu-horizontal.directive'
 import { UrlImagePipe } from './pipes/url-image.pipe';
 import { FirstNamePipe } from './pipes/first-name.pipe';
 import { MenuAsideDirective } from './directives/menu-aside.directive';
+import { LetDirective } from './directives/let.directive';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { MenuAsideDirective } from './directives/menu-aside.directive';
      //DIRECTIVAS
      MenuHorizontalDirective,
      MenuHorizontalOffcanvasDirective,
-     MenuAsideDirective
+     MenuAsideDirective,
+     LetDirective
   ],
   declarations: [
      //PIPES
@@ -31,7 +33,8 @@ import { MenuAsideDirective } from './directives/menu-aside.directive';
      MenuHorizontalOffcanvasDirective,
      UrlImagePipe,
      FirstNamePipe,
-     MenuAsideDirective
+     MenuAsideDirective,
+     LetDirective
 
    ]
 })

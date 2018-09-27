@@ -23,6 +23,19 @@ export const ROLE_URL = [
    { id_role: 3, name: 'Estudiante', url: 'student' },
 ]
 
+
+export const ROLES = {
+   1: { name: 'Administrador', url: 'admin' },
+   2: { name: 'Profesor', url: 'teacher' },
+   3: { name: 'Estudiante', url: 'student' },
+};
+
+export const ROLEW = [
+   { id_role: 1, name: 'Administrador', url: 'admin' },
+   { id_role: 2, name: 'Profesor', url: 'teacher' },
+   { id_role: 3, name: 'Estudiante', url: 'student' },
+];
+
 //RUTAS SIN INTERCEPTOR (BORRAR?)
 export const SKIP_INTERCEPTOR = [
    API.LOGIN

@@ -16,14 +16,14 @@
 
 
 
-      <ng-container *ngIf="current_role==0">
+      <ng-container *ngIf="current_id_role == 0">
          <!-- SEPARADOR -->
          <li class="m-menu__section ">
             <h4 class="m-menu__section-text">SECCIONES</h4>
             <i class="m-menu__section-icon flaticon-more-v2"></i>
          </li>
          <!-- FIN SEPARADOR-->
-         <li *ngFor="let item of admin"class="m-menu__item" aria-haspopup="true">
+         <li *ngFor="let item of admin" class="m-menu__item" aria-haspopup="true">
             <a [routerLink]="item.url" class="m-menu__link m-menu__toggle">
                <span class="m-menu__link-text">{{item.title}}</span>
 
@@ -32,7 +32,7 @@
       </ng-container>
 
       <!-- MENÚ DE PROFESOR -->
-      <ng-container *ngIf="current_role==1">
+      <ng-container *ngIf="current_id_role == 1">
 
          <li class="m-menu__section ">
             <h4 class="m-menu__section-text">ASIGNATURAS</h4>

@@ -1,20 +1,20 @@
 //ANGULAR
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 //COMPONENTES
 import { AdminComponent } from './admin.component';
+import { SubjectComponent } from './subject/subject.component';
+//ROUTING
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {
-         path: '',
-         component: AdminComponent
-      }
-   ])
-  ],
-  declarations: [AdminComponent]
+   imports: [
+      CommonModule,
+      AdminRoutingModule
+   ],
+   declarations: [
+      AdminComponent,
+      SubjectComponent
+   ]
 })
 export class AdminModule { }
