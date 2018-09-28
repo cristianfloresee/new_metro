@@ -10,6 +10,7 @@ import { LoaderService } from './core/services/loader.service';
 import { filter } from 'rxjs/operators';
 import { PageService } from './core/services/page.service';
 import { RoleService } from './core/services/role.service';
+//import { SocketService } from './core/services/socket.service';
 
 
 
@@ -36,14 +37,15 @@ export class AppComponent implements OnInit {
    @ViewChild('cwLoader') cwLoader: ElementRef;
 
    show_loader: boolean;
+   ioConnection: any;
 
    constructor(
       private loaderSrv: LoaderService,
       private _pageSrv: PageService,
       private router: Router,
-      private _roleSrv: RoleService
+      private _roleSrv: RoleService,
+      //private _socketSrv: SocketService
    ) {
-
 
       //OBTIENE EL NOMBRE DE LA PÁGINA ACTUAL
       this.router.events
@@ -70,4 +72,9 @@ export class AppComponent implements OnInit {
          else setTimeout(() => this.cwLoader.nativeElement.style.display = 'none', 600)
       })
    }
+
+   private initIoConnection(){
+      //this._socketSrv.
+   }
+
 }

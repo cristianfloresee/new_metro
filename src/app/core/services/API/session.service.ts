@@ -17,7 +17,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 //MODELOS
 import { User } from '../../models/user.model';
+//SERVICIOS
 import { RoleService } from '../role.service';
+import { SocketService } from '../socket.service';
 
 @Injectable()
 export class SessionService {
@@ -31,7 +33,8 @@ export class SessionService {
    constructor(
       public handler: HttpBackend,
       public router: Router,
-      private _roleSrv: RoleService
+      private _roleSrv: RoleService,
+      private _socketSrv: SocketService
    ) {
       this.http = new HttpClient(handler);
       this.loadStorage();
@@ -48,6 +51,7 @@ export class SessionService {
             map((response: any) => {  //token, user
                this._roleSrv.changeAvailableRoles(response.user.roles);
                this.saveStorage(response.user, response.token)
+               this._socketSrv.initSocket();
                return true;
             })
          )
@@ -56,13 +60,18 @@ export class SessionService {
    logout() {
       this.router.navigate(['/login']);
       setTimeout(() => {
+         //LIMPIA LAS VARIABLES GLOBALES:
          this.token = '';
          this.menu = [];
          this.userSubject.next(null);
          this._roleSrv.cleanRoles();
+         //LIMPIA EL LOCALSTORAGE:
          localStorage.removeItem('token');
          localStorage.removeItem('menu');
          localStorage.removeItem('user');
+         //DESCONECTA EL SOCKET:
+         //if (this._socketSrv) this._socketSrv.offSocket();
+         console.log(this._socketSrv)
       }, 1000);
 
    }

@@ -16,7 +16,7 @@ export class RoleService {
    rolesAvailable$: Observable<any> = this.rolesAvailableSubject.asObservable();
 
    //ROL ACTUAL
-   roleSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+   roleSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null); //ROL DEBE SER { }
    role$: Observable<any> = this.roleSubject.asObservable();
 
    constructor() {
@@ -33,16 +33,17 @@ export class RoleService {
    changeAvailableRoles(roles) {
       let _roles = roles.map(id_role => ROLES.find(row => id_role == row.id_role));
       this.rolesAvailableSubject.next(_roles);
+      this.changeRole(_roles[0])
    }
 
    checkUrlRole(url) {
 
-      console.log("checkUrlRole: ", url);
-      url = url.slice(1); //http://localhost:4200/admin/(subject) obtener /admin, /teacher o /student
-      //OBTENER LA PRIMERA URL DESPUES DEL LOCALHOST admin, teacher, student
+      console.log("XXXXcheckUrlRole: ", url);
+      url = url.match(/\/[0-9a-z-A-Z-_]*/)[0].slice(1); //obtiene la raíz de la url. Ejemplo: http://localhost:4200/admin/(subject) => admin
+
       let roles = this.rolesAvailableSubject.value;
       if (roles) {
-         let index_role = roles.findIndex(role => role.url == url); //'admin', 'teacher', 'student'
+         let index_role = roles.findIndex(role => role.url == url); //admin, teacher, student
          if (index_role >= 0) {
             let role = roles[index_role];
             role.index = index_role;

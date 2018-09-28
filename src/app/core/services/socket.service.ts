@@ -1,6 +1,6 @@
 //ANGULAR
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 //RXJS
 import { Observable } from 'rxjs';
 //SOCKET
@@ -17,10 +17,34 @@ export class SocketService {
 
    private socket;
 
-   constructor(private client: HttpClient) {
+   constructor(private client: HttpClient) { }
+
+   //INICIA LA CONEXIÓN SI ES QUE TIENE ROL ADMIN, TEACHER O STUDENT
+   public initSocket() {
       this.socket = io(API_URL);
    }
 
+   //CIERA LA CONEXIÓN CUANDO HACE LOGOUT
+   public offSocket() {
+      this.socket.disconnect();
+   }
+
+
+
+   public onUsers(): Observable<any> {
+      return new Observable<any>(observer => {
+         this.socket.on('change_users', (data) => observer.next(data))
+      })
+   }
+
+   public onSubjects(): Observable<any> {
+      return new Observable<any>(observer => {
+         this.socket.on('change_subjects', (data) => observer.next(data))
+      })
+   }
+
+
+   /**BORRAR?' */
    public getMatriculas(): Promise<any> {
       return this.client
          .get<any>(`${API_URL}/api/matriculas`)
@@ -29,15 +53,6 @@ export class SocketService {
             return response;
          })
          .catch(this.handleError);
-   }
-
-
-
-
-   public onChange(): Observable<any> {
-      return new Observable<any>(observer => {
-         this.socket.on('change_matriculas', (data) => observer.next(data));
-      });
    }
 
    private handleError(error: any): Promise<any> {

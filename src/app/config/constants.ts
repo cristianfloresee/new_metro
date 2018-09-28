@@ -7,12 +7,12 @@ export const API_URL = API_URL_DEV;
 export const API = {
    LOGIN: `${API_URL}login`,
    LOGOUT: ``,
-   USER_ALL: `${API_URL}`,
+   USER_ALL: `${API_URL}users`,
    USER_GET: `${API_URL}/`,
    USER_CREATE: `${API_URL}users/create`,
    USER_UPDATE: `${API_URL}users/update/`,
    USER_DELETE: `${API_URL}users/delete/`,
-
+   SUBJECT_ALL: `${API_URL}`,
    UPLOAD_IMAGE: `${API_URL}image/`
 };
 

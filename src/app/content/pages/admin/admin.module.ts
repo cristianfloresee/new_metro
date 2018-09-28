@@ -6,6 +6,7 @@ import { AdminComponent } from './admin.component';
 import { SubjectComponent } from './subject/subject.component';
 //ROUTING
 import { AdminRoutingModule } from './admin-routing.module';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
    imports: [
@@ -14,7 +15,8 @@ import { AdminRoutingModule } from './admin-routing.module';
    ],
    declarations: [
       AdminComponent,
-      SubjectComponent
+      SubjectComponent,
+      UserComponent
    ]
 })
 export class AdminModule { }

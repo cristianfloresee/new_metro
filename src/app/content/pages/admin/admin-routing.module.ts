@@ -1,10 +1,10 @@
 //ANGULAR
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
+// COMPONENTES
 import { AdminComponent } from './admin.component';
 import { SubjectComponent } from './subject/subject.component';
-
-// COMPONENTES
+import { UserComponent } from './user/user.component';
 
 //GUARDS
 
@@ -18,6 +18,9 @@ const routes: Routes = [
       children: [
          {
             path: 'subject', component: SubjectComponent
+         },
+         {
+            path: 'user', component: UserComponent
          }
       ]
    }

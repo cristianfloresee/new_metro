@@ -32,7 +32,7 @@ export const MENU = [
 ];
 
 export const MENU_ADMIN = [
-   { title: 'Usuarios', url: '/metronic/accordion' },
-   { title: 'Asignaturas', url: 'subject'},
-   { title: 'Calendario', url: '/metronic/accordion' }
+   { title: 'Usuarios', url: 'user' },
+   { title: 'Asignaturas', url: 'subject' },
+   { title: 'Calendario', url: 'calendar' }
 ];

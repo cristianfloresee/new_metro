@@ -44,6 +44,7 @@ import { SubheaderService } from './core/services/layout/subheader.service';
 import { LoginGuard } from './core/services/guards/login.guard';
 import { AdminGuard } from './core/services/guards/role-admin.guard';
 import { TeacherGuard } from './core/services/guards/role-teacher.guard';
+import { SocketService } from './core/services/socket.service';
 
 
 
@@ -88,6 +89,8 @@ import { TeacherGuard } from './core/services/guards/role-teacher.guard';
       RoleService,
       PageService,
       SubheaderService,
+      SocketService,
+      //GUARDS
       LoginGuard,
       AdminGuard,
       TeacherGuard

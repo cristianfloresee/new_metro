@@ -53,8 +53,15 @@ export class UserService {
          );
    }
 
-   getUsers(){
-      return this.http.get(`${API.USER_ALL}`);
+   getUsers() {
+      console.log("LLAMO FUNCIÓN GETUSERS...");
+      return this.http.get(`${API.USER_ALL}`)
+         .pipe(
+            map((response: any) => {  //token, user
+               console.log("USERS: ", response);
+               return response;
+            })
+         )
    }
 
 }
