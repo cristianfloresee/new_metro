@@ -1,3 +1,25 @@
+<table width="100%">
+   <thead>
+      <tr>
+         <th title="Field #1" data-field="OrderID">ID</th>
+         <th title="Field #2" data-field="Owner">Nombre</th>
+         <th title="Field #10" data-field="Type">Creado</th>
+         <th title="Field #10" data-field="Type">Actualizado</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let subject of subjects">
+         <td>{{subject.id_subject}}</td>
+         <td>{{subject.name}}</td>
+         <td>{{subject.created_at | timeAgo}}</td>
+         <td>{{subject.updated_at | timeAgo}}</td>
+      </tr>
+   </tbody>
+</table>
+
+
+
+<!--
 <div class="m-content">
       <div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
          <div class="m-alert__icon">
@@ -5,7 +27,7 @@
          </div>
          <div class="m-alert__text">
             The Metronic Datatable component supports initialization from HTML table. It also defines the schema model of the data source. In addition to the visualization, the Datatable provides built-in support for operations over data such as sorting, filtering
-            and paging performed in user browser(frontend).
+            and paging performed in subject browser(frontend).
          </div>
       </div>
       <div class="m-portlet m-portlet--mobile">
@@ -83,7 +105,6 @@
          </div>
          <div class="m-portlet__body">
 
-            <!--begin: Search Form -->
             <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
                <div class="row align-items-center">
                   <div class="col-xl-8 order-2 order-xl-1">
@@ -144,9 +165,6 @@
                </div>
             </div>
 
-            <!--end: Search Form -->
-
-            <!--begin: Datatable -->
             <table class="m-datatable" id="html_table" width="100%">
                <thead>
                   <tr>
@@ -1882,7 +1900,8 @@
                </tbody>
             </table>
 
-            <!--end: Datatable -->
+
          </div>
       </div>
    </div>
+-->

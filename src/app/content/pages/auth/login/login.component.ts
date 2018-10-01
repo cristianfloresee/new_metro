@@ -31,6 +31,22 @@ export class LoginComponent implements OnInit {
 
    error_response = { show: false, title: '', message: '' };
 
+   // errors_form = {
+   //    email: '',
+   //    password: ''
+   // };
+
+   // messages_validation = {
+   //    email: {
+   //       required: 'Este campo es requerido.',
+   //       email: 'Este campo debe ser una dirección de correo electrónico válida.'
+   //    },
+   //    password: {
+   //       required: 'Este campo es requerido.',
+   //       minlength: 'La contraseña debe tener al menos 4 carácteres.'
+   //    }
+   // };
+
    constructor(
       fb: FormBuilder,
       public sessionSrv: SessionService,

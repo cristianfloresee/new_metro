@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 //NG2-VALIDATION
-import { CustomValidators } from 'ng2-validation';
+//import { CustomValidators } from 'ng2-validation';
 //RXJS
 import { Subject } from 'rxjs';
 //MODELOS
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
          'lastname': ['', Validators.required],
          'middlename': ['', Validators.required],
          'document': ['', Validators.required],
-         'email': ['', [Validators.required, CustomValidators.email]],
+         'email': ['', [Validators.required, Validators.email]],
          'phone': ['', Validators.required],
          'username': ['', Validators.required],
          'password': ['', Validators.required],

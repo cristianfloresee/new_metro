@@ -3,16 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 const routes: Routes = [
-	{
-		path: '',
-		loadChildren: './content/pages/pages.module#PagesModule'
-	}
+   {
+      path: '',
+      loadChildren: './content/pages/pages.module#PagesModule',
+      data: { breadcrumb: 'Inicio' }
+   },
+   {
+      path: '**',
+      redirectTo: 'error',
+      pathMatch: 'full'
+   }
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forRoot(routes)
-	],
-	exports: [RouterModule]
+   imports: [
+      RouterModule.forRoot(routes)
+   ],
+   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

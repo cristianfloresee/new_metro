@@ -7,7 +7,7 @@ import { SessionService } from '../../../../core/services/API/session.service';
 import { UserService } from '../../../../core/services/API/user.service';
 import { LoaderService } from '../../../../core/services/loader.service';
 //CUSTOM-VALIDATION
-import { CustomValidators } from 'ng2-validation';
+//import { CustomValidators } from 'ng2-validation';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
          'last_name': [this.user.last_name, [Validators.required, Validators.minLength(4)]],
          'middle_name': [this.user.middle_name, Validators.required],
          'document_no': [this.user.document_no, Validators.required],
-         'email': [this.user.email, [Validators.required, CustomValidators.email]],
+         'email': [this.user.email, [Validators.required, Validators.email]],
          'phone_no': [this.user.phone_no, Validators.required],
          'username': [this.user.username, Validators.required]
       });
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
 
    }
 
-   saveUserImage(){
+   saveUserImage() {
       console.log("save user image...");
    }
 

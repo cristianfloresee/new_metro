@@ -44,9 +44,9 @@ export class SubheaderService {
    }
 
    //ACTUALIZA EL TÍTULO DE PÁGINA
-   updateTitlePage(){
+   updateTitlePage() {
       let title = objectPath.get(PAGE_TITLES[this.router.url.substring(1).replace(/\//g, '.') || '/'], 'title');
-      if(title) this.title$.next(title);
+      if (title) this.title$.next(title);
       else this.title$.next(null);
    }
 

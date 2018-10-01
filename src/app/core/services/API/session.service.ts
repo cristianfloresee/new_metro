@@ -71,7 +71,8 @@ export class SessionService {
          localStorage.removeItem('user');
          //DESCONECTA EL SOCKET:
          //if (this._socketSrv) this._socketSrv.offSocket();
-         console.log(this._socketSrv)
+         this._socketSrv.offSocket();
+         //console.log(this._socketSrv)
       }, 1000);
 
    }

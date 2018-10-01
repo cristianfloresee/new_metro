@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../../../config/constants';
 //SERVICIOS
 import { SessionService } from './session.service';
+import { map, catchError } from 'rxjs/operators';
 // //RXJS
 // import { Observable, throwError } from 'rxjs';
 // import { map, catchError } from 'rxjs/operators';
@@ -25,7 +26,12 @@ export class SubjectService {
 
 
    getSubjects() {
-      return this.http.get(`${API.USER_ALL}`);
+      return this.http.get(`${API.SUBJECT_ALL}`)
+         .pipe(
+            map((response: any) => {
+               return response.subjects;
+            })
+         )
    }
 
 }

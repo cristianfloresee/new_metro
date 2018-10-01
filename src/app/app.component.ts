@@ -10,6 +10,8 @@ import { LoaderService } from './core/services/loader.service';
 import { filter } from 'rxjs/operators';
 import { PageService } from './core/services/page.service';
 import { RoleService } from './core/services/role.service';
+import { SessionService } from './core/services/API/session.service';
+import { SocketService } from './core/services/socket.service';
 //import { SocketService } from './core/services/socket.service';
 
 
@@ -44,6 +46,8 @@ export class AppComponent implements OnInit {
       private _pageSrv: PageService,
       private router: Router,
       private _roleSrv: RoleService,
+      private _sessionSrv: SessionService,
+      private _socketService: SocketService
       //private _socketSrv: SocketService
    ) {
 
@@ -56,8 +60,6 @@ export class AppComponent implements OnInit {
             this._roleSrv.checkUrlRole(url);
 
             console.log("nombre de la página: ", this._pageSrv.getCurrentPageConfig());
-
-
             //this.layoutConfigService.setModel({ page: objectPath.get(this.pageConfigService.getCurrentPageConfig(), 'config') }, true);
          });
 
@@ -71,10 +73,17 @@ export class AppComponent implements OnInit {
          if (status) this.cwLoader.nativeElement.style.display = 'block';
          else setTimeout(() => this.cwLoader.nativeElement.style.display = 'none', 600)
       })
+      this.checkIsAuth();
    }
 
-   private initIoConnection(){
-      //this._socketSrv.
+
+   //CHEQUEA SI EL USUARIO TIENE UNA SESIÓN INICIADA Y ACTIVA EL WEBSOCKET EN CASO DE SER ASI.
+   checkIsAuth() {
+      if (this._sessionSrv.isLogged()) {
+         this._socketService.initSocket();
+      }
    }
+
+
 
 }

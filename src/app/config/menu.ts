@@ -32,7 +32,7 @@ export const MENU = [
 ];
 
 export const MENU_ADMIN = [
-   { title: 'Usuarios', url: 'user' },
-   { title: 'Asignaturas', url: 'subject' },
-   { title: 'Calendario', url: 'calendar' }
+   { title: 'Usuarios', url: 'user', parent: '/admin/' },
+   { title: 'Asignaturas', url: 'subject', parent: '/admin/' },
+   { title: 'Calendario', url: 'calendar', parent: '/admin/' }
 ];

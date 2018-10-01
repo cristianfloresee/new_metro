@@ -20,23 +20,24 @@ export class UserComponent implements OnInit {
       private _socketSrv: SocketService
    ) { }
 
-   ngOnInit() { }
+   ngOnInit() {
+      this.getUsers();
+   }
 
    getUsers() {
       this._userSrv.getUsers()
          .subscribe(
             result => {
-               console.log("result: ", result);
+               //console.log("result: ", result);
                this.users = result;
-               //SUSCRIBIRME AL SOCKET
             },
             error => {
                console.log("error:", error);
-
             });
+
       this.ioConnection = this._socketSrv.onUsers()
          .subscribe((data) => {
-            console.log("NUEVA DATA PAPU: ", data);
+            //console.log("data socket: ", data);
          })
    }
 

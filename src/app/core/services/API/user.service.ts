@@ -53,13 +53,12 @@ export class UserService {
          );
    }
 
+
    getUsers() {
-      console.log("LLAMO FUNCIÓN GETUSERS...");
       return this.http.get(`${API.USER_ALL}`)
          .pipe(
-            map((response: any) => {  //token, user
-               console.log("USERS: ", response);
-               return response;
+            map((response: any) => {
+               return response.users;
             })
          )
    }

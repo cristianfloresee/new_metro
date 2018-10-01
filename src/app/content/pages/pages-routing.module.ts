@@ -1,6 +1,6 @@
+//ANGULAR
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
-
 // COMPONENTES
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './header/profile/profile.component';
@@ -16,13 +16,13 @@ const routes: Routes = [
       canActivate: [LoginGuard],
       children: [
          {
-            path: 'admin', canLoad: [AdminGuard], loadChildren: './admin/admin.module#AdminModule'
+            path: 'admin', canLoad: [AdminGuard], loadChildren: './admin/admin.module#AdminModule', data: { breadcrumb: 'Admin' }
          },
          {
-            path: 'teacher', canLoad: [TeacherGuard], loadChildren: './teacher/teacher.module#TeacherModule'
+            path: 'teacher', canLoad: [TeacherGuard], loadChildren: './teacher/teacher.module#TeacherModule', data: { breadcrumb: 'Profe' }
          },
          {
-            path: 'student', loadChildren: './student/student.module#StudentModule'
+            path: 'student', loadChildren: './student/student.module#StudentModule', data: { breadcrumb: 'Estu' }
          },
          { path: '', redirectTo: 'admin', pathMatch: 'full' },
          // {
@@ -30,14 +30,17 @@ const routes: Routes = [
          // 	loadChildren: './dashboard/dashboard.module#DashboardModule'
          // },
          {
-            path: 'profile',
-            component: ProfileComponent
+            path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Perfil' }
          }
       ]
    },
    {
       path: 'login',
       loadChildren: './auth/auth.module#AuthModule'
+   },
+   {
+      path: 'error',
+      //component: ErrorPageComponent
    },
 ];
 

@@ -35,6 +35,7 @@ export class PageService {
 		//this.router.url.substring(1).replace(/\//g, '.'): material.form-controls.autocomplete
       console.log(this.router.url);
       console.log(this.router.url.substring(1).replace(/\//g, '.'));
+      console.log("nemesis: ", );
       console.log("TITULO: ", PAGE_TITLES[this.router.url]);
 		// return objectPath.get(
 		// 	// this.configModel,

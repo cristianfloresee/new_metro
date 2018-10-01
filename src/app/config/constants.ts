@@ -12,7 +12,7 @@ export const API = {
    USER_CREATE: `${API_URL}users/create`,
    USER_UPDATE: `${API_URL}users/update/`,
    USER_DELETE: `${API_URL}users/delete/`,
-   SUBJECT_ALL: `${API_URL}`,
+   SUBJECT_ALL: `${API_URL}subjects`,
    UPLOAD_IMAGE: `${API_URL}image/`
 };
 
@@ -22,11 +22,6 @@ export const ROLES = [
    { id_role: 2, name: 'Profesor', url: 'teacher' },
    { id_role: 3, name: 'Estudiante', url: 'student' },
 ];
-
-//RUTAS SIN INTERCEPTOR (BORRAR?)
-export const SKIP_INTERCEPTOR = [
-   API.LOGIN
-]
 
 //RECURSOS
 export const IMAGE_SERVER = '';
@@ -42,6 +37,7 @@ export const PAGE_TITLES = {
    'admin': { title: 'Inicio' },
    'teacher': { title: 'Inicio' },
    'student': { title: 'Inicio' },
-   'profile': { title: 'Perfil de Usuario' }
+   'profile': { title: 'Perfil de Usuario' },
+   'admin.(user)': { title: 'Usuarios' }
 }
 

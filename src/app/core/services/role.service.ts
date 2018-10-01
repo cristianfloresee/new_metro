@@ -38,7 +38,7 @@ export class RoleService {
 
    checkUrlRole(url) {
 
-      console.log("XXXXcheckUrlRole: ", url);
+      //console.log("XXXXcheckUrlRole: ", url);
       url = url.match(/\/[0-9a-z-A-Z-_]*/)[0].slice(1); //obtiene la raíz de la url. Ejemplo: http://localhost:4200/admin/(subject) => admin
 
       let roles = this.rolesAvailableSubject.value;
@@ -47,7 +47,7 @@ export class RoleService {
          if (index_role >= 0) {
             let role = roles[index_role];
             role.index = index_role;
-            console.log("active role: ", role);
+            //console.log("active role: ", role);
             this.changeRole(role)
          }
       }

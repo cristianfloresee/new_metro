@@ -1,7 +1,33 @@
-<p>
-  user works!
-</p>
+<table width="100%">
+   <thead>
+      <tr>
+         <th title="Field #1" data-field="OrderID">ID</th>
+         <th title="Field #2" data-field="Owner">Nombre</th>
+         <th title="Field #3" data-field="Contact">Apellido Paterno</th>
+         <th title="Field #4" data-field="CarMake">Apellido Materno</th>
+         <th title="Field #5" data-field="CarModel">No de Documento</th>
+         <th title="Field #6" data-field="Color">Correo</th>
+         <th title="Field #7" data-field="DepositPaid">Teléfono</th>
+         <th title="Field #8" data-field="OrderDate">Nombre de Usuario</th>
+         <th title="Field #9" data-field="Status">Activo</th>
+         <th title="Field #10" data-field="Type">Creado</th>
+         <th title="Field #10" data-field="Type">Actualizado</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr *ngFor="let user of users">
+            <td>{{user.id_user}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.last_name}}</td>
+            <td>{{user.middle_name}}</td>
+            <td>{{user.document_no}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone_no}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.active}}</td>
+            <td>{{user.created_at | timeAgo}}</td>
+            <td>{{user.updated_at | timeAgo}}</td>
+      </tr>
+   </tbody>
+</table>
 
-<a (click)="getUsers()">
-   <button class="btn btn-success pull-right">Users</button>
-</a>

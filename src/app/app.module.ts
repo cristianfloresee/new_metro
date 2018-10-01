@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //RUTAS
 import { AppRoutingModule } from './app-routing.module';
 
+
 //COMPONENTES
 import { AppComponent } from './app.component';
 
@@ -45,6 +46,7 @@ import { LoginGuard } from './core/services/guards/login.guard';
 import { AdminGuard } from './core/services/guards/role-admin.guard';
 import { TeacherGuard } from './core/services/guards/role-teacher.guard';
 import { SocketService } from './core/services/socket.service';
+import { SubjectService } from './core/services/API/subject.service';
 
 
 
@@ -78,13 +80,14 @@ import { SocketService } from './core/services/socket.service';
       //INTERCEPTOR
       [
          {
-           provide: HTTP_INTERCEPTORS,
-           useClass: InterceptorService,
-           multi: true
+            provide: HTTP_INTERCEPTORS,
+            useClass: InterceptorService,
+            multi: true
          }
-       ],
+      ],
       //SERVICIOS
       UserService,
+      SubjectService,
       LoaderService,
       RoleService,
       PageService,

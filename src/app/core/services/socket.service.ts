@@ -19,14 +19,14 @@ export class SocketService {
 
    constructor(private client: HttpClient) { }
 
-   //INICIA LA CONEXIÓN SI ES QUE TIENE ROL ADMIN, TEACHER O STUDENT
+   //INICIA LA CONEXIÓN DEL SOCKET
    public initSocket() {
       this.socket = io(API_URL);
    }
 
-   //CIERA LA CONEXIÓN CUANDO HACE LOGOUT
+   //CIERRA LA CONEXIÓN DEL SOCKET
    public offSocket() {
-      this.socket.disconnect();
+      if (this.socket) this.socket.disconnect();
    }
 
 

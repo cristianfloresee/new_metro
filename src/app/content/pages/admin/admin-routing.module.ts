@@ -5,23 +5,17 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { SubjectComponent } from './subject/subject.component';
 import { UserComponent } from './user/user.component';
-
+import { CalendarComponent } from './calendar/calendar.component';
 //GUARDS
-
-
-
 
 const routes: Routes = [
    {
       path: '',
       component: AdminComponent,
       children: [
-         {
-            path: 'subject', component: SubjectComponent
-         },
-         {
-            path: 'user', component: UserComponent
-         }
+         { path: 'subject', component: SubjectComponent, data: { breadcrumb: 'Asignaturas' } },
+         { path: 'user', component: UserComponent, data: { breadcrumb: 'Usuarios' } },
+         { path: 'calendar', component: CalendarComponent, data: { breadcrumb: 'Calendario' } }
       ]
    }
 ];

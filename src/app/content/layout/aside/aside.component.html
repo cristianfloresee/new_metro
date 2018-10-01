@@ -4,7 +4,7 @@
    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 
       <li class="m-menu__item  m-menu__item--active" aria-haspopup="true">
-         <a routerLink="/" class="m-menu__link ">
+         <a routerLink="/" class="m-menu__link">
             <i class="m-menu__link-icon flaticon-line-graph"></i>
             <span class="m-menu__link-title">
                <span class="m-menu__link-wrap">
@@ -23,13 +23,34 @@
             <i class="m-menu__section-icon flaticon-more-v2"></i>
          </li>
          <!-- FIN SEPARADOR-->
-         <li *ngFor="let item of admin" class="m-menu__item" aria-haspopup="true">
-            <a [routerLink]="[item.url]" class="m-menu__link m-menu__toggle">
+         <li *ngFor="let item of admin" class="m-menu__item" aria-haspopup="true" [ngClass]="{ 'm-menu__item--active': isItemActive(item)}">
+            <a [routerLinkActive]="['active']" [routerLink]="[item.url]" class="m-menu__link m-menu__toggle"> <!---->
                <span class="m-menu__link-text">{{item.title}}</span>
-
             </a>
          </li>
       </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- MENÚ DE PROFESOR -->
       <ng-container *ngIf="current_role.id_role == 2">

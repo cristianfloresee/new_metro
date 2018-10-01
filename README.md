@@ -136,6 +136,7 @@ ng g component content/pages/dashboard -is --spec=false
 ng g module content/pages/admin --spec false
 ng g component content/pages/admin -is --spec=false
 ng g component content/pages/admin/subject --spec false
+ng g component content/pages/admin/calendar --spec false
 
 
 ## Creación Modulo Estudiante
