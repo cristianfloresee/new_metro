@@ -1,7 +1,13 @@
 @import "variables";
 @import "fonts/fonts";
 
+.nowrap{
+   white-space: nowrap;
+}
 
+.center{
+   text-align: center;
+}
 //FONT-WEIGHT
 .b500{
    font-weight: 500 !important;

@@ -12,8 +12,11 @@ import { SocketService } from '../../../../core/services/socket.service';
 export class UserComponent implements OnInit {
 
    ioConnection;
-
    users: any[] = [];
+
+   f_role;
+   f_status;
+   f_seatch;
 
    constructor(
       private _userSrv: UserService,
@@ -39,6 +42,10 @@ export class UserComponent implements OnInit {
          .subscribe((data) => {
             //console.log("data socket: ", data);
          })
+   }
+
+   filter(){
+      console.log("FILTER..");
    }
 
 }

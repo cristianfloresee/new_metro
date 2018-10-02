@@ -1,4 +1,247 @@
-<table width="100%">
+<!-- LEYENDA -->
+<div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
+   <div class="m-alert__icon">
+      <i class="flaticon-exclamation m--font-brand"></i>
+   </div>
+   <div class="m-alert__text">
+      En esta sección usted podrá administrar a todos los usuarios de la plataforma teniendo a su disposición
+      herramientas de filtrado y búsqueda.
+   </div>
+</div>
+<!-- FIN LEYENDA -->
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Usuarios
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+      <div class="m-portlet__head-tools">
+         <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+               <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                  m-dropdown-toggle="hover" aria-expanded="true">
+                  <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                     <i class="la la-ellipsis-h m--font-brand"></i>
+                  </a>
+                  <div class="m-dropdown__wrapper">
+                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                     <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                           <div class="m-dropdown__content">
+                              <ul class="m-nav">
+                                 <li class="m-nav__section m-nav__section--first">
+                                    <span class="m-nav__section-text">Acciones</span>
+                                 </li>
+                                 <li class="m-nav__item">
+                                    <a href="" class="m-nav__link">
+                                       <i class="m-nav__link-icon flaticon-share"></i>
+                                       <span class="m-nav__link-text">Crear Usuario</span>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+         </ul>
+      </div>
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+         <div class="row align-items-center">
+            <div class="col-xl-8 order-2 order-xl-1">
+               <div class="form-group m-form__group row align-items-center">
+                  <div class="col-md-4">
+                     <div class="m-form__group m-form__group--inline">
+                        <div class="m-form__label">
+                           <label>Rol:</label>
+                        </div>
+                        <div class="m-form__control">
+                           <select class="form-control m-bootstrap-select" id="m_form_status">
+                              <option value="">Todos</option>
+                              <option value="1">Administrador</option>
+                              <option value="2">Profesor</option>
+                              <option value="3">Estudiante</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="d-md-none m--margin-bottom-10"></div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="m-form__group m-form__group--inline">
+                        <div class="m-form__label">
+                           <label class="m-label m-label--single">Estado:</label>
+                        </div>
+                        <div class="m-form__control">
+                           <select class="form-control m-bootstrap-select" id="m_form_type">
+                              <option value="">Todos</option>
+                              <option value="1">Activo</option>
+                              <option value="2">Inactivo</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="d-md-none m--margin-bottom-10"></div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="m-input-icon m-input-icon--left">
+                        <input type="text" class="form-control m-input" placeholder="Buscar usuario..." id="generalSearch">
+                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                           <span>
+                              <i class="la la-search"></i>
+                           </span>
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+               <a (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                  <span>
+                     <span>Aplicar</span>
+                  </span>
+               </a>
+               <div class="m-separator m-separator--dashed d-xl-none"></div>
+            </div>
+         </div>
+      </div>
+      <!-- FIN FILTRO/BUSQUEDA -->
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <!-- TABLA -->
+         <!--
+         <table class="m-datatable__table" id="html_table" width="100%" style="display: block;min-height: 300px;overflow-x: auto;">
+            <thead class="m-datatable__head">
+               <tr class="m-datatable__row" style="left: 0px;">
+                  <th title="Field #1" data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort">ID</th>
+                  <th title="Field #2" data-field="Owner" class="m-datatable__cell m-datatable__cell--sort">Nombre</th>
+                  <th title="Field #3" data-field="Contact" class="m-datatable__cell m-datatable__cell--sort">Apellido
+                     Paterno</th>
+                  <th title="Field #4" data-field="CarMake" class="m-datatable__cell m-datatable__cell--sort">Apellido
+                     Materno</th>
+                  <th title="Field #5" data-field="CarModel" class="m-datatable__cell m-datatable__cell--sort">No de
+                     Documento</th>
+                  <th title="Field #6" data-field="Color" class="m-datatable__cell m-datatable__cell--sort">Correo</th>
+                  <th title="Field #7" data-field="DepositPaid" class="m-datatable__cell m-datatable__cell--sort">Teléfono</th>
+                  <th title="Field #8" data-field="OrderDate" class="m-datatable__cell m-datatable__cell--sort">Nombre
+                     de Usuario</th>
+                  <th title="Field #9" data-field="Status" class="m-datatable__cell m-datatable__cell--sort">Activo</th>
+                  <th title="Field #10" data-field="Type" class="m-datatable__cell m-datatable__cell--sort">Creado</th>
+                  <th title="Field #11" data-field="Type" class="m-datatable__cell m-datatable__cell--sort">Actualizado</th>
+               </tr>
+            </thead>
+            <tbody class="m-datatable__body">
+               <tr *ngFor="let user of users" class="m-datatable__row">
+                  <td class="m-datatable__cell">{{user.id_user}}</td>
+                  <td class="m-datatable__cell">{{user.name}}</td>
+                  <td class="m-datatable__cell">{{user.last_name}}</td>
+                  <td class="m-datatable__cell">{{user.middle_name}}</td>
+                  <td class="m-datatable__cell">{{user.document_no}}</td>
+                  <td class="m-datatable__cell">{{user.email}}</td>
+                  <td class="m-datatable__cell">{{user.phone_no}}</td>
+                  <td class="m-datatable__cell">{{user.username}}</td>
+                  <td class="m-datatable__cell">{{user.active}}</td>
+                  <td class="m-datatable__cell">{{user.created_at | timeAgo}}</td>
+                  <td class="m-datatable__cell">{{user.updated_at | timeAgo}}</td>
+               </tr>
+            </tbody>
+         </table>-->
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">ID</th>
+                  <th>Nombre</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
+                  <th>Nro. de Documento</th>
+                  <th>Correo Electrónico</th>
+                  <th>Teléfono</th>
+                  <th>Nombre de Usuario</th>
+                  <th>Estado</th>
+                  <th>Creado</th>
+                  <th>Actualizado</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let user of users">
+                  <td>{{user.id_user}}</td>
+                  <td class="nowrap">{{user.name}}</td>
+                  <td>{{user.last_name}}</td>
+                  <td>{{user.middle_name}}</td>
+                  <td>{{user.document_no}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.phone_no}}</td>
+                  <td>{{user.username}}</td>
+                  <td>
+                     <span style="font-size:0.9rem" class="m-badge m-badge--wide" [ngClass]="(user.active)?'m-badge--success':'m-badge--danger'">
+                        {{user.active ? 'Activo': 'Inactivo'}}
+                     </span>
+                  </td>
+                  <td class="nowrap">{{user.created_at | timeAgo}}</td>
+                  <td class="nowrap">{{user.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+         <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+            <ul class="m-datatable__pager-nav">
+               <li>
+                  <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first m-datatable__pager-link--disabled">
+                     <i class="la la-angle-double-left"></i>
+                  </a>
+               </li>
+               <li>
+                  <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev m-datatable__pager-link--disabled">
+                     <i class="la la-angle-left"></i>
+                  </a>
+               </li>
+               <li>
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number m-datatable__pager-link--active">1</a>
+               </li>
+               <li>
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number">2</a>
+               </li>
+               <li>
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next">
+                     <i class="la la-angle-right"></i>
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </div>
+
+   </div>
+</div>
+
+
+<!--<table width="100%">
    <thead>
       <tr>
          <th title="Field #1" data-field="OrderID">ID</th>
@@ -29,5 +272,4 @@
             <td>{{user.updated_at | timeAgo}}</td>
       </tr>
    </tbody>
-</table>
-
+</table>-->
