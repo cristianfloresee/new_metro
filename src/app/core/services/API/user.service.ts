@@ -28,39 +28,42 @@ export class UserService {
       return this.http.post(API.USER_CREATE, { name, last_name, middle_name, document_no, email, phone_no, username, password });
    }
 
-   updateUser(user: User) {
-      const { name, last_name, middle_name, document_no, email, phone_no, username } = user;
-      const params = { name, last_name, middle_name, document_no, email, phone_no, username };
+   updateUser(user, id_user?) {
+      const { name, last_name, middle_name, document_no, email, phone_no, username, active, add_roles, delete_roles } = user;
+      console.log("USER: ", user);
+      id_user = id_user || this._sessionSrv.userSubject.value.id_user;
+      console.log("ID USER: ", id_user)
 
-      return this.http.put(`${API.USER_UPDATE}${this._sessionSrv.userSubject.value.id_user}`, params)
+      return this.http.put(`${API.USER_UPDATE}${id_user}`, { name, last_name, middle_name, document_no, email, phone_no, username, active, add_roles, delete_roles })
          .pipe(
             map((response: any) => {
-               this._sessionSrv.saveStorage(response.user);
+               //this._sessionSrv.saveStorage(response.user);
+               //GUARDAR EN EL STORAGE SOLO SI
 
-               Swal({
-                  title: 'Usuario Actualizado',
-               })
                return true;
             }),
             catchError(err => {
                console.log("error en el service: ", err)
-               Swal({
-                  title: 'Error al actualizar',
-               })
-
                return throwError(err);
             })
          );
    }
 
 
-   getUsers() {
-      return this.http.get(`${API.USER_ALL}`)
-         .pipe(
-            map((response: any) => {
-               return response.users;
-            })
-         )
+   getUsers(from, limit, role?, status?, search?) {
+
+      let filter = '';
+      if (role) filter += `&role=${role}`;
+      if (status) filter += `&status=${status}`;
+      if (search) filter += `&search=${search}`;
+      //console.log(`${API.CALENDAR_ALL}?from=${from}&limit=${limit}${filter}`);
+
+      return this.http.get(`${API.USER_ALL}?from=${from}&limit=${limit}${filter}`)
+         .pipe(map((response: any) => response))
+   }
+
+   deleteUser(id_user) {
+      return this.http.delete(`${API.USER_DELETE}${id_user}`);
    }
 
 }

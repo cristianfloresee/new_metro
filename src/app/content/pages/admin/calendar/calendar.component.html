@@ -1,3 +1,136 @@
-<p>
-  calendar works!
-</p>
+<!-- LEYENDA -->
+<div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
+   <div class="m-alert__icon">
+      <i class="flaticon-exclamation m--font-brand"></i>
+   </div>
+   <div class="m-alert__text">
+      En esta sección usted podrá realizar la configuración del calendario escolar. Esta representa las fechas en las
+      que disponen los profesores para impoartir asignaturas.
+   </div>
+</div>
+<!-- FIN LEYENDA -->
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Listado de Períodos Escolares
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+      <div class="m-portlet__head-tools">
+         <ul class="m-portlet__nav">
+            <li class="m-portlet__nav-item">
+               <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                  m-dropdown-toggle="hover" aria-expanded="true">
+                  <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                     <i class="la la-ellipsis-h m--font-brand"></i>
+                  </a>
+                  <div class="m-dropdown__wrapper">
+                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                     <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                           <div class="m-dropdown__content">
+                              <ul class="m-nav">
+                                 <li class="m-nav__section m-nav__section--first">
+                                    <span class="m-nav__section-text">Acciones</span>
+                                 </li>
+                                 <li class="m-nav__item">
+                                    <a (click)="openCreateCalendar()" class="m-nav__link pointer">
+                                       <i class="m-nav__link-icon flaticon-share"></i>
+                                       <span class="m-nav__link-text">Crear Período Escolar</span>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+         </ul>
+      </div>
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+         <div class="row align-items-center">
+            <div class="col-xl-8 order-2 order-xl-1">
+
+               <form [formGroup]="userForm" style="display:inline;">
+                  <div class="form-group m-form__group row align-items-center">
+                     <div class="col-md-4">
+                        <div class="m-input-icon m-input-icon--left">
+
+                           <input formControlName="search" type="text" class="form-control m-input" placeholder="Buscar año ...">
+
+                           <span class="m-input-icon__icon m-input-icon__icon--left">
+                              <span>
+                                 <i class="la la-search"></i>
+                              </span>
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+
+            </div>
+            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+               <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                  [disabled]="userForm.value.role == f_role && userForm.value.status == f_status && userForm.value.search == f_search">
+                  <span>
+                     <span>Aplicar</span>
+                  </span>
+               </button>
+               <div class="m-separator m-separator--dashed d-xl-none"></div>
+            </div>
+         </div>
+      </div>
+      <!-- FIN FILTRO/BUSQUEDA -->
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">ID</th>
+                  <th>Año</th>
+                  <th>Semestre</th>
+                  <th>Creado</th>
+                  <th>Actualizado</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr *ngFor="let calendar of calendars">
+                  <td>{{calendar.id_calendar}}</td>
+                  <td class="nowrap">{{calendar.year}}</td>
+                  <td>{{calendar.semester}}</td>
+                  <td class="nowrap">{{calendar.created_at | timeAgo}}</td>
+                  <td class="nowrap">{{calendar.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="openCalendarEdit(calendar)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a (click)="deleteCalendar(calendar.id_calendar)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>

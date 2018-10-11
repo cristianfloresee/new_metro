@@ -10,6 +10,8 @@ import { FirstNamePipe } from './pipes/first-name.pipe';
 import { MenuAsideDirective } from './directives/menu-aside.directive';
 import { LetDirective } from './directives/let.directive';
 import { TimeAgoPipe } from './pipes/time-ago';
+import { FillArray } from './pipes/fill-array';
+import { rolePipe } from './pipes/role';
 
 @NgModule({
    imports: [
@@ -20,6 +22,8 @@ import { TimeAgoPipe } from './pipes/time-ago';
       UrlImagePipe,
       FirstNamePipe,
       TimeAgoPipe,
+      FillArray,
+      rolePipe,
       //DIRECTIVAS
       MenuHorizontalDirective,
       MenuHorizontalOffcanvasDirective,
@@ -31,6 +35,8 @@ import { TimeAgoPipe } from './pipes/time-ago';
       UrlImagePipe,
       FirstNamePipe,
       TimeAgoPipe,
+      FillArray,
+      rolePipe,
       //DIRECTIVAS
       MenuHorizontalDirective,
       MenuHorizontalOffcanvasDirective,

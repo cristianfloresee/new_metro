@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //RUTAS
 import { AppRoutingModule } from './app-routing.module';
 
@@ -33,26 +33,39 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 //SERVICIOS
 import { UserService } from './core/services/API/user.service';
-import { InterceptorService } from './core/services/interceptor.service';
-
-//NGX-TOASTR
-import { ToastrModule } from 'ngx-toastr';
+import { CalendarService } from './core/services/API/calendar.service';
 import { LoaderService } from './core/services/loader.service';
 import { RoleService } from './core/services/role.service';
 import { PageService } from './core/services/page.service';
 import { SubheaderService } from './core/services/layout/subheader.service';
+
+import { InterceptorService } from './core/services/interceptor.service';
+
+//NGX-TOASTR
+import { ToastrModule } from 'ngx-toastr';
+
 //GUARDS
 import { LoginGuard } from './core/services/guards/login.guard';
 import { AdminGuard } from './core/services/guards/role-admin.guard';
 import { TeacherGuard } from './core/services/guards/role-teacher.guard';
 import { SocketService } from './core/services/socket.service';
 import { SubjectService } from './core/services/API/subject.service';
-
+//ENTRY COMPONENTS (MODAL)
+import { EditUserComponent } from './content/pages/admin/user/edit-user/edit-user.component';
+import { CreateUserComponent } from './content/pages/admin/user/create-user/create-user.component';
+import { CreateCalendarComponent } from './content/pages/admin/calendar/create-calendar/create-calendar.component';
+import { EditCalendarComponent } from './content/pages/admin/calendar/edit-calendar/edit-calendar.component';
+import { YearDatepickerComponent } from './content/pages/admin/calendar/year-datepicker/year-datepicker.component';
 
 
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
+      CreateUserComponent,
+      EditUserComponent,
+      CreateCalendarComponent,
+      EditCalendarComponent,
+      YearDatepickerComponent
    ],
    imports: [
       //ANGULAR
@@ -60,6 +73,8 @@ import { SubjectService } from './core/services/API/subject.service';
       AppRoutingModule,
       HttpClientModule,
       BrowserAnimationsModule,
+      FormsModule,
+      ReactiveFormsModule,
       //BOOTSTRAP
       NgbModule.forRoot(),
       //NGX-TOASTR
@@ -87,6 +102,7 @@ import { SubjectService } from './core/services/API/subject.service';
       ],
       //SERVICIOS
       UserService,
+      CalendarService,
       SubjectService,
       LoaderService,
       RoleService,
@@ -97,6 +113,12 @@ import { SubjectService } from './core/services/API/subject.service';
       LoginGuard,
       AdminGuard,
       TeacherGuard
+   ],
+   entryComponents: [
+      CreateUserComponent,
+      EditUserComponent,
+      CreateCalendarComponent,
+      EditCalendarComponent
    ],
    bootstrap: [AppComponent]
 })

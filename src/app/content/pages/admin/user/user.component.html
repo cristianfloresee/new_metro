@@ -17,7 +17,7 @@
       <div class="m-portlet__head-caption">
          <div class="m-portlet__head-title">
             <h3 class="m-portlet__head-text">
-               Usuarios
+               Listado de Usuarios
             </h3>
          </div>
       </div>
@@ -41,7 +41,7 @@
                                     <span class="m-nav__section-text">Acciones</span>
                                  </li>
                                  <li class="m-nav__item">
-                                    <a href="" class="m-nav__link">
+                                    <a (click)="openCreateUser()" class="m-nav__link pointer">
                                        <i class="m-nav__link-icon flaticon-share"></i>
                                        <span class="m-nav__link-text">Crear Usuario</span>
                                     </a>
@@ -66,56 +66,65 @@
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
          <div class="row align-items-center">
             <div class="col-xl-8 order-2 order-xl-1">
-               <div class="form-group m-form__group row align-items-center">
-                  <div class="col-md-4">
-                     <div class="m-form__group m-form__group--inline">
-                        <div class="m-form__label">
-                           <label>Rol:</label>
+
+               <form [formGroup]="userForm" style="display:inline;">
+                  <div class="form-group m-form__group row align-items-center">
+                     <div class="col-md-4">
+                        <div class="m-form__group m-form__group--inline">
+                           <div class="m-form__label">
+                              <label>Rol:</label>
+                           </div>
+                           <div class="m-form__control">
+
+
+                              <select formControlName="role" class="form-control m-bootstrap-select">
+                                 <option value="">Todos</option>
+                                 <option value="1">Administrador</option>
+                                 <option value="2">Profesor</option>
+                                 <option value="3">Estudiante</option>
+                              </select>
+                           </div>
                         </div>
-                        <div class="m-form__control">
-                           <select class="form-control m-bootstrap-select" id="m_form_status">
-                              <option value="">Todos</option>
-                              <option value="1">Administrador</option>
-                              <option value="2">Profesor</option>
-                              <option value="3">Estudiante</option>
-                           </select>
-                        </div>
+                        <div class="d-md-none m--margin-bottom-10"></div>
                      </div>
-                     <div class="d-md-none m--margin-bottom-10"></div>
-                  </div>
-                  <div class="col-md-4">
-                     <div class="m-form__group m-form__group--inline">
-                        <div class="m-form__label">
-                           <label class="m-label m-label--single">Estado:</label>
+                     <div class="col-md-4">
+                        <div class="m-form__group m-form__group--inline">
+                           <div class="m-form__label">
+                              <label class="m-label m-label--single">Estado:</label>
+                           </div>
+                           <div class="m-form__control">
+                              <select formControlName="status" class="form-control m-bootstrap-select" id="m_form_type">
+                                 <option value="">Todos</option>
+                                 <option value="true">Activo</option>
+                                 <option value="false">Inactivo</option>
+                              </select>
+                           </div>
                         </div>
-                        <div class="m-form__control">
-                           <select class="form-control m-bootstrap-select" id="m_form_type">
-                              <option value="">Todos</option>
-                              <option value="1">Activo</option>
-                              <option value="2">Inactivo</option>
-                           </select>
-                        </div>
+                        <div class="d-md-none m--margin-bottom-10"></div>
                      </div>
-                     <div class="d-md-none m--margin-bottom-10"></div>
-                  </div>
-                  <div class="col-md-4">
-                     <div class="m-input-icon m-input-icon--left">
-                        <input type="text" class="form-control m-input" placeholder="Buscar usuario..." id="generalSearch">
-                        <span class="m-input-icon__icon m-input-icon__icon--left">
-                           <span>
-                              <i class="la la-search"></i>
+                     <div class="col-md-4">
+                        <div class="m-input-icon m-input-icon--left">
+
+                           <input formControlName="search" type="text" class="form-control m-input" placeholder="nombre, rut, correo, usuario">
+
+                           <span class="m-input-icon__icon m-input-icon__icon--left">
+                              <span>
+                                 <i class="la la-search"></i>
+                              </span>
                            </span>
-                        </span>
+                        </div>
                      </div>
                   </div>
-               </div>
+               </form>
+
             </div>
             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-               <a (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+               <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                  [disabled]="userForm.value.role == f_role && userForm.value.status == f_status && userForm.value.search == f_search">
                   <span>
                      <span>Aplicar</span>
                   </span>
-               </a>
+               </button>
                <div class="m-separator m-separator--dashed d-xl-none"></div>
             </div>
          </div>
@@ -123,45 +132,6 @@
       <!-- FIN FILTRO/BUSQUEDA -->
 
       <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
-
-         <!-- TABLA -->
-         <!--
-         <table class="m-datatable__table" id="html_table" width="100%" style="display: block;min-height: 300px;overflow-x: auto;">
-            <thead class="m-datatable__head">
-               <tr class="m-datatable__row" style="left: 0px;">
-                  <th title="Field #1" data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort">ID</th>
-                  <th title="Field #2" data-field="Owner" class="m-datatable__cell m-datatable__cell--sort">Nombre</th>
-                  <th title="Field #3" data-field="Contact" class="m-datatable__cell m-datatable__cell--sort">Apellido
-                     Paterno</th>
-                  <th title="Field #4" data-field="CarMake" class="m-datatable__cell m-datatable__cell--sort">Apellido
-                     Materno</th>
-                  <th title="Field #5" data-field="CarModel" class="m-datatable__cell m-datatable__cell--sort">No de
-                     Documento</th>
-                  <th title="Field #6" data-field="Color" class="m-datatable__cell m-datatable__cell--sort">Correo</th>
-                  <th title="Field #7" data-field="DepositPaid" class="m-datatable__cell m-datatable__cell--sort">Teléfono</th>
-                  <th title="Field #8" data-field="OrderDate" class="m-datatable__cell m-datatable__cell--sort">Nombre
-                     de Usuario</th>
-                  <th title="Field #9" data-field="Status" class="m-datatable__cell m-datatable__cell--sort">Activo</th>
-                  <th title="Field #10" data-field="Type" class="m-datatable__cell m-datatable__cell--sort">Creado</th>
-                  <th title="Field #11" data-field="Type" class="m-datatable__cell m-datatable__cell--sort">Actualizado</th>
-               </tr>
-            </thead>
-            <tbody class="m-datatable__body">
-               <tr *ngFor="let user of users" class="m-datatable__row">
-                  <td class="m-datatable__cell">{{user.id_user}}</td>
-                  <td class="m-datatable__cell">{{user.name}}</td>
-                  <td class="m-datatable__cell">{{user.last_name}}</td>
-                  <td class="m-datatable__cell">{{user.middle_name}}</td>
-                  <td class="m-datatable__cell">{{user.document_no}}</td>
-                  <td class="m-datatable__cell">{{user.email}}</td>
-                  <td class="m-datatable__cell">{{user.phone_no}}</td>
-                  <td class="m-datatable__cell">{{user.username}}</td>
-                  <td class="m-datatable__cell">{{user.active}}</td>
-                  <td class="m-datatable__cell">{{user.created_at | timeAgo}}</td>
-                  <td class="m-datatable__cell">{{user.updated_at | timeAgo}}</td>
-               </tr>
-            </tbody>
-         </table>-->
 
          <table class="cw-table">
             <thead>
@@ -174,6 +144,7 @@
                   <th>Correo Electrónico</th>
                   <th>Teléfono</th>
                   <th>Nombre de Usuario</th>
+                  <th>Rol</th>
                   <th>Estado</th>
                   <th>Creado</th>
                   <th>Actualizado</th>
@@ -191,18 +162,31 @@
                   <td>{{user.phone_no}}</td>
                   <td>{{user.username}}</td>
                   <td>
+                     <span *ngFor="let rol of user.roles" style="font-size:0.8rem; margin-top: 3px; color: #ffffff"
+                        class="center m-badge m-badge--wide" [ngClass]="(rol == 1) ? 'm-badge--success' : (rol == 2 ? 'm-badge--warning' : 'm-badge--danger')">
+                        {{rol | role}}
+                     </span>
+                  </td>
+                  <td class="nowrap">
+                     <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="(user.active)?'m-badge--success':'m-badge--danger'"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="(user.active)?'m--font-success':'m--font-danger'">
+                           {{user.active ? 'Activo': 'Inactivo'}}</span>
+                     </span>
+                     <!--
                      <span style="font-size:0.9rem" class="m-badge m-badge--wide" [ngClass]="(user.active)?'m-badge--success':'m-badge--danger'">
                         {{user.active ? 'Activo': 'Inactivo'}}
-                     </span>
+                     </span>-->
                   </td>
                   <td class="nowrap">{{user.created_at | timeAgo}}</td>
                   <td class="nowrap">{{user.updated_at | timeAgo}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="openUserEdit(user)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="deleteUser(user.id_user)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
                      </span>
@@ -210,30 +194,79 @@
                </tr>
             </tbody>
          </table>
+
+
+
+
          <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
             <ul class="m-datatable__pager-nav">
-               <li>
-                  <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first m-datatable__pager-link--disabled">
+               <li (click)="getUsersPage(0)">
+                  <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < limit)}">
                      <i class="la la-angle-double-left"></i>
                   </a>
                </li>
-               <li>
-                  <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev m-datatable__pager-link--disabled">
+               <li (click)="getUsersFrom(-limit)">
+                  <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < limit)}">
                      <i class="la la-angle-left"></i>
                   </a>
                </li>
+               <!--
                <li>
-                  <a class="m-datatable__pager-link m-datatable__pager-link-number m-datatable__pager-link--active">1</a>
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active'}">1</a>
                </li>
                <li>
                   <a class="m-datatable__pager-link m-datatable__pager-link-number">2</a>
+               </li>-->
+               <li *ngFor="let page of total_pages | fillArray" (click)="getUsersPage((page-1)*limit)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': page == current_page}">{{page}}</a>
                </li>
-               <li>
-                  <a class="m-datatable__pager-link m-datatable__pager-link--next">
+               <li (click)="getUsersFrom(+limit)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/limit)+1)==total_pages}">
                      <i class="la la-angle-right"></i>
                   </a>
                </li>
+               <li (click)="getUsersPage(limit*(total_pages-1))">
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/limit)+1)==total_pages}">
+                     <i class="la la-angle-double-right"></i>
+                  </a>
+               </li>
             </ul>
+
+            <!-- INFO DE LA TABLA -->
+            <div class="m-datatable__pager-info">
+               <!--
+               <select class="m-datatable__pager-size" data-width="170px" data-selected="10">
+                  <option value>seleccione tamaño de página</option>
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+               </select>-->
+               <form [formGroup]="userForm" style="display:inline;">
+                  <select formControlName="limit" class="m-datatable__pager-size" style="width:160px" (change)="kisa()">>
+                     <option value="5">5</option>
+                     <option value="10">10</option>
+                     <option value="50">50</option>
+                  </select>
+               </form>
+
+               <!-- <div class="dropdown bootstrap-select m-datatable__pager-size dropup" style="width: 70px">
+
+                  <button type="button" class="btn dropdown-toggle btn-light" data-togle="dropdown" role="button" title="Select page size" aria-expanded="false">
+                     <div class="filter-option">
+                        <div class="filter-option-inner">10</div>
+                     </div>
+                     <span class="bs-caret">
+                        <span class="caret"></span>
+                     </span>
+                  </button>
+               </div>
+               <div class="dropdown-menu" role="combobox" x-placement="top-start" style="max-height: 756.318px; overflow: hidden; min-height: 130px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -3px, 0px);">
+                  <div class="inner show" role="listbox"></div>
+               </div> -->
+               <span class="m-datatable__pager-detail">Mostrando {{total_users ? ((current_page-1)*limit + 1) : 0}} -
+                  {{(limit*current_page > total_users) ? total_users : (limit*current_page)}} de {{total_users}}
+                  usuarios</span>
+            </div>
          </div>
       </div>
 

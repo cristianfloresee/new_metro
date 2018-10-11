@@ -42,6 +42,7 @@ export class RoleService {
       url = url.match(/\/[0-9a-z-A-Z-_]*/)[0].slice(1); //obtiene la raíz de la url. Ejemplo: http://localhost:4200/admin/(subject) => admin
 
       let roles = this.rolesAvailableSubject.value;
+      console.log("checkRole roles: ", roles);
       if (roles) {
          let index_role = roles.findIndex(role => role.url == url); //admin, teacher, student
          if (index_role >= 0) {

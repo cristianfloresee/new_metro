@@ -1,9 +1,9 @@
-//ENDPOINTS
+//ENVIRONMENTS
 export const API_URL_DEV = '//localhost:3000/';
 export const API_URL_PROD = 'http://...';
 export const API_URL = API_URL_DEV;
 
-//RUTAS
+//ENDPOINTS
 export const API = {
    LOGIN: `${API_URL}login`,
    LOGOUT: ``,
@@ -12,6 +12,8 @@ export const API = {
    USER_CREATE: `${API_URL}users/create`,
    USER_UPDATE: `${API_URL}users/update/`,
    USER_DELETE: `${API_URL}users/delete/`,
+   CALENDAR_ALL: `${API_URL}calendars`,
+   CALENDAR_DELETE: `${API_URL}calendars/delete/`,
    SUBJECT_ALL: `${API_URL}subjects`,
    UPLOAD_IMAGE: `${API_URL}image/`
 };
@@ -38,6 +40,13 @@ export const PAGE_TITLES = {
    'teacher': { title: 'Inicio' },
    'student': { title: 'Inicio' },
    'profile': { title: 'Perfil de Usuario' },
-   'admin.(user)': { title: 'Usuarios' }
+   'admin.(user)': { title: 'Usuarios' },
+   'admin.(subject)': { title: 'Asignaturas' },
+   'admin.(calendar)': { title: 'Calendario' }
+}
+
+//MENSAJES TOAST
+export const TOAST_MESSAGES = {
+   SUCCESS: 'Acción realizada correctamente'
 }
 
