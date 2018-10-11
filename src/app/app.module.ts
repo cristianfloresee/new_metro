@@ -78,7 +78,11 @@ import { YearDatepickerComponent } from './content/pages/admin/calendar/year-dat
       //BOOTSTRAP
       NgbModule.forRoot(),
       //NGX-TOASTR
-      ToastrModule.forRoot(),
+      ToastrModule.forRoot({
+         closeButton: true,
+         progressBar: true,
+         progressAnimation: 'increasing'
+      }),
       //ANGULAR MATERIAL
       MatProgressSpinnerModule,
       //MODULOS
@@ -115,6 +119,7 @@ import { YearDatepickerComponent } from './content/pages/admin/calendar/year-dat
       TeacherGuard
    ],
    entryComponents: [
+      //MODALS
       CreateUserComponent,
       EditUserComponent,
       CreateCalendarComponent,

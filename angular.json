@@ -27,7 +27,7 @@
                      "src/assets"
                   ],
                   "styles": [
-                     "src/app/sass/styles.scss",
+                     "src/scss/styles.scss",
                      "src/assets/css/bootstrap.min.css",
                      "src/assets/css/toastr.custom.css"
                   ],

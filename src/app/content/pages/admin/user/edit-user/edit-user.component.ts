@@ -116,11 +116,7 @@ export class EditUserComponent implements OnInit {
             error => {
                console.log("error:", error);
                this.activeModal.close(false);
-               this.toastr.error('El usuario no ha sido actualizado.', 'Ha ocurrido un error!', {
-                  closeButton: true,
-                  progressBar: true,
-                  progressAnimation: 'increasing'
-               });
+               this.toastr.error('El usuario no ha sido actualizado.', 'Ha ocurrido un error!');
             }
          );
    }
