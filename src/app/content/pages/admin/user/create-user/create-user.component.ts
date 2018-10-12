@@ -58,6 +58,26 @@ export class CreateUserComponent implements OnInit {
    createUser(user) {
       console.log("create user: ", user);
       console.log(this.formatRoleArray(user.roles));
+
+      return this._userSrv.createUser(user)
+         .subscribe(
+            result => {
+               this.activeModal.close(true);
+               this.toastr.success('El usuario ha sido creado correctamente.', 'Usuario creado!');
+            },
+            error => {
+               console.log("error: ", error);
+               //console.log("error code:", error);
+               // this.activeModal.close(false);
+               // if (error.error.code && error.error.code == '23505') {
+               //    this.toastr.error('El período ya existe.', 'Ha ocurrido un error!');
+               // } else {
+               //    this.toastr.error('El período no ha sido creado.', 'Ha ocurrido un error!');
+               // }
+
+            }
+         );
+
    }
 
    formatRoleArray(array) {

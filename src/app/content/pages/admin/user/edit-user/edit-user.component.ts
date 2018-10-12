@@ -107,11 +107,7 @@ export class EditUserComponent implements OnInit {
          .subscribe(
             result => {
                this.activeModal.close(true);
-               this.toastr.success('El usuario ha sido actualizado correctamente.', 'Usuario actualizado!', {
-                  closeButton: true,
-                  progressBar: true,
-                  progressAnimation: 'increasing'
-               });
+               this.toastr.success('El usuario ha sido actualizado correctamente.', 'Usuario actualizado!');
             },
             error => {
                console.log("error:", error);

@@ -67,12 +67,12 @@
          <div class="row align-items-center">
             <div class="col-xl-8 order-2 order-xl-1">
 
-               <form [formGroup]="userForm" style="display:inline;">
+               <form [formGroup]="calendarForm" style="display:inline;">
                   <div class="form-group m-form__group row align-items-center">
                      <div class="col-md-4">
                         <div class="m-input-icon m-input-icon--left">
 
-                           <input formControlName="search" type="text" class="form-control m-input" placeholder="Buscar año ...">
+                           <input formControlName="search" type="number" class="form-control m-input" placeholder="Buscar año ...">
 
                            <span class="m-input-icon__icon m-input-icon__icon--left">
                               <span>
@@ -87,9 +87,9 @@
             </div>
             <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                  [disabled]="userForm.value.role == f_role && userForm.value.status == f_status && userForm.value.search == f_search">
+                  [disabled]="(calendarForm.value.search == f_search) || calendarForm.invalid">
                   <span>
-                     <span>Aplicar</span>
+                     <span>Filtrar</span>
                   </span>
                </button>
                <div class="m-separator m-separator--dashed d-xl-none"></div>

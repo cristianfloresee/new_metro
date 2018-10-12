@@ -38,26 +38,22 @@ export class CreateCalendarComponent implements OnInit {
 
    createCalendar(calendar) {
 
-      // return this._calendarSrv.createCalendar()
-      //    .subscribe(
-      //       result => {
-      //          this.activeModal.close(true);
-      //          this.toastr.success('El usuario ha sido actualizado correctamente.', 'Usuario actualizado!', {
-      //             closeButton: true,
-      //             progressBar: true,
-      //             progressAnimation: 'increasing'
-      //          });
-      //       },
-      //       error => {
-      //          console.log("error:", error);
-      //          this.activeModal.close(false);
-      //          this.toastr.error('El usuario no ha sido actualizado.', 'Ha ocurrido un error!', {
-      //             closeButton: true,
-      //             progressBar: true,
-      //             progressAnimation: 'increasing'
-      //          });
-      //       }
-      //    );
-      console.log("CREATE CALENDAR: ", calendar);
+      return this._calendarSrv.createCalendar(calendar)
+         .subscribe(
+            result => {
+               this.activeModal.close(true);
+               this.toastr.success('El usuario ha sido creado correctamente.', 'Usuario actualizado!');
+            },
+            error => {
+               console.log("error code:", error);
+               this.activeModal.close(false);
+               if (error.error.code && error.error.code == '23505') {
+                  this.toastr.error('El período ya existe.', 'Ha ocurrido un error!');
+               }else{
+                  this.toastr.error('El período no ha sido creado.', 'Ha ocurrido un error!');
+               }
+
+            }
+         );
    }
 }

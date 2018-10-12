@@ -1,6 +1,11 @@
+/**
+ * SI HAY MENOS DE 10 REGISTROS QUE NO APAREZCA EL COMPONENTE DE PAGINACIÓN.
+ */
+
+
 //ANGULAR
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //NG-BOOTSTRAP
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 //SWEETALERT2
@@ -19,14 +24,14 @@ import { EditCalendarComponent } from './edit-calendar/edit-calendar.component';
 })
 export class CalendarComponent implements OnInit {
 
-   userForm: FormGroup;
-
-   calendars: any[] = [];
-
-   f_role = '';
-   f_status = '';
+   //FORM
+   calendarForm: FormGroup;
    f_search = '';
 
+   //REGISTERS
+   calendars: any[] = [];
+
+   //PAGINATION
    from = 0;
    limit = 5;
    total_calendars = 0;
@@ -38,11 +43,9 @@ export class CalendarComponent implements OnInit {
       private ngModal: NgbModal,
       private _calendarSrv: CalendarService
    ) {
-      this.userForm = fb.group({
+      this.calendarForm = fb.group({
          limit: [this.limit],
-         role: [this.f_role],
-         status: [this.f_status],
-         search: [this.f_search]
+         search: [this.f_search, [Validators.min(2010), Validators.max(3000)]]
       });
    }
 
@@ -50,26 +53,25 @@ export class CalendarComponent implements OnInit {
       this.getCalendars();
    }
 
-   getCalendars(){
+   getCalendars() {
       this._calendarSrv.getCalendars(this.from, this.limit)
          .subscribe(
             result => {
                console.log("result: ", result);
-               this.calendars= result.results;
-               //console.log("NOOOO: ", this.users[0].active);
-               //this.total_calendars = result.total;
-               //this.total_pages = Math.ceil(result.total / this.limit);
-               //this.current_page = (this.from / this.limit) + 1;
-               //console.log("current page: ", this.current_page)
+               this.calendars = result.results;
             },
             error => {
                console.log("error:", error);
             });
    }
 
-   openCalendarEdit(calendar){
+   openCalendarEdit(calendar) {
       const modalRef = this.ngModal.open(EditCalendarComponent);
       modalRef.componentInstance.calendar = calendar;
+
+      modalRef.result.then((result) => {
+         if (result) this.getCalendars()
+      });
    }
 
 
@@ -112,8 +114,31 @@ export class CalendarComponent implements OnInit {
       })
    }
 
-   openCreateCalendar(){
+   openCreateCalendar() {
       const modalRef = this.ngModal.open(CreateCalendarComponent);
+      modalRef.result.then((result) => {
+         if (result) this.getCalendars()
+      });
+   }
+
+   filter(){
+      this.f_search = this.calendarForm.value.search;
+      console.log("filter: ", this.f_search);
+
+      this._calendarSrv.getCalendars(this.from, this.limit, this.f_search)
+      .subscribe(
+         result => {
+            console.log("result: ", result);
+            this.calendars = result.results;
+            // this.users = result.users;
+            // this.total_users = result.total;
+            // this.total_pages = Math.ceil(result.total / this.limit);
+            // this.current_page = (this.from / this.limit) + 1;
+            // console.log("current page: ", this.current_page)
+         },
+         error => {
+            console.log("error:", error);
+         });
    }
 
 }
