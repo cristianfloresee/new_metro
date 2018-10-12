@@ -38,13 +38,15 @@ export class CreateUserComponent implements OnInit {
          phone_no: ['', Validators.required],
          username: ['', Validators.required],
          active: [true],
+         password: ['', Validators.required],
+         password2: ['', Validators.required],
          roles: this.fb.group({
             admin: [''],
             teacher: [''],
             student: ['']
-         },
-            { validator: this.requiredRoles('admin', 'teacher', 'student') })
-      });
+         }, { validator: this.requiredRoles('admin', 'teacher', 'student') })
+      },{ validator: this.equalPasswords('password', 'password2') }
+      );
    }
 
    //VALIDADOR
@@ -67,6 +69,9 @@ export class CreateUserComponent implements OnInit {
             },
             error => {
                console.log("error: ", error);
+               if(error.error.status == '010'){
+                  this.toastr.error('El nombre de usuario ya existe.', 'Ha ocurrido un error!');
+               }
                //console.log("error code:", error);
                // this.activeModal.close(false);
                // if (error.error.code && error.error.code == '23505') {
@@ -88,4 +93,14 @@ export class CreateUserComponent implements OnInit {
       return roles;
    }
 
+   //COMPRUEBA SI LAS CONTRASEÑAS SON IGUALES
+   equalPasswords(password1, password2) {
+      return (result: FormGroup) => {
+         let pass1 = result.controls[password1].value;
+         let pass2 = result.controls[password2].value;
+
+         if (pass1 === pass2) return null;
+         return { areEquals: true }
+      }
+   }
 }
