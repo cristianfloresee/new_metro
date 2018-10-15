@@ -61,8 +61,8 @@ export class CreateCourseComponent implements OnInit {
       this._calendarSrv.getCalendars()
          .subscribe(
             result => {
-               this.options_calendar = result.results;
-               console.log("result: ", this.options_calendar);
+               this.options_calendar = this.formatCalendarOptions(result.results);
+               console.log("option_calendar: ", this.options_calendar);
             },
             error => {
                console.log("error:", error);
@@ -72,6 +72,17 @@ export class CreateCourseComponent implements OnInit {
       //    year: this.calendar.year,
       //    semester: this.calendar.semester
       // })
+   }
+
+   formatCalendarOptions(data) {
+      let new_data = data.reduce((object, item) => {
+         object[item.year] = object[item.year] || [];
+         console.log(object);
+         object[item.year].push(item);
+         return object;
+      }, {})
+      //Object.create(null)
+      return new_data;
    }
 
 }
