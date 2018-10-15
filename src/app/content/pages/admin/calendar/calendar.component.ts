@@ -121,24 +121,39 @@ export class CalendarComponent implements OnInit {
       });
    }
 
-   filter(){
+   filter() {
       this.f_search = this.calendarForm.value.search;
       console.log("filter: ", this.f_search);
 
       this._calendarSrv.getCalendars(this.from, this.limit, this.f_search)
-      .subscribe(
-         result => {
-            console.log("result: ", result);
-            this.calendars = result.results;
-            // this.users = result.users;
-            // this.total_users = result.total;
-            // this.total_pages = Math.ceil(result.total / this.limit);
-            // this.current_page = (this.from / this.limit) + 1;
-            // console.log("current page: ", this.current_page)
-         },
-         error => {
-            console.log("error:", error);
-         });
+         .subscribe(
+            result => {
+               console.log("result: ", result);
+               this.calendars = result.results;
+               // this.users = result.users;
+               // this.total_users = result.total;
+               // this.total_pages = Math.ceil(result.total / this.limit);
+               // this.current_page = (this.from / this.limit) + 1;
+               // console.log("current page: ", this.current_page)
+            },
+            error => {
+               console.log("error:", error);
+            });
+   }
+
+   //SI NO FUNCIONA INPUT USAR KEYUP
+   validSearch(value) {
+      console.log(value);
+      let search = this.validYear(value, 4);
+      this.calendarForm.controls.search.setValue(search);
+      //let rut = this._rutPrv.digitosValidosRut(this.loginForm.value.rut);
+      //this.loginForm.controls.rut.setValue(rut); //INSERTO EL RUT LIMPIO EN EL INPUT
+   }
+
+   validYear(value, limit) {
+
+      if (value.length > limit) value = value.slice(0, limit); //SACAR LOS PRIMEROS 4
+      return value;
    }
 
 }

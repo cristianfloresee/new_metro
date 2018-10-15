@@ -33,6 +33,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 //SERVICIOS
 import { UserService } from './core/services/API/user.service';
+import { CourseService } from './core/services/API/course.service';
 import { CalendarService } from './core/services/API/calendar.service';
 import { LoaderService } from './core/services/loader.service';
 import { RoleService } from './core/services/role.service';
@@ -55,7 +56,13 @@ import { EditUserComponent } from './content/pages/admin/user/edit-user/edit-use
 import { CreateUserComponent } from './content/pages/admin/user/create-user/create-user.component';
 import { CreateCalendarComponent } from './content/pages/admin/calendar/create-calendar/create-calendar.component';
 import { EditCalendarComponent } from './content/pages/admin/calendar/edit-calendar/edit-calendar.component';
+import { CreateSubjectComponent } from './content/pages/admin/subject/create-subject/create-subject.component';
+import { EditSubjectComponent } from './content/pages/admin/subject/edit-subject/edit-subject.component';
+
+//COMPONENTE INDIVIDUAL
 import { YearDatepickerComponent } from './content/pages/admin/calendar/year-datepicker/year-datepicker.component';
+import { CreateCourseComponent } from './content/pages/teacher/modals/create-course/create-course.component';
+
 
 
 @NgModule({
@@ -65,6 +72,9 @@ import { YearDatepickerComponent } from './content/pages/admin/calendar/year-dat
       EditUserComponent,
       CreateCalendarComponent,
       EditCalendarComponent,
+      CreateSubjectComponent,
+      EditSubjectComponent,
+      CreateCourseComponent,
       YearDatepickerComponent
    ],
    imports: [
@@ -106,6 +116,7 @@ import { YearDatepickerComponent } from './content/pages/admin/calendar/year-dat
       ],
       //SERVICIOS
       UserService,
+      CourseService,
       CalendarService,
       SubjectService,
       LoaderService,
@@ -123,7 +134,10 @@ import { YearDatepickerComponent } from './content/pages/admin/calendar/year-dat
       CreateUserComponent,
       EditUserComponent,
       CreateCalendarComponent,
-      EditCalendarComponent
+      EditCalendarComponent,
+      CreateSubjectComponent,
+      EditSubjectComponent,
+      CreateCourseComponent
    ],
    bootstrap: [AppComponent]
 })

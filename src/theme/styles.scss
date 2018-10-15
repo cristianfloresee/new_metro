@@ -172,3 +172,10 @@ mat-radio-button {
    padding: 0 !important;
    border-bottom: 0 !important;
 }
+
+
+/*HIDE SPIN NUMBER SELECTOR*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

@@ -72,7 +72,7 @@
                      <div class="col-md-4">
                         <div class="m-input-icon m-input-icon--left">
 
-                           <input formControlName="search" type="number" class="form-control m-input" placeholder="Buscar año ...">
+                           <input formControlName="search" type="number" (input)="validSearch($event.target.value)" class="form-control m-input" placeholder="Buscar año ...">
 
                            <span class="m-input-icon__icon m-input-icon__icon--left">
                               <span>

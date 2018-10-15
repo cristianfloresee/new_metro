@@ -66,4 +66,8 @@ export class UserService {
       return this.http.delete(`${API.USER_DELETE}${id_user}`);
    }
 
+   countUser() {
+      return this.http.get(`${API.USER_COUNT}`);
+   }
+
 }

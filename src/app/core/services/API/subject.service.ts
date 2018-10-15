@@ -24,9 +24,16 @@ export class SubjectService {
 
    }
 
+   getSubjects(from?, limit?, search?) {
 
-   getSubjects() {
-      return this.http.get(`${API.SUBJECT_ALL}`)
+      let params = '';
+      if (from != undefined && limit) {
+         params = `?from=${from}&limit=${limit}`;
+         if (search) params += `&search=${search}`;
+      }
+
+
+      return this.http.get(`${API.SUBJECT_ALL}${params}`)
          .pipe(
             map((response: any) => {
                return response.subjects;
@@ -34,4 +41,21 @@ export class SubjectService {
          )
    }
 
+   createSubject(subject) {
+      const { name } = subject;
+      return this.http.post(API.SUBJECT_CREATE, { name });
+   }
+
+   updateSubject(subject, id_subject) {
+      const { name } = subject;
+      return this.http.put(`${API.SUBJECT_UPDATE}${id_subject}`, { name });
+   }
+
+   deleteSubject(id_subject) {
+      return this.http.delete(`${API.SUBJECT_DELETE}${id_subject}`);
+   }
+
+   countSubject() {
+      return this.http.get(`${API.SUBJECT_COUNT}`);
+   }
 }

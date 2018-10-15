@@ -12,7 +12,7 @@ import { SubjectComponent } from './subject/subject.component';
 import { UserComponent } from './user/user.component';
 import { CalendarComponent } from './calendar/calendar.component';
 //NGX-BOOTSTRAP
-import { NgbActiveModal, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
    imports: [
@@ -26,7 +26,7 @@ import { NgbActiveModal, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
       AdminComponent,
       SubjectComponent,
       UserComponent,
-      CalendarComponent,
+      CalendarComponent
    ],
    providers: [
       NgbActiveModal

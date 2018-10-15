@@ -11,7 +11,7 @@ import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
-export class CalendarService {
+export class CourseService {
 
    constructor(
       public http: HttpClient
@@ -19,23 +19,33 @@ export class CalendarService {
 
    }
 
-   getCalendars(from?, limit?, search?) {
+   createCourse(course) {
+      const { id_calendar, id_user, id_subject, name, course_goal, student_goal } = course;
+      return this.http.post(API.CALENDAR_CREATE, { id_calendar, id_user, id_subject, name, course_goal, student_goal })
+   }
 
-      let params = '';
-      if (from != undefined && limit) {
-         params = `?from=${from}&limit=${limit}`;
-         if (search) params += `&search=${search}`;
-      }
+   getCoursesByTeacherId(teacher_id) {
+      return this.http.get(`${API.COURSE_BY_TEACHERID}`)
+   }
+
+   /*
+   createCalendar(calendar) {
+      const { year, semester } = calendar;
+      return this.http.post(API.CALENDAR_CREATE, { year, semester });
+   }
+
+   getCalendars(from, limit, search?) {
+
+      let params = `?from=${from}&limit=${limit}`;
+      if (search) params += `&search=${search}`;
 
       return this.http.get(`${API.CALENDAR_ALL}${params}`)
          .pipe(map((response: any) => response))
 
    }
 
-   createCalendar(calendar) {
-      const { year, semester } = calendar;
-      return this.http.post(API.CALENDAR_CREATE, { year, semester });
-   }
+
+
 
    updateCalendar(calendar, id_calendar) {
 
@@ -60,6 +70,6 @@ export class CalendarService {
 
    countCalendar() {
       return this.http.get(`${API.CALENDAR_COUNT}`);
-   }
+   }*/
 
 }

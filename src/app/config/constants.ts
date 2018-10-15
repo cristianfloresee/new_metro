@@ -14,13 +14,23 @@ export const API = {
    USER_CREATE: `${API_URL}users/create`,
    USER_UPDATE: `${API_URL}users/update/`,
    USER_DELETE: `${API_URL}users/delete/`,
+   USER_COUNT: `${API_URL}users/count`,
    //CALENDARIO
    CALENDAR_ALL: `${API_URL}calendars`,
    CALENDAR_CREATE: `${API_URL}calendars/create`,
    CALENDAR_UPDATE: `${API_URL}calendars/update/`,
    CALENDAR_DELETE: `${API_URL}calendars/delete/`,
-   //ASIGNATURA
+   CALENDAR_COUNT: `${API_URL}calendars/count`,
+   //CURSOS
+   COURSE_BY_TEACHERID: `${API_URL}`,
+   COURSE_CREATE: `${API_URL}courses/create`,
+   //ASIGNATURAS
    SUBJECT_ALL: `${API_URL}subjects`,
+   SUBJECT_CREATE: `${API_URL}subjects/create`,
+   SUBJECT_UPDATE: `${API_URL}subjects/update/`,
+   SUBJECT_DELETE: `${API_URL}subjects/delete/`,
+   SUBJECT_COUNT: `${API_URL}subjects/count`,
+   //OTROS
    UPLOAD_IMAGE: `${API_URL}image/`
 };
 
