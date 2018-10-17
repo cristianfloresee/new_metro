@@ -160,7 +160,9 @@ ng g module content/pages/teacher --spec false
 ng g component content/pages/teacher -is --spec=false
 
 ng g component content/pages/teacher/modals/create-course --spec false
-
+ng g component content/pages/teacher/modals/create-answer --spec false
+ng g component content/pages/teacher/modals/create-category --spec false
+ng g component content/pages/teacher/modals/create-subcategory --spec false
 
 ## Instalar Componentes de Pages
 

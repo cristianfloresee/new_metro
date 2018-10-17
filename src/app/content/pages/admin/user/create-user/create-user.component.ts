@@ -45,13 +45,15 @@ export class CreateUserComponent implements OnInit {
             teacher: [''],
             student: ['']
          }, { validator: this.requiredRoles('admin', 'teacher', 'student') })
-      },{ validator: this.equalPasswords('password', 'password2') }
+      }, { validator: this.equalPasswords('password', 'password2') }
       );
    }
 
    //VALIDADOR
    requiredRoles(rol1, rol2, rol3) {
+
       return (result: FormGroup) => {
+         console.log("requiredRoles validation...");
          if (!result.controls[rol1].value && !result.controls[rol2].value && !result.controls[rol3].value) return { requiredRole: true }
          else return null;
       }
@@ -69,7 +71,7 @@ export class CreateUserComponent implements OnInit {
             },
             error => {
                console.log("error: ", error);
-               if(error.error.status == '010'){
+               if (error.error.status == '010') {
                   this.toastr.error('El nombre de usuario ya existe.', 'Ha ocurrido un error!');
                }
                //console.log("error code:", error);
@@ -96,6 +98,7 @@ export class CreateUserComponent implements OnInit {
    //COMPRUEBA SI LAS CONTRASEÑAS SON IGUALES
    equalPasswords(password1, password2) {
       return (result: FormGroup) => {
+         console.log("equalPassword validation...");
          let pass1 = result.controls[password1].value;
          let pass2 = result.controls[password2].value;
 

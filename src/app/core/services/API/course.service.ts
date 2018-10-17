@@ -21,7 +21,7 @@ export class CourseService {
 
    createCourse(course) {
       const { id_calendar, id_user, id_subject, name, course_goal, student_goal } = course;
-      return this.http.post(API.CALENDAR_CREATE, { id_calendar, id_user, id_subject, name, course_goal, student_goal })
+      return this.http.post(API.COURSE_CREATE, { id_calendar, id_user, id_subject, name, course_goal, student_goal })
    }
 
    getCoursesByTeacherId(teacher_id) {

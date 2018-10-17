@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { TeacherComponent } from './teacher.component';
 
 
+
 @NgModule({
    imports: [
       CommonModule,

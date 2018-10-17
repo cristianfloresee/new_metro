@@ -62,6 +62,9 @@ import { EditSubjectComponent } from './content/pages/admin/subject/edit-subject
 //COMPONENTE INDIVIDUAL
 import { YearDatepickerComponent } from './content/pages/admin/calendar/year-datepicker/year-datepicker.component';
 import { CreateCourseComponent } from './content/pages/teacher/modals/create-course/create-course.component';
+import { CreateCategoryComponent } from './content/pages/teacher/modals/create-category/create-category.component';
+import { CreateSubcategoryComponent } from './content/pages/teacher/modals/create-subcategory/create-subcategory.component';
+import { CreateAnswerComponent } from './content/pages/teacher/modals/create-answer/create-answer.component';
 
 
 
@@ -75,6 +78,9 @@ import { CreateCourseComponent } from './content/pages/teacher/modals/create-cou
       CreateSubjectComponent,
       EditSubjectComponent,
       CreateCourseComponent,
+      CreateAnswerComponent,
+      CreateCategoryComponent,
+      CreateSubcategoryComponent,
       YearDatepickerComponent
    ],
    imports: [
@@ -137,7 +143,10 @@ import { CreateCourseComponent } from './content/pages/teacher/modals/create-cou
       EditCalendarComponent,
       CreateSubjectComponent,
       EditSubjectComponent,
-      CreateCourseComponent
+      CreateCourseComponent,
+      CreateAnswerComponent,
+      CreateCategoryComponent,
+      CreateSubcategoryComponent
    ],
    bootstrap: [AppComponent]
 })

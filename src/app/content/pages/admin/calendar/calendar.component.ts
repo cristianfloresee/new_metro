@@ -151,7 +151,7 @@ export class CalendarComponent implements OnInit {
    }
 
    validYear(value, limit) {
-
+      console.log(`value: ${value}, limit: ${limit}, value.length: ${value.length}, typeof: ${typeof(value)}`);
       if (value.length > limit) value = value.slice(0, limit); //SACAR LOS PRIMEROS 4
       return value;
    }
