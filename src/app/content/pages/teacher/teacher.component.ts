@@ -5,9 +5,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CourseService } from 'src/app/core/services/API/course.service';
 //MODALS
 import { CreateCourseComponent } from './modals/create-course/create-course.component';
-import { CreateAnswerComponent } from './modals/create-answer/create-answer.component';
 import { CreateCategoryComponent } from './modals/create-category/create-category.component';
 import { CreateSubcategoryComponent } from './modals/create-subcategory/create-subcategory.component';
+import { CreateQuestionComponent } from './modals/create-question/create-question.component';
 
 @Component({
    selector: 'cw-teacher',
@@ -31,7 +31,7 @@ export class TeacherComponent implements OnInit {
    }
 
    openCreateAnswer() {
-      const modalRef = this.ngModal.open(CreateAnswerComponent);
+      const modalRef = this.ngModal.open(CreateQuestionComponent);
    }
 
    openCreateCategory() {

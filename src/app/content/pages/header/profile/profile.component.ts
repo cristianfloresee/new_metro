@@ -6,9 +6,6 @@ import { User } from '../../../../core/models/user.model';
 import { SessionService } from '../../../../core/services/API/session.service';
 import { UserService } from '../../../../core/services/API/user.service';
 import { LoaderService } from '../../../../core/services/loader.service';
-//CUSTOM-VALIDATION
-//import { CustomValidators } from 'ng2-validation';
-
 
 @Component({
    selector: 'cw-profile',
@@ -46,6 +43,7 @@ export class ProfileComponent implements OnInit {
    saveUserData() {
 
       this._loaderSrv.show();
+      //GET ACTIVE
       return this._userSrv.updateUser(this.profileForm.value)
          .subscribe(
             (response) => {

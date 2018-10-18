@@ -1,4 +1,3 @@
-
 //ANGULAR
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,14 +9,17 @@ import { ToastrService } from 'ngx-toastr';
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 
 @Component({
-   selector: 'cw-create-category',
-   templateUrl: './create-category.component.html',
-   styleUrls: ['./create-category.component.scss']
+   selector: 'cw-create-question',
+   templateUrl: './create-question.component.html',
+   styleUrls: ['./create-question.component.scss']
 })
-export class CreateCategoryComponent implements OnInit {
+export class CreateQuestionComponent implements OnInit {
 
-   categoryForm: FormGroup;
+   questionForm: FormGroup;
+
    options_subject;
+   options_category;
+   options_subcategory;
 
    constructor(
       public fb: FormBuilder,
@@ -31,10 +33,14 @@ export class CreateCategoryComponent implements OnInit {
       this.loadFormOptions();
    }
 
+
    initFormData() {
-      this.categoryForm = this.fb.group({
+      this.questionForm = this.fb.group({
+         description: ['', [Validators.required]],
+         difficulty: ['', Validators.required],
          subject: ['', Validators.required],
-         name: ['', [Validators.required]],
+         category: ['', Validators.required],
+         subcategory: ['', Validators.required],
       });
    }
 
@@ -49,10 +55,6 @@ export class CreateCategoryComponent implements OnInit {
                console.log("error:", error);
             });
 
-   }
-
-   createCategory() {
-      console.log("create category...");
    }
 
 }

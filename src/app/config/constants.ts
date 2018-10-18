@@ -30,6 +30,12 @@ export const API = {
    SUBJECT_UPDATE: `${API_URL}subjects/update/`,
    SUBJECT_DELETE: `${API_URL}subjects/delete/`,
    SUBJECT_COUNT: `${API_URL}subjects/count`,
+   //CATEGORIAS
+   CATEGORY_GET: `${API_URL}categories`,
+   CATEGORY_CREATE: `${API_URL}categories/create`,
+   CATEGORY_UPDATE: `${API_URL}categories/update`,
+   CATEGORY_DELETE: `${API_URL}categories/delete`,
+   CATEGORY_COUNT: `${API_URL}categories/count`,
    //OTROS
    UPLOAD_IMAGE: `${API_URL}image/`
 };
@@ -63,16 +69,16 @@ export const PAGE_TITLES = {
 
 //MENSAJES TOAST
 export const TOAST_MESSAGES = {
-  /* CALENDAR: {
+   /* CALENDAR: {
 
-         TITLE: `${noun} ${action}!`,
-         BODY: `${subject} ha sido ${action} correctamente.`
+          TITLE: `${noun} ${action}!`,
+          BODY: `${subject} ha sido ${action} correctamente.`
 
-         ERROR: 'Ha ocurrido un error!',
-         BODY: 'El período no ha sido actualizado.',
-         BODY: 'El período ya existe.'
+          ERROR: 'Ha ocurrido un error!',
+          BODY: 'El período no ha sido actualizado.',
+          BODY: 'El período ya existe.'
 
-   }*/
+    }*/
 
 }
 

@@ -64,9 +64,7 @@ import { YearDatepickerComponent } from './content/pages/admin/calendar/year-dat
 import { CreateCourseComponent } from './content/pages/teacher/modals/create-course/create-course.component';
 import { CreateCategoryComponent } from './content/pages/teacher/modals/create-category/create-category.component';
 import { CreateSubcategoryComponent } from './content/pages/teacher/modals/create-subcategory/create-subcategory.component';
-import { CreateAnswerComponent } from './content/pages/teacher/modals/create-answer/create-answer.component';
-
-
+import { CreateQuestionComponent } from './content/pages/teacher/modals/create-question/create-question.component';
 
 @NgModule({
    declarations: [
@@ -78,9 +76,9 @@ import { CreateAnswerComponent } from './content/pages/teacher/modals/create-ans
       CreateSubjectComponent,
       EditSubjectComponent,
       CreateCourseComponent,
-      CreateAnswerComponent,
       CreateCategoryComponent,
       CreateSubcategoryComponent,
+      CreateQuestionComponent,
       YearDatepickerComponent
    ],
    imports: [
@@ -144,7 +142,7 @@ import { CreateAnswerComponent } from './content/pages/teacher/modals/create-ans
       CreateSubjectComponent,
       EditSubjectComponent,
       CreateCourseComponent,
-      CreateAnswerComponent,
+      CreateQuestionComponent,
       CreateCategoryComponent,
       CreateSubcategoryComponent
    ],
