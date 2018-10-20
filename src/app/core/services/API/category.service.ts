@@ -19,6 +19,7 @@ export class CategoryService {
 
    getCategories(from?, limit?, search?){
       let params = '';
+
       if (from != undefined && limit) {
          params = `?from=${from}&limit=${limit}`;
          if (search) params += `&search=${search}`;
