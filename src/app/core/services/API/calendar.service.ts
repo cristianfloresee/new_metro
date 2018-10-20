@@ -15,9 +15,7 @@ export class CalendarService {
 
    constructor(
       public http: HttpClient
-   ) {
-
-   }
+   ) {}
 
    getCalendars(from?, limit?, search?) {
 

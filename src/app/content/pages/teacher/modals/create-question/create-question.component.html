@@ -1,55 +1,83 @@
 <div class="modal-header">
-      <h4 class="modal-title">Crear Pregunta</h4>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-         <span aria-hidden="true">&times;</span>
-      </button>
-   </div>
+   <h4 class="modal-title">Crear Pregunta</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
 
-   <form [formGroup]="questionForm" (ngSubmit)="createQuestion(questionForm.value)" class="m-form m-form--state m-form--label-align-right">
-      <div class="modal-body">
-         <div class="m-portlet__body">
+<form [formGroup]="questionForm" (ngSubmit)="createQuestion(questionForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
 
-            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.description.invalid && questionForm.controls.description.touched }">
-               <label class="form-control-label">Pregunta:</label>
-               <input type="text" class="form-control m-input" formControlName="description" maxLength="15" autocomplete="nope">
-               <!--===================== ERRORES DE NOMBRE =====================-->
-               <div class="form-control-feedback" *ngIf="questionForm.controls['description'].hasError('required') && (questionForm.controls['description'].dirty || questionForm.controls['description'].touched)">
-                  Este campo es requerido.
-               </div>
-               <!-- FIN ERRORES DE NOMBRE -->
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.description.invalid && questionForm.controls.description.touched }">
+            <label class="form-control-label">Pregunta:</label>
+            <input type="text" class="form-control m-input" formControlName="description" maxLength="15" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="questionForm.controls['description'].hasError('required') && (questionForm.controls['description'].dirty || questionForm.controls['description'].touched)">
+               Este campo es requerido.
             </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
 
-            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.subject.invalid && questionForm.controls.subject.touched }">
-               <label class="form-control-label">Asignatura:</label>
-               <select formControlName="subject" class="m-datatable__pager-size" style="width:160px">
-                  <option value="">Seleccionar</option>
-                  <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
-               </select>
-               <!--===================== ERRORES DE PATERNO =====================-->
-               <div class="form-control-feedback" *ngIf="questionForm.controls['subject'].hasError('required') && (questionForm.controls['subject'].dirty || questionForm.controls['subject'].touched)">
-                  Este campo es requerido.
-               </div>
-               <!-- FIN ERRORES DE PATERNO -->
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.subject.invalid && questionForm.controls.subject.touched }">
+            <label class="form-control-label">Asignatura:</label>
+            <select formControlName="subject" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+            </select>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="questionForm.controls['subject'].hasError('required') && (questionForm.controls['subject'].dirty || questionForm.controls['subject'].touched)">
+               Este campo es requerido.
             </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
 
-            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.subject.invalid && questionForm.controls.subject.touched }">
-               <label class="form-control-label">Dificultad:</label>
-               <select formControlName="subject" class="m-datatable__pager-size" style="width:160px">
-                  <option value="">Seleccionar</option>
-                  <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
-               </select>
-               <!--===================== ERRORES DE PATERNO =====================-->
-               <div class="form-control-feedback" *ngIf="questionForm.controls['subject'].hasError('required') && (questionForm.controls['subject'].dirty || questionForm.controls['subject'].touched)">
-                  Este campo es requerido.
-               </div>
-               <!-- FIN ERRORES DE PATERNO -->
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.difficulty.invalid && questionForm.controls.difficulty.touched }">
+            <label class="form-control-label">Dificultad:</label>
+            <select formControlName="difficulty" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let difficulty of options_difficulties" [value]="difficulty.difficulty">{{difficulty.name}}</option>
+            </select>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="questionForm.controls['difficulty'].hasError('required') && (questionForm.controls['difficulty'].dirty || questionForm.controls['difficulty'].touched)">
+               Este campo es requerido.
             </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
 
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.category.invalid && questionForm.controls.category.touched }">
+            <label class="form-control-label">Categoría:</label>
+            <select formControlName="category" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let category of options_category" [value]="category.id_category">{{category.name}}</option>
+            </select>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="questionForm.controls['category'].hasError('required') && (questionForm.controls['category'].dirty || questionForm.controls['category'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.subcategory.invalid && questionForm.controls.subcategory.touched }">
+            <label class="form-control-label">Subcategoría:</label>
+            <select formControlName="subcategory" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <ng-container *ngIf="questionForm.value.category">
+                  <option *ngFor="let subcategory of options_subcategory" [value]="subcategory.id_subcategory">{{subcategory.name}}</option>
+               </ng-container>
+            </select>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="questionForm.controls['subcategory'].hasError('required') && (questionForm.controls['subcategory'].dirty || questionForm.controls['subcategory'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
          </div>
 
       </div>
-      <div class="modal-footer">
-         <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-         <button type="submit" class="btn btn-info" [disabled]="questionForm.invalid">Crear</button>
-      </div>
-   </form>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="questionForm.invalid">Crear</button>
+   </div>
+</form>

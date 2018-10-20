@@ -15,48 +15,26 @@ export class CategoryService {
 
    constructor(
       public http: HttpClient
-   ) { }
+   ) {}
 
-   //OBTENER CATEGORÍAS POR PROFESOR
-   //CATEGORIAS POR ASINATURA
-
-   getCategories(from?, limit?, search?) {
+   getCategories(from?, limit?, search?){
       let params = '';
       if (from != undefined && limit) {
          params = `?from=${from}&limit=${limit}`;
          if (search) params += `&search=${search}`;
       }
+
       return this.http.get(`${API.CATEGORY_GET}${params}`)
-         .pipe(map((response: any) => response))
-
    }
 
-   createCategory(category) {
-      const { id_user, id_subject, name } = category;
-      return this.http.post(API.CATEGORY_CREATE, { id_user, id_subject, name });
+   getCategoriesByUserId(id_user){
+      let params = `?teacher_options=${id_user}`
+      return this.http.get(`${API.CATEGORY_GET}${params}`)
    }
 
-   updateCategory(category, id_category) {
-      const { id_subject, name } = category;
-      return this.http.put(`${API.CATEGORY_UPDATE}${id_category}`, { id_subject, name })
-         .pipe(
-            map((response: any) => {
-               console.log("RESPONSE: ", response);
-               return true;
-            }),
-            catchError(err => {
-               console.log("error en el service: ", err)
-               return throwError(err);
-            })
-         );
+   createCategory(id_user, id_subject, name){
+      return this.http.post(API.CATEGORY_CREATE, {id_user, id_subject, name})
    }
 
-   deleteCalendar(id_category) {
-      return this.http.delete(`${API.CATEGORY_DELETE}${id_category}`);
-   }
-
-   countCategory() {
-      return this.http.get(`${API.CATEGORY_COUNT}`);
-   }
 
 }

@@ -8,6 +8,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 //SERVICIOS
 import { SubjectService } from 'src/app/core/services/API/subject.service';
+import { CategoryService } from 'src/app/core/services/API/category.service';
+import { SessionService } from 'src/app/core/services/API/session.service';
 
 @Component({
    selector: 'cw-create-category',
@@ -23,6 +25,8 @@ export class CreateCategoryComponent implements OnInit {
       public fb: FormBuilder,
       public activeModal: NgbActiveModal,
       private _subjectSrv: SubjectService,
+      private _categorySrv: CategoryService,
+      private _sessionSrv: SessionService,
       private toastr: ToastrService
    ) { }
 
@@ -51,8 +55,21 @@ export class CreateCategoryComponent implements OnInit {
 
    }
 
-   createCategory() {
-      console.log("create category...");
+   createCategory(category) {
+      console.log("create category: ", category);
+
+      this._categorySrv.createCategory(this._sessionSrv.userSubject.value.id_user, category.subject, category.name)
+         .subscribe(
+            result => {
+               this.activeModal.close(true);
+               this.toastr.success('El categoría ha sido creada correctamente.', 'Categoría creada!');
+            },
+            error => {
+               console.log("error code:", error);
+               this.activeModal.close(false);
+               this.toastr.error('El período no ha sido creado.', 'Ha ocurrido un error!');
+            }
+         );
    }
 
 }

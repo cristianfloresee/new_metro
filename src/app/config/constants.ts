@@ -36,6 +36,14 @@ export const API = {
    CATEGORY_UPDATE: `${API_URL}categories/update`,
    CATEGORY_DELETE: `${API_URL}categories/delete`,
    CATEGORY_COUNT: `${API_URL}categories/count`,
+   //SUBCATEGORÍAS
+   SUBCATEGORY_GET: `${API_URL}subcategories`,
+   SUBCATEGORY_CREATE: `${API_URL}subcategories/create`,
+   SUBCATEGORY_UPDATE: `${API_URL}subcategories/update`,
+   SUBCATEGORY_DELETE: `${API_URL}subcategories/delete`,
+   SUBCATEGORY_COUNT: `${API_URL}subcategories/count`,
+   //PREGUNTAS
+   QUESTION_CREATE: `${API_URL}questions/create`,
    //OTROS
    UPLOAD_IMAGE: `${API_URL}image/`
 };
@@ -84,3 +92,10 @@ export const TOAST_MESSAGES = {
 
 //PAGINACIÓN
 export const REGISTERS_PER_PAGE = 5;
+
+//DIFICULTADES
+export const DIFFICULTIES = [
+   { difficulty: 1, name: 'Fácil' },
+   { difficulty: 2, name: 'Media' },
+   { difficulty: 3, name: 'Díficil' }
+]

@@ -65,6 +65,9 @@ import { CreateCourseComponent } from './content/pages/teacher/modals/create-cou
 import { CreateCategoryComponent } from './content/pages/teacher/modals/create-category/create-category.component';
 import { CreateSubcategoryComponent } from './content/pages/teacher/modals/create-subcategory/create-subcategory.component';
 import { CreateQuestionComponent } from './content/pages/teacher/modals/create-question/create-question.component';
+import { CategoryService } from './core/services/API/category.service';
+import { SubcategoryService } from './core/services/API/subcategory';
+import { QuestionService } from './core/services/API/question.service';
 
 @NgModule({
    declarations: [
@@ -128,6 +131,9 @@ import { CreateQuestionComponent } from './content/pages/teacher/modals/create-q
       PageService,
       SubheaderService,
       SocketService,
+      CategoryService,
+      SubcategoryService,
+      QuestionService,
       //GUARDS
       LoginGuard,
       AdminGuard,
