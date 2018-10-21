@@ -25,7 +25,7 @@ export class CourseService {
    }
 
    getCoursesByTeacherId(teacher_id) {
-      return this.http.get(`${API.COURSE_BY_TEACHERID}`)
+      return this.http.get(`${API.COURSE_GET}`)
    }
 
    /*

@@ -16,8 +16,10 @@ import { CreateQuestionComponent } from './modals/create-question/create-questio
 })
 export class TeacherComponent implements OnInit {
 
+   courses;
+
    constructor(
-      private courseSrv: CourseService,
+      private _courseSrv: CourseService,
       private ngModal: NgbModal
    ) { }
 
@@ -40,5 +42,10 @@ export class TeacherComponent implements OnInit {
 
    openCreateSubcategory() {
       const modalRef = this.ngModal.open(CreateSubcategoryComponent);
+   }
+
+
+   getLastCourses(){
+      this._courseSrv
    }
 }

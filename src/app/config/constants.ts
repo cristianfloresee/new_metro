@@ -22,7 +22,7 @@ export const API = {
    CALENDAR_DELETE: `${API_URL}calendars/delete/`,
    CALENDAR_COUNT: `${API_URL}calendars/count`,
    //CURSOS
-   COURSE_BY_TEACHERID: `${API_URL}`,
+   COURSE_GET: `${API_URL}courses`,
    COURSE_CREATE: `${API_URL}courses/create`,
    //ASIGNATURAS
    SUBJECT_ALL: `${API_URL}subjects`,
