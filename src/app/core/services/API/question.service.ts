@@ -21,4 +21,8 @@ export class QuestionService {
    createQuestion(id_subcategory, description, difficulty) {
       return this.http.post(API.QUESTION_CREATE, { id_subcategory, description, difficulty })
    }
+
+   getLastQuestionsAdded(){
+
+   }
 }

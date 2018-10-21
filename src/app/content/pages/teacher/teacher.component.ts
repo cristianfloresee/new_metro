@@ -12,7 +12,7 @@ import { CreateQuestionComponent } from './modals/create-question/create-questio
 @Component({
    selector: 'cw-teacher',
    templateUrl: './teacher.component.html',
-   styles: []
+   styleUrls: ['./teacher.component.scss']
 })
 export class TeacherComponent implements OnInit {
 

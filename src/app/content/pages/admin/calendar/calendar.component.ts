@@ -1,8 +1,3 @@
-/**
- * SI HAY MENOS DE 10 REGISTROS QUE NO APAREZCA EL COMPONENTE DE PAGINACIÓN.
- */
-
-
 //ANGULAR
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
