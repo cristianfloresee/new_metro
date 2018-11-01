@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //RUTAS
 import { AppRoutingModule } from './app-routing.module';
 
+import { NgxEchartsModule } from 'ngx-echarts';
 
 //COMPONENTES
 import { AppComponent } from './app.component';
@@ -68,6 +69,8 @@ import { CreateQuestionComponent } from './content/pages/teacher/modals/create-q
 import { CategoryService } from './core/services/API/category.service';
 import { SubcategoryService } from './core/services/API/subcategory';
 import { QuestionService } from './core/services/API/question.service';
+import { SidemenuService } from './core/services/sidemenu.service';
+import { utilService } from './core/services/utils.service';
 
 @NgModule({
    declarations: [
@@ -100,6 +103,7 @@ import { QuestionService } from './core/services/API/question.service';
          progressBar: true,
          progressAnimation: 'increasing'
       }),
+      NgxEchartsModule,
       //ANGULAR MATERIAL
       MatProgressSpinnerModule,
       //MODULOS
@@ -134,6 +138,8 @@ import { QuestionService } from './core/services/API/question.service';
       CategoryService,
       SubcategoryService,
       QuestionService,
+      SidemenuService,
+      utilService,
       //GUARDS
       LoginGuard,
       AdminGuard,

@@ -37,5 +37,10 @@ export class CategoryService {
       return this.http.post(API.CATEGORY_CREATE, {id_user, id_subject, name})
    }
 
+   getLastCategoriesByTeacherId(id_user){
+      let params = `?last_by_teacher=${id_user}`;
+      return this.http.get(`${API.CATEGORY_GET}${params}`)
+   }
+
 
 }

@@ -104,7 +104,7 @@
          <table class="cw-table">
             <thead>
                <tr>
-                  <th class="center">ID</th>
+                  <th class="center">#</th>
                   <th>Nombre</th>
                   <th>Creado</th>
                   <th>Actualizado</th>
@@ -113,8 +113,8 @@
             </thead>
 
             <tbody>
-               <tr *ngFor="let subject of subjects">
-                     <td>{{subject.id_subject}}</td>
+               <tr *ngFor="let subject of subjects; let i=index">
+                     <td>{{i+1}}</td>
                      <td>{{subject.name}}</td>
                      <td class="nowrap">{{subject.created_at | timeAgo}}</td>
                      <td class="nowrap">{{subject.updated_at | timeAgo}}</td>

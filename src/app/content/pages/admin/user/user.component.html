@@ -136,7 +136,7 @@
          <table class="cw-table">
             <thead>
                <tr>
-                  <th class="center">ID</th>
+                  <th class="center">#</th>
                   <th>Nombre</th>
                   <th>Apellido Paterno</th>
                   <th>Apellido Materno</th>
@@ -152,8 +152,8 @@
                </tr>
             </thead>
             <tbody>
-               <tr *ngFor="let user of users">
-                  <td>{{user.id_user}}</td>
+               <tr *ngFor="let user of users; let i=index">
+                  <td>{{i+1}}</td>
                   <td class="nowrap">{{user.name}}</td>
                   <td>{{user.last_name}}</td>
                   <td>{{user.middle_name}}</td>

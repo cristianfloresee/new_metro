@@ -24,8 +24,9 @@ export class UserService {
    }
 
    createUser(user) {
-      const { name, last_name, middle_name, document_no, email, phone_no, username, password } = user;
-      return this.http.post(API.USER_CREATE, { name, last_name, middle_name, document_no, email, phone_no, username, password });
+      console.log("create user service: ", user);
+      const { name, last_name, middle_name, document_no, email, phone_no, username, password, roles } = user;
+      return this.http.post(API.USER_CREATE, { name, last_name, middle_name, document_no, email, phone_no, username, password, roles });
    }
 
    updateUser(user, id_user?) {
@@ -68,6 +69,10 @@ export class UserService {
 
    countUser() {
       return this.http.get(`${API.USER_COUNT}`);
+   }
+
+   getStudentsByCourse(id_course){
+
    }
 
 }

@@ -43,6 +43,7 @@ export const API = {
    SUBCATEGORY_DELETE: `${API_URL}subcategories/delete`,
    SUBCATEGORY_COUNT: `${API_URL}subcategories/count`,
    //PREGUNTAS
+   QUESTION_GET: `${API_URL}questions`,
    QUESTION_CREATE: `${API_URL}questions/create`,
    //OTROS
    UPLOAD_IMAGE: `${API_URL}image/`

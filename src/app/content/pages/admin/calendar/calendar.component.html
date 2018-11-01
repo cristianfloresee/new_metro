@@ -103,7 +103,7 @@
          <table class="cw-table">
             <thead>
                <tr>
-                  <th class="center">ID</th>
+                  <th class="center">#</th>
                   <th>Año</th>
                   <th>Semestre</th>
                   <th>Creado</th>
@@ -113,8 +113,8 @@
             </thead>
 
             <tbody>
-               <tr *ngFor="let calendar of calendars">
-                  <td>{{calendar.id_calendar}}</td>
+               <tr *ngFor="let calendar of calendars; let i=index">
+                  <td>{{i+1}}</td>
                   <td class="nowrap">{{calendar.year}}</td>
                   <td>{{calendar.semester}}</td>
                   <td class="nowrap">{{calendar.created_at | timeAgo}}</td>

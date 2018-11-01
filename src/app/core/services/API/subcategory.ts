@@ -26,5 +26,10 @@ export class SubcategoryService {
       return this.http.get(`${API.SUBCATEGORY_GET}${params}`)
    }
 
+   getLastSubcategoriesByTeacherId(id_user){
+      let params = `?last_by_teacher=${id_user}`;
+      return this.http.get(`${API.SUBCATEGORY_GET}${params}`)
+   }
+
 
 }

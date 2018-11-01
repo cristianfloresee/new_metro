@@ -61,7 +61,7 @@ export class CreateUserComponent implements OnInit {
 
    createUser(user) {
       console.log("create user: ", user);
-      console.log(this.formatRoleArray(user.roles));
+      user.roles = this.formatRoleArray(user.roles);
 
       return this._userSrv.createUser(user)
          .subscribe(

@@ -5,16 +5,14 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../../../config/constants';
 //SERVICIOS
 import { SessionService } from './session.service';
-//RXJS
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable()
 export class CourseService {
 
    constructor(
-      public http: HttpClient
+      public http: HttpClient,
+
    ) {
 
    }
@@ -24,8 +22,19 @@ export class CourseService {
       return this.http.post(API.COURSE_CREATE, { id_calendar, id_user, id_subject, name, course_goal, student_goal })
    }
 
-   getCoursesByTeacherId(teacher_id) {
-      return this.http.get(`${API.COURSE_GET}`)
+   getCoursesByTeacherId(id_user) {
+      let params = `?last_by_teacher=${id_user}`;
+      return this.http.get(`${API.COURSE_GET}${params}`);
+   }
+
+   getCoursesForSidemenu(id_user){
+      let params = `?all_courses_by_teacher=${id_user}`;
+      return this.http.get(`${API.COURSE_GET}${params}`)
+   }
+
+   getCourseById(id_user, id_course){
+      let params = `?id_user=${id_user}&id_course=${id_course}`;
+      return this.http.get(`${API.COURSE_GET}${params}`)
    }
 
    /*

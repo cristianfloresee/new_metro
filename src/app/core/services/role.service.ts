@@ -7,6 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ROLES } from '../../config/constants';
 //OBJECT-PATH
 import * as objectPath from 'object-path';
+//import { SidemenuService } from './sidemenu.service';
+//SERVICIOS
+
 
 @Injectable()
 export class RoleService {
@@ -19,7 +22,9 @@ export class RoleService {
    roleSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null); //ROL DEBE SER { }
    role$: Observable<any> = this.roleSubject.asObservable();
 
-   constructor() {
+   constructor(
+      //private _sidemenuSrv: SidemenuService
+   ) {
       let roles = (objectPath.get(JSON.parse(localStorage.getItem('user')), 'roles')); //1,2,3
       if (roles) this.changeAvailableRoles(roles);
    }

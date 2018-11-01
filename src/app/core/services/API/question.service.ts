@@ -22,7 +22,8 @@ export class QuestionService {
       return this.http.post(API.QUESTION_CREATE, { id_subcategory, description, difficulty })
    }
 
-   getLastQuestionsAdded(){
-
+   getLastQuestionsByTeacherId(id_user){
+      let params = `?last_by_teacher=${id_user}`;
+      return this.http.get(`${API.QUESTION_GET}${params}`)
    }
 }

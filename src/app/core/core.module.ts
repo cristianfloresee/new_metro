@@ -12,6 +12,7 @@ import { LetDirective } from './directives/let.directive';
 import { TimeAgoPipe } from './pipes/time-ago';
 import { FillArray } from './pipes/fill-array';
 import { rolePipe } from './pipes/role';
+import { ActivePipe } from './pipes/active.pipe';
 
 @NgModule({
    imports: [
@@ -24,6 +25,7 @@ import { rolePipe } from './pipes/role';
       TimeAgoPipe,
       FillArray,
       rolePipe,
+      ActivePipe,
       //DIRECTIVAS
       MenuHorizontalDirective,
       MenuHorizontalOffcanvasDirective,
@@ -37,12 +39,13 @@ import { rolePipe } from './pipes/role';
       TimeAgoPipe,
       FillArray,
       rolePipe,
+      ActivePipe,
       //DIRECTIVAS
       MenuHorizontalDirective,
       MenuHorizontalOffcanvasDirective,
       MenuAsideDirective,
       LetDirective
-
-   ]
+   ],
+   providers: [ActivePipe]
 })
 export class CoreModule { }

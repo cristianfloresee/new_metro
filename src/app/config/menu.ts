@@ -7,9 +7,10 @@ export const MENU = [
             semesters: [
                {
                   semester: 1,
-                  groups: [
+                  courses: [
                      {
-                        group: 'A'
+                        name: 'A',
+                        url: ''
                      }
                   ]
                }
