@@ -164,6 +164,8 @@ ng g component content/pages/teacher/modals/create-question --spec false
 ng g component content/pages/teacher/modals/create-category --spec false
 ng g component content/pages/teacher/modals/create-subcategory --spec false
 
+ng g c content/pages/teacher/courses/config/general --spec false
+
 ## Instalar Componentes de Pages
 
 ```
@@ -245,3 +247,19 @@ https://github.com/FortAwesome/angular-fontawesome
 https://fontawesome.com/how-to-use/on-the-web/setup/using-package-managers
 
 npm install --save-dev @fortawesome/fontawesome-free
+
+
+## vendor.bundle.js
+
+Incluye:
++ SweetAlert2 (https://github.com/sweetalert2/sweetalert2/)
++ Chart.js?
++ Bootstrap.js??
++ Lodash??
++ Moment
+
+
+## Por hacer:
+
++ Reemplazar sweetalert2 por ngx-sweetalert2 (https://github.com/sweetalert2/ngx-sweetalert2)
+  Con la versión ngx puedo ajustar opciones globales de estilo y aliviano el component.ts

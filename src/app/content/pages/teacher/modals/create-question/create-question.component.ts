@@ -1,5 +1,5 @@
 //ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 //NG-BOOTSTRAP
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,20 +12,27 @@ import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { QuestionService } from 'src/app/core/services/API/question.service';
+//RXJS
+import { Subscription } from 'rxjs';
 
 @Component({
    selector: 'cw-create-question',
    templateUrl: './create-question.component.html',
    styleUrls: ['./create-question.component.scss']
 })
-export class CreateQuestionComponent implements OnInit {
+export class CreateQuestionComponent implements OnInit, OnDestroy {
 
+   id_user;
    questionForm: FormGroup;
+   show_message;
 
-   options_subject;
-   options_difficulties;
-   options_category;
-   options_subcategory;
+   subjectChanges$: Subscription;
+   categoryChanges$: Subscription;
+
+   options_subject: Array<any>;
+   options_difficulties: Array<any>;
+   options_category: Array<any>;
+   options_subcategory: Array<any>
 
    constructor(
       public fb: FormBuilder,
@@ -39,44 +46,40 @@ export class CreateQuestionComponent implements OnInit {
    ) { }
 
    ngOnInit() {
+      //INICIAR VARIABLES
+      this.id_user = this._sessionSrv.userSubject.value.id_user;
+      this.options_difficulties = DIFFICULTIES;
+      //INICIAR FUNCIONES
       this.initFormData();
       this.loadFormOptions();
+      this.checkValidFields();
    }
 
    initFormData() {
       this.questionForm = this.fb.group({
-         description: ['', [Validators.required]],
-         difficulty: ['', Validators.required],
          subject: ['', Validators.required],
          category: ['', Validators.required],
          subcategory: ['', Validators.required],
+         description: ['', [Validators.required]],
+         difficulty: ['', Validators.required],
       });
    }
 
    loadFormOptions() {
-      this.options_difficulties = DIFFICULTIES;
-      this._subjectSrv.getSubjects()
+
+      this._subjectSrv.getSubjectsByUserId(this.id_user)
          .subscribe(
-            result => {
+            (result:any) => {
                this.options_subject = result;
-               console.log("result: ", result);
+               if(result && result.length == 0) this.show_message = true;
             },
             error => {
                console.log("error:", error);
             });
 
       //CATEGORÍAS DE USUARIO PROFE
-      this._categorySrv.getCategoriesByUserId(this._sessionSrv.userSubject.value.id_user)
-         .subscribe(
-            (result: any) => {
-               this.options_category = result.results;
-               console.log("categories: ", result.results);
-            },
-            error => {
-               console.log("error:", error);
-            });
-
-      this.questionForm.get('category').valueChanges.subscribe((changes) => {
+      this.categoryChanges$ = this.questionForm.get('category').valueChanges.subscribe((changes) => {
+         this.questionForm.controls.subcategory.setValue('');
          if (changes) {
             this._subcategorySrv.getSubcategoriesByCategoryId(changes)
                .subscribe(
@@ -88,31 +91,54 @@ export class CreateQuestionComponent implements OnInit {
                      console.log("error:", error);
                   });
          }
-         else this.options_subcategory = '';
-
+         else {
+            this.options_subcategory = [];
+         }
       });
 
    }
 
-   createQuestion(question){
-      console.log("create: ", question);
-      this._questionSrv.createQuestion(question.subcategory, question.description, question.difficulty)
-      .subscribe(
-         result => {
-            this.activeModal.close(true);
-            this.toastr.success('La pregunta ha sido creada correctamente.', 'Pregunta creada!');
-         },
-         error => {
-            console.log("error: ", error);
-            this.toastr.error('No se ha podido crear la pregunta.', 'Ha ocurrido un error!');
+   createQuestion(question) {
 
-         }
-      );
+      this._questionSrv.createQuestion(question.subcategory, question.description, question.difficulty)
+         .subscribe(
+            result => {
+               this.activeModal.close(true);
+               this.toastr.success('La pregunta ha sido creada correctamente.', 'Pregunta creada!');
+            },
+            error => {
+               console.log("error: ", error);
+               this.toastr.error('No se ha podido crear la pregunta.', 'Ha ocurrido un error!');
+            }
+         );
 
    }
 
 
+   checkValidFields() {
 
+      this.subjectChanges$ = this.questionForm.get('subject').valueChanges.subscribe((changes) => {
+         this.questionForm.controls.category.setValue('');
+         if (changes) {
+            this._categorySrv.getCategoriesByUserIdAndSubjectId(this.id_user, changes)
+               .subscribe(
+                  (result: any) => {
+                     this.options_category = result;
+                  },
+                  error => {
+                     console.log("error:", error);
+                  });
+         }
+         else {
+            this.options_category = [];
+         }
 
+      });
+   }
+
+   ngOnDestroy(){
+      this.subjectChanges$.unsubscribe();
+      this.categoryChanges$.unsubscribe();
+   }
 
 }

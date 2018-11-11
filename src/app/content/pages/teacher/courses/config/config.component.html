@@ -22,122 +22,7 @@
                               <b>General</b>
                            </ng-template>
                            <ng-template ngbTabContent>
-
-
-                                 <div class="form-group m-form__group m--margin-top-10">
-                                       <div class="alert m-alert m-alert--default" role="alert">
-                                          The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
-                                       </div>
-                                    </div>
-                              <ng-container>
-                                 <form [formGroup]="courseForm" class="m-form m-form--label-align-left- m-form--state-" >
-                                    <div class="m-portlet__body" style="margin: 80px 0;">
-                                       <div class="row">
-                                          <div class="col-xl-8 offset-xl-2">
-
-                                             <div class="m-form__section">
-                                                <div class="m-form__heading">
-                                                   <h3 class="m-form__heading-title">
-                                                      Detalles del Curso
-                                                      <i data-toggle="m-tooltip" data-width="auto" class="m-form__heading-help-icon flaticon-info"
-                                                         title="Some help text goes here"></i>
-                                                   </h3>
-                                                </div>
-
-
-
-                                                <div class="form-group m-form__group row">
-                                                   <label class="col-xl-3 col-lg-3 col-form-label">Nombre:</label>
-                                                   <div class="col-xl-9 col-lg-9">
-                                                      <input type="text" formControlName="name" class="form-control m-input"
-                                                         placeholder="">
-                                                      <span class="m-form__help">Street address, P.O. box, company
-                                                         name, c/o</span>
-                                                   </div>
-                                                </div>
-                                                <div class="form-group m-form__group row">
-                                                   <label class="col-xl-3 col-lg-3 col-form-label">Código:</label>
-                                                   <div class="col-xl-9 col-lg-9">
-                                                      <input type="text" formControlName="code" class="form-control m-input">
-                                                      <span class="m-form__help">Appartment, suite, unit, building,
-                                                         floor, etc</span>
-                                                   </div>
-                                                </div>
-                                                <div class="form-group m-form__group row">
-                                                   <label class="col-xl-3 col-lg-3 col-form-label">Meta del Curso:</label>
-                                                   <div class="col-xl-9 col-lg-9">
-                                                      <input type="text" formControlName="course_goal" class="form-control m-input"
-                                                         placeholder="">
-                                                   </div>
-                                                </div>
-                                                <div class="form-group m-form__group row">
-                                                   <label class="col-xl-3 col-lg-3 col-form-label">Meta por Estudiante:</label>
-                                                   <div class="col-xl-9 col-lg-9">
-                                                      <input type="text" formControlName="student_goal" class="form-control m-input"
-                                                         placeholder="">
-                                                   </div>
-                                                </div>
-
-                                                <div class="form-group m-form__group row">
-                                                   <label class="col-xl-3 col-lg-3 col-form-label">Estado:</label>
-                                                   <div class="col-xl-9 col-lg-9">
-                                                      <input type="text" formControlName="active" class="form-control m-input"
-                                                         placeholder="">
-                                                   </div>
-                                                </div>
-
-                                                <div class="m-separator m-separator--dashed m-separator--lg"></div>
-
-
-                                                <div class="form-group m-form__group row">
-                                                      <div class="col-lg-12 m-form__group-sub">
-                                                         <label class="form-control-label">Asignatura:</label>
-
-                                                         <input type="text" formControlName="subject" class="form-control m-input"
-                                                            [attr.disabled]="true" placeholder="">
-                                                         <span class="m-form__help">Asignatura a la que pertenece el
-                                                            curso</span>
-
-                                                      </div>
-                                                   </div>
-
-                                                   <div class="form-group m-form__group row">
-                                                      <div class="col-lg-6 m-form__group-sub">
-                                                         <label class="form-control-label">Año:</label>
-                                                         <input type="text" formControlName="year" class="form-control m-input">
-
-                                                      </div>
-                                                      <div class="col-lg-6 m-form__group-sub">
-                                                         <label class="form-control-label">Semestre:</label>
-                                                         <input type="text" formControlName="semester" class="form-control m-input"
-                                                            placeholder="">
-
-                                                      </div>
-                                                   </div>
-                                             </div>
-
-                                          </div>
-                                       </div>
-                                    </div>
-
-
-                                    <div class="m-portlet__foot m-portlet__foot--fit">
-                                          <div class="m-form__actions">
-                                             <div class="row">
-                                                <div class="col m--align-right">
-                                                      <button type="reset" class="btn btn-primary">Actualizar</button>
-                                                </div>
-                                             </div>
-
-
-                                          </div>
-                                       </div>
-
-                                 </form>
-                              </ng-container>
-
-
-
+                              <cw-general [id_course]=id_course></cw-general>
                            </ng-template>
                         </ngb-tab>
                         <ngb-tab>
@@ -145,7 +30,7 @@
                               <b>Modulos</b>
                            </ng-template>
                            <ng-template ngbTabContent>
-                              <cw-modules id_number='5'></cw-modules>
+                              <cw-modules [id_course]=id_course></cw-modules>
                            </ng-template>
                         </ngb-tab>
                         <ngb-tab>
@@ -153,7 +38,7 @@
                               <b>Estudiantes</b>
                            </ng-template>
                            <ng-template ngbTabContent>
-                              <cw-students></cw-students>
+                              <cw-students [id_course]=id_course></cw-students>
                            </ng-template>
                         </ngb-tab>
                      </ngb-tabset>

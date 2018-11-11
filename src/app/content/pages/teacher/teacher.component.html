@@ -52,7 +52,7 @@
                <div style="height: 200px;" echarts [options]="options"></div>
             </div>
          </div>
-         <div class="col-xl-4" *ngIf="courses">
+         <div class="col-xl-4" *ngIf="courses && courses.length > 0">
             meta curso {{courses[0].course_goal}} <br>
             meta estudiante {{courses[0].student_goal}}
          </div>

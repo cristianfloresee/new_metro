@@ -1,126 +1,64 @@
-<ng-container>
-   <form class="m-form m-form--label-align-left- m-form--state-" id="m_form">
+<div class="form-group m-form__group m--margin-top-10">
+   <div class="alert m-alert m-alert--default" role="alert">
+      En esta sección encontrarás los estudiantes inscritos al curso.
+   </div>
+</div>
 
 
-      <div class="m-portlet__body">
-         <div class="row">
-            <div class="col-xl-8 offset-xl-2">
-               <div class="m-form__section m-form__section--first">
-                  <div class="m-form__heading">
-                     <h3 class="m-form__heading-title">
-                        Detalle de la Asignatura
-                     </h3>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <label class="col-xl-3 col-lg-3 col-form-label">Nombre:</label>
-                     <div class="col-xl-9 col-lg-9">
-                        <input type="text" name="name" class="form-control m-input" placeholder="" value="Nick Stone" disabled>
-                        <span class="m-form__help">Please enter your first and last names</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="m-separator m-separator--dashed m-separator--lg"></div>
+<div class="m-portlet__body">
 
-               <div class="m-form__section">
-                  <div class="m-form__heading">
-                     <h3 class="m-form__heading-title">
-                        Detalle del Curso
-                        <i data-toggle="m-tooltip" data-width="auto" class="m-form__heading-help-icon flaticon-info"
-                           title="Some help text goes here"></i>
-                     </h3>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <label class="col-xl-3 col-lg-3 col-form-label">Nombre:</label>
-                     <div class="col-xl-9 col-lg-9">
-                        <input type="text" name="address1" class="form-control m-input" placeholder="" value="Headquarters 1120 N Street Sacramento 916-654-5266">
-                        <span class="m-form__help">Street address, P.O. box, company name, c/o</span>
-                     </div>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <label class="col-xl-3 col-lg-3 col-form-label">Código:</label>
-                     <div class="col-xl-9 col-lg-9">
-                        <input type="text" name="address2" class="form-control m-input" placeholder="" value="P.O. Box 942873 Sacramento, CA 94273-0001">
-                        <span class="m-form__help">Appartment, suite, unit, building, floor, etc</span>
-                     </div>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <label class="col-xl-3 col-lg-3 col-form-label">Meta del Curso:</label>
-                     <div class="col-xl-9 col-lg-9">
-                        <input type="text" name="city" class="form-control m-input" placeholder="" value="Polo Alto">
-                     </div>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <label class="col-xl-3 col-lg-3 col-form-label">Meta por Estudiante:</label>
-                     <div class="col-xl-9 col-lg-9">
-                        <input type="text" name="state" class="form-control m-input" placeholder="" value="California">
-                     </div>
-                  </div>
+      <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+         <div class="row align-items-center">
+            <div class="col-xl-12 order-1 order-xl-2 m--align-right">
 
-               </div>
-               <div class="m-separator m-separator--dashed m-separator--lg"></div>
-               <div class="m-form__section m-form__section--first">
-                  <div class="m-form__heading">
-                     <h3 class="m-form__heading-title">Detalle de Calendario</h3>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <div class="col-lg-6 m-form__group-sub">
-                        <label class="form-control-label">Año:</label>
-                        <input type="text" name="account_username" class="form-control m-input" placeholder="" value="nick.stone">
-                        <span class="m-form__help">Your username to login to your dashboard</span>
-                     </div>
-                     <div class="col-lg-6 m-form__group-sub">
-                        <label class="form-control-label">Semestre:</label>
-                        <input type="password" name="account_password" class="form-control m-input" placeholder=""
-                           value="qwerty">
-                        <span class="m-form__help">Please use letters and at least one number and symbol</span>
-                     </div>
-                  </div>
-               </div>
-               <div class="m-separator m-separator--dashed m-separator--lg"></div>
-               <div class="m-form__section">
-                  <div class="m-form__heading">
-                     <h3 class="m-form__heading-title">Client Settings</h3>
-                  </div>
-                  <div class="form-group m-form__group row">
-                     <div class="col-lg-6 m-form__group-sub">
-                        <label class="form-control-label">* User Group:</label>
-                        <div class="m-radio-inline">
-                           <label class="m-radio m-radio--solid m-radio--brand">
-                              <input type="radio" name="account_group" checked="" value="2"> Sales Person
-                              <span></span>
-                           </label>
-                           <label class="m-radio m-radio--solid m-radio--brand">
-                              <input type="radio" name="account_group" value="2"> Customer
-                              <span></span>
-                           </label>
-                        </div>
-                        <span class="m-form__help">Please select user group</span>
-                     </div>
-                     <div class="col-lg-6 m-form__group-sub">
-                        <label class="form-control-label">* Communications:</label>
-                        <div class="m-checkbox-inline">
-                           <label class="m-checkbox m-checkbox--solid m-checkbox--brand">
-                              <input type="checkbox" name="account_communication[]" checked value="email"> Email
-                              <span></span>
-                           </label>
-                           <label class="m-checkbox m-checkbox--solid  m-checkbox--brand">
-                              <input type="checkbox" name="account_communication[]" value="sms"> SMS
-                              <span></span>
-                           </label>
-                           <label class="m-checkbox m-checkbox--solid  m-checkbox--brand">
-                              <input type="checkbox" name="account_communication[]" value="phone"> Phone
-                              <span></span>
-                           </label>
-                        </div>
-                        <span class="m-form__help">Please select user communication options</span>
-                     </div>
-                  </div>
-               </div>
+               <button (click)="addStudent()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                  <span>
+                     <span>Añadir Estudiante</span>
+                  </span>
+               </button>
+               <div class="m-separator m-separator--dashed d-xl-none"></div>
             </div>
          </div>
       </div>
+      <!-- FIN FILTRO/BUSQUEDA -->
 
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
 
-
-   </form>
-</ng-container>
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Usuario</th>
+                  <th>Documento</th>
+                  <th>Nombres</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
+                  <th>Correo Electrónico</th>
+                  <th>Añadido</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+   <!--
+            <tbody>
+               <tr *ngFor="let calendar of calendars; let i=index">
+                  <td>{{i+1}}</td>
+                  <td class="nowrap">{{calendar.year}}</td>
+                  <td>{{calendar.semester}}</td>
+                  <td class="nowrap">{{calendar.created_at | timeAgo}}</td>
+                  <td class="nowrap">{{calendar.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="openCalendarEdit(calendar)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a (click)="deleteCalendar(calendar.id_calendar)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>-->
+         </table>
+      </div>
+   </div>

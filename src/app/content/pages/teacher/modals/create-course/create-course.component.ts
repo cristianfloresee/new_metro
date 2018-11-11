@@ -1,6 +1,8 @@
 //ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+//RXJS
+import { Subscription } from 'rxjs';
 //NG-BOOTSTRAP
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 //NGX-TOASTR
@@ -16,18 +18,22 @@ import { SessionService } from 'src/app/core/services/API/session.service';
    templateUrl: './create-course.component.html',
    styleUrls: ['./create-course.component.scss']
 })
-export class CreateCourseComponent implements OnInit {
+export class CreateCourseComponent implements OnInit, OnDestroy {
 
    courseForm: FormGroup;
-
+   id_user;
    //SELECT OPTIONS
    options_subject;
    options_calendar;
+   //DETECCIÓN DE CAMBIOS EN EL FORM
+   subjectChanges$: Subscription;
+   courseGoalChanges$: Subscription;
+   studentGoalChanges$: Subscription;
 
    constructor(
       public fb: FormBuilder,
       public activeModal: NgbActiveModal,
-      public _subjectSrv: SubjectService,
+      private _subjectSrv: SubjectService,
       private _calendarSrv: CalendarService,
       private _courseSrv: CourseService,
       private _sessionSrv: SessionService,
@@ -35,6 +41,7 @@ export class CreateCourseComponent implements OnInit {
    ) { }
 
    ngOnInit() {
+      this.id_user = this._sessionSrv.userSubject.value.id_user;
       this.initFormData();
       this.loadFormOptions();
       this.checkValidFields();
@@ -42,21 +49,20 @@ export class CreateCourseComponent implements OnInit {
 
    initFormData() {
       this.courseForm = this.fb.group({
-         name: ['', [Validators.required, Validators.maxLength(15)]],
          subject: ['', Validators.required],
          year: ['', Validators.required],
          semester: ['', Validators.required],
+         name: ['', [Validators.required, Validators.maxLength(15)]],
          goalsForm: this.fb.group({
             course_goal: ['', Validators.required],
             student_goal: ['', Validators.required],
-         }, { validator: this.validGoals })
+         }, { validator: this.validGoals }),
       });
    }
 
    createCourse(course) {
 
-      let id_user = this._sessionSrv.userSubject.value.id_user;
-      let _course = { id_calendar: course.semester, id_user: id_user, id_subject: course.subject, name: course.name, course_goal: course.goalsForm.course_goal, student_goal: course.goalsForm.student_goal }
+      let _course = { id_calendar: course.semester, id_user: this.id_user, id_subject: course.subject, name: course.name, course_goal: course.goalsForm.course_goal, student_goal: course.goalsForm.student_goal }
       this._courseSrv.createCourse(_course)
          .subscribe(
             result => {
@@ -66,10 +72,8 @@ export class CreateCourseComponent implements OnInit {
             error => {
                console.log("error: ", error);
                this.toastr.error('No se ha podido crear el curso.', 'Ha ocurrido un error!');
-
             }
          );
-
    }
 
    loadFormOptions() {
@@ -107,23 +111,27 @@ export class CreateCourseComponent implements OnInit {
    }
 
    checkValidFields() {
-      this.courseForm.controls.goalsForm.get('course_goal').valueChanges.subscribe((changes) => {
+
+      this.subjectChanges$ = this.courseForm.get('year').valueChanges.subscribe(()=> {
+         this.courseForm.controls.semester.setValue('');
+      });
+
+      this.courseGoalChanges$ = this.courseForm.controls.goalsForm.get('course_goal').valueChanges.subscribe((changes) => {
          let new_value = this.validNumbers(changes)
          if (changes.length != new_value.length) this.courseForm.patchValue({ goalsForm: { course_goal: new_value, } }, { emitEvent: false });
       });
 
-      this.courseForm.controls.goalsForm.get('student_goal').valueChanges.subscribe((changes) => {
+      this.studentGoalChanges$ = this.courseForm.controls.goalsForm.get('student_goal').valueChanges.subscribe((changes) => {
          let new_value = this.validNumbers(changes)
          if (changes.length != new_value.length) this.courseForm.patchValue({ goalsForm: { student_goal: new_value, } }, { emitEvent: false });
       });
    }
 
-
    validNumbers(value) {
       return value.replace(/[^0-9]/g, '');
    }
 
-   //VALIDADOR
+   //VALIDADOR DE METAS
    validGoals(group: FormGroup) {
       const course_goal = Number(group.get('course_goal').value);
       const student_goal = Number(group.get('student_goal').value);
@@ -131,5 +139,10 @@ export class CreateCourseComponent implements OnInit {
       else return null;
    }
 
+   ngOnDestroy(){
+      this.subjectChanges$.unsubscribe();
+      this.courseGoalChanges$.unsubscribe();
+      this.studentGoalChanges$.unsubscribe();
+   }
 
 }

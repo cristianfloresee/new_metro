@@ -11,6 +11,7 @@ import { ConfigComponent } from './courses/config/config.component';
 import { ModulesComponent } from './courses/config/modules/modules.component';
 import { StudentsComponent } from './courses/config/students/students.component';
 import { CoreModule } from 'src/app/core/core.module';
+import { GeneralComponent } from './courses/config/general/general.component';
 
 //RUTAS
 @NgModule({
@@ -23,6 +24,12 @@ import { CoreModule } from 'src/app/core/core.module';
       FormsModule,
       ReactiveFormsModule,
    ],
-   declarations: [TeacherComponent, ConfigComponent, ModulesComponent, StudentsComponent]
+   declarations: [
+      TeacherComponent,
+      ConfigComponent,
+      ModulesComponent,
+      StudentsComponent,
+      GeneralComponent,
+   ]
 })
 export class TeacherModule { }

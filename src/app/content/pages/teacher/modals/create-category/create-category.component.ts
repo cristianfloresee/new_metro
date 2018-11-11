@@ -56,7 +56,6 @@ export class CreateCategoryComponent implements OnInit {
    }
 
    createCategory(category) {
-      console.log("create category: ", category);
 
       this._categorySrv.createCategory(this._sessionSrv.userSubject.value.id_user, category.subject, category.name)
          .subscribe(

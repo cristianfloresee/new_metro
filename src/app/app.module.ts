@@ -71,6 +71,12 @@ import { SubcategoryService } from './core/services/API/subcategory';
 import { QuestionService } from './core/services/API/question.service';
 import { SidemenuService } from './core/services/sidemenu.service';
 import { utilService } from './core/services/utils.service';
+import { DeleteCourseComponent } from './content/pages/teacher/modals/delete-course/delete-course.component';
+import { CreateModuleComponent } from './content/pages/teacher/modals/create-module/create-module.component';
+import { ModuleService } from './core/services/API/module.service';
+import { AddStudentComponent } from './content/pages/teacher/courses/config/students/add-student/add-student.component';
+import { EnrollmentService } from './core/services/API/enrollments.service';
+import { EditModuleComponent } from './content/pages/teacher/modals/edit-module/edit-module.component';
 
 @NgModule({
    declarations: [
@@ -85,7 +91,11 @@ import { utilService } from './core/services/utils.service';
       CreateCategoryComponent,
       CreateSubcategoryComponent,
       CreateQuestionComponent,
-      YearDatepickerComponent
+      YearDatepickerComponent,
+      DeleteCourseComponent,
+      CreateModuleComponent,
+      AddStudentComponent,
+      EditModuleComponent
    ],
    imports: [
       //ANGULAR
@@ -132,6 +142,7 @@ import { utilService } from './core/services/utils.service';
       SubjectService,
       LoaderService,
       RoleService,
+      ModuleService,
       PageService,
       SubheaderService,
       SocketService,
@@ -140,6 +151,7 @@ import { utilService } from './core/services/utils.service';
       QuestionService,
       SidemenuService,
       utilService,
+      EnrollmentService,
       //GUARDS
       LoginGuard,
       AdminGuard,
@@ -156,7 +168,11 @@ import { utilService } from './core/services/utils.service';
       CreateCourseComponent,
       CreateQuestionComponent,
       CreateCategoryComponent,
-      CreateSubcategoryComponent
+      CreateSubcategoryComponent,
+      DeleteCourseComponent,
+      CreateModuleComponent,
+      AddStudentComponent,
+      EditModuleComponent
    ],
    bootstrap: [AppComponent]
 })

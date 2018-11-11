@@ -57,7 +57,6 @@ export class UserService {
       if (role) filter += `&role=${role}`;
       if (status) filter += `&status=${status}`;
       if (search) filter += `&search=${search}`;
-      //console.log(`${API.CALENDAR_ALL}?from=${from}&limit=${limit}${filter}`);
 
       return this.http.get(`${API.USER_ALL}?from=${from}&limit=${limit}${filter}`)
          .pipe(map((response: any) => response))
@@ -71,8 +70,9 @@ export class UserService {
       return this.http.get(`${API.USER_COUNT}`);
    }
 
-   getStudentsByCourse(id_course){
-
+   getUsersByCourse(id_course) {
+      const params = { id_course };
+      return this.http.get(API.USER_ALL, { params })
    }
 
 }

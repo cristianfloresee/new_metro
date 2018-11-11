@@ -33,6 +33,11 @@ export class CategoryService {
       return this.http.get(`${API.CATEGORY_GET}${params}`)
    }
 
+   getCategoriesByUserIdAndSubjectId(id_user,id_subject){
+      let params = `?id_user=${id_user}&id_subject=${id_subject}`;
+      return this.http.get(`${API.CATEGORY_GET}${params}`);
+   }
+
    createCategory(id_user, id_subject, name){
       return this.http.post(API.CATEGORY_CREATE, {id_user, id_subject, name})
    }

@@ -56,12 +56,22 @@
       <ng-container *ngIf="current_role.id_role == 2">
 
          <li class="m-menu__section ">
-            <h4 class="m-menu__section-text">ASIGNATURAS</h4>
+            <h4 class="m-menu__section-text">MIS CURSOS</h4>
             <i class="m-menu__section-icon flaticon-more-v2"></i>
          </li>
 
 
          <!-- ASIGNATURAS -->
+         <li *ngIf="my_menu && my_menu.length == 0" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+         m-menu-submenu-toggle="hover">
+
+         <a href="javascript:;" class="m-menu__link m-menu__toggle">
+            <span class="m-menu__link-text">(Crear Curso)</span>
+            <i class="m-menu__ver-arrow la la-angle-right"></i>
+         </a>
+         </li>
+
+
          <li *ngFor="let subject of my_menu" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
             m-menu-submenu-toggle="hover">
             <a href="javascript:;" class="m-menu__link m-menu__toggle">
@@ -144,5 +154,15 @@
 
       </ng-container>
 
+      <li style="margin-top: 50px" class="m-menu__item  m-menu__item" aria-haspopup="true">
+         <a routerLink="/" class="m-menu__link">
+            <i class="m-menu__link-icon flaticon-line-graph"></i>
+            <span class="m-menu__link-title">
+               <span class="m-menu__link-wrap">
+                  <span class="m-menu__link-text">Cerrar Sesión</span>
+               </span>
+            </span>
+         </a>
+      </li>
    </ul>
 </div>

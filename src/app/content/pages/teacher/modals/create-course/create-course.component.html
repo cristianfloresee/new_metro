@@ -8,16 +8,6 @@
 <form [formGroup]="courseForm" (ngSubmit)="createCourse(courseForm.value)" class="m-form m-form--state m-form--label-align-right">
    <div class="modal-body">
       <div class="m-portlet__body">
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
-            <label class="form-control-label">Nombre del Curso:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
-            <!--===================== ERRORES DE NOMBRE =====================-->
-            <div class="form-control-feedback" *ngIf="courseForm.controls['name'].hasError('required') && (courseForm.controls['name'].dirty || courseForm.controls['name'].touched)">
-               Este campo es requerido.
-            </div>
-            <!-- FIN ERRORES DE NOMBRE -->
-         </div>
-
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.subject.invalid && courseForm.controls.subject.touched }">
             <label class="form-control-label">Asignatura:</label>
@@ -60,6 +50,16 @@
             <!-- FIN ERRORES DE PATERNO -->
          </div>
 
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
+            <label class="form-control-label">Nombre del Curso:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="courseForm.controls['name'].hasError('required') && (courseForm.controls['name'].dirty || courseForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
+
          <ng-container formGroupName="goalsForm">
 
             <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls['goalsForm'].controls['course_goal'].invalid && courseForm.controls['goalsForm'].controls['course_goal'].touched }">
@@ -87,7 +87,7 @@
             <span class="text-danger" *ngIf="courseForm.controls.goalsForm.errors && courseForm.controls.goalsForm.touched">
                La meta por estudiante debe ser menor a la meta por curso.
             </span>
-         </ng-container>
+         </ng-container>            
 
       </div>
 

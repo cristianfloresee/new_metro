@@ -25,6 +25,11 @@ export class CalendarService {
          if (search) params += `&search=${search}`;
       }
 
+      /*
+
+
+      */
+
       return this.http.get(`${API.CALENDAR_ALL}${params}`)
          .pipe(map((response: any) => response))
 

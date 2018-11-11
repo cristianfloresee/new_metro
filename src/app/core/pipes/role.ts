@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class rolePipe implements PipeTransform {
 
-   transform(role): string {
+   transform(role: number): string {
       if (role == 1) return 'Administrador'
       else if (role == 2) return 'Profesor'
       else return 'Estudiante'

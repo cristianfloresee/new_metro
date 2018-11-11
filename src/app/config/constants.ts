@@ -15,6 +15,8 @@ export const API = {
    USER_UPDATE: `${API_URL}users/update/`,
    USER_DELETE: `${API_URL}users/delete/`,
    USER_COUNT: `${API_URL}users/count`,
+   //USUARIO-CURSO
+   ENROLLMENTS: `${API_URL}enrollments`,
    //CALENDARIO
    CALENDAR_ALL: `${API_URL}calendars`,
    CALENDAR_CREATE: `${API_URL}calendars/create`,
@@ -24,6 +26,8 @@ export const API = {
    //CURSOS
    COURSE_GET: `${API_URL}courses`,
    COURSE_CREATE: `${API_URL}courses/create`,
+   COURSE_UPDATE: `${API_URL}courses/update/`,
+   COURSE_DELETE: `${API_URL}courses/delete/`,
    //ASIGNATURAS
    SUBJECT_ALL: `${API_URL}subjects`,
    SUBJECT_CREATE: `${API_URL}subjects/create`,
@@ -45,6 +49,10 @@ export const API = {
    //PREGUNTAS
    QUESTION_GET: `${API_URL}questions`,
    QUESTION_CREATE: `${API_URL}questions/create`,
+   //MODULOS
+   MODULE_GET: `${API_URL}modules`,
+   MODULE_CREATE: `${API_URL}modules/create`,
+   MODULE_DELETE: `${API_URL}modules/delete/`,
    //OTROS
    UPLOAD_IMAGE: `${API_URL}image/`
 };

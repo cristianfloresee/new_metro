@@ -27,7 +27,6 @@ export class EditCalendarComponent implements OnInit {
       public activeModal: NgbActiveModal,
       private _calendarSrv: CalendarService,
       private toastr: ToastrService,
-      private _calendar: NgbCalendar
    ) {
 
    }
@@ -74,6 +73,8 @@ export class EditCalendarComponent implements OnInit {
          );
    }
 
+
+   //INDICA SE EL FORMULARIO CAMBIO
    checkFormChanges() {
       this.calendarFormChanges$ = this.calendarForm.valueChanges
          .subscribe((changes) => {

@@ -1,6 +1,5 @@
 //ANGULAR IMPORTS
 import { Component, OnInit, Output, Input, ViewChild, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-//import { NgForm } from '@angular/forms';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 //RXJS
 import { Subject } from 'rxjs';

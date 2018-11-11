@@ -98,7 +98,6 @@ export class CreateUserComponent implements OnInit {
    //COMPRUEBA SI LAS CONTRASEÑAS SON IGUALES
    equalPasswords(password1, password2) {
       return (result: FormGroup) => {
-         console.log("equalPassword validation...");
          let pass1 = result.controls[password1].value;
          let pass2 = result.controls[password2].value;
 

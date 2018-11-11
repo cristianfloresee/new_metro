@@ -9,14 +9,17 @@
    <div class="modal-body">
       <div class="m-portlet__body">
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subcategoryForm.controls.name.invalid && subcategoryForm.controls.name.touched }">
-            <label class="form-control-label">Nombre de la Subcategoría:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
-            <!--===================== ERRORES DE NOMBRE =====================-->
-            <div class="form-control-feedback" *ngIf="subcategoryForm.controls['name'].hasError('required') && (subcategoryForm.controls['name'].dirty || subcategoryForm.controls['name'].touched)">
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subcategoryForm.controls.subject.invalid && subcategoryForm.controls.subject.touched }">
+            <label class="form-control-label">Asignatura:</label>
+            <select formControlName="subject" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+            </select>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="subcategoryForm.controls['subject'].hasError('required') && (subcategoryForm.controls['subject'].dirty || subcategoryForm.controls['subject'].touched)">
                Este campo es requerido.
             </div>
-            <!-- FIN ERRORES DE NOMBRE -->
+            <!-- FIN ERRORES DE PATERNO -->
          </div>
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subcategoryForm.controls.category.invalid && subcategoryForm.controls.category.touched }">
@@ -30,6 +33,16 @@
                Este campo es requerido.
             </div>
             <!-- FIN ERRORES DE PATERNO -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subcategoryForm.controls.name.invalid && subcategoryForm.controls.name.touched }">
+            <label class="form-control-label">Nombre de la Subcategoría:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="subcategoryForm.controls['name'].hasError('required') && (subcategoryForm.controls['name'].dirty || subcategoryForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
          </div>
 
       </div>

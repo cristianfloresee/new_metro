@@ -41,6 +41,11 @@ export class SubjectService {
          )
    }
 
+
+   getSubjectsByUserId(id_user){
+      let params = `?teacher_options=${id_user}`
+      return this.http.get(`${API.SUBJECT_ALL}${params}`)
+   }
    createSubject(subject) {
       const { name } = subject;
       return this.http.post(API.SUBJECT_CREATE, { name });
