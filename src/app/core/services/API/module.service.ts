@@ -30,29 +30,8 @@ export class ModuleService {
       return this.http.delete(`${API.MODULE_DELETE}${id_module}`);
    }
 
-   // updateCalendar(calendar, id_calendar) {
-
-   //    const { year, semester } = calendar;
-
-   //    return this.http.put(`${API.CALENDAR_UPDATE}${id_calendar}`, { year, semester })
-   //       .pipe(
-   //          map((response: any) => {
-   //             console.log("RESPONSE: ", response);
-   //             return true;
-   //          }),
-   //          catchError(err => {
-   //             console.log("error en el service: ", err)
-   //             return throwError(err);
-   //          })
-   //       );
-   // }
-
-   // deleteCalendar(id_calendar) {
-   //    return this.http.delete(`${API.CALENDAR_DELETE}${id_calendar}`);
-   // }
-
-   // countCalendar() {
-   //    return this.http.get(`${API.CALENDAR_COUNT}`);
-   // }
+   updateModule(id_module, name) {
+      return this.http.put(`${API.MODULE_UPDATE}${id_module}`, { name });
+   }
 
 }

@@ -53,7 +53,7 @@ export class CalendarComponent implements OnInit {
          .subscribe(
             result => {
                console.log("result: ", result);
-               this.calendars = result.results;
+               this.calendars = result.items;
             },
             error => {
                console.log("error:", error);

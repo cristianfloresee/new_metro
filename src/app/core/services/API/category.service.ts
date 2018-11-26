@@ -47,5 +47,4 @@ export class CategoryService {
       return this.http.get(`${API.CATEGORY_GET}${params}`)
    }
 
-
 }

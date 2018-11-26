@@ -183,7 +183,9 @@ export class TeacherComponent implements OnInit {
    }
 
    openCreateAnswer() {
-      const modalRef = this.ngModal.open(CreateQuestionComponent);
+      const modalRef = this.ngModal.open(CreateQuestionComponent,{
+         size: "lg"
+      });
    }
 
    openCreateCategory() {

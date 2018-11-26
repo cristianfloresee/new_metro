@@ -15,8 +15,10 @@ export const API = {
    USER_UPDATE: `${API_URL}users/update/`,
    USER_DELETE: `${API_URL}users/delete/`,
    USER_COUNT: `${API_URL}users/count`,
-   //USUARIO-CURSO
+   // User-Course (Enrollment)
    ENROLLMENTS: `${API_URL}enrollments`,
+   ACTIVITIES: `${API_URL}activities`,
+
    //CALENDARIO
    CALENDAR_ALL: `${API_URL}calendars`,
    CALENDAR_CREATE: `${API_URL}calendars/create`,
@@ -52,6 +54,7 @@ export const API = {
    //MODULOS
    MODULE_GET: `${API_URL}modules`,
    MODULE_CREATE: `${API_URL}modules/create`,
+   MODULE_UPDATE: `${API_URL}modules/update/`,
    MODULE_DELETE: `${API_URL}modules/delete/`,
    //OTROS
    UPLOAD_IMAGE: `${API_URL}image/`

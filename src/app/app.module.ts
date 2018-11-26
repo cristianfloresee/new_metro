@@ -78,6 +78,14 @@ import { AddStudentComponent } from './content/pages/teacher/courses/config/stud
 import { EnrollmentService } from './core/services/API/enrollments.service';
 import { EditModuleComponent } from './content/pages/teacher/modals/edit-module/edit-module.component';
 
+import { FileSelectDirective } from 'ng2-file-upload';
+import { CreateActivityComponent } from './content/pages/teacher/modals/create-activity/create-activity.component';
+import { ActivityService } from './core/services/API/activity.service';
+import { CreateLessonComponent } from './content/pages/teacher/modals/create-lesson/create-lesson.component';
+import { LessonService } from './core/services/API/lesson.service';
+import { EditLessonComponent } from './content/pages/teacher/modals/edit-lesson/edit-lesson.component';
+import { UpdateActivityComponent } from './content/pages/teacher/modals/update-activity/update-activity.component';
+
 @NgModule({
    declarations: [
       AppComponent,
@@ -95,7 +103,12 @@ import { EditModuleComponent } from './content/pages/teacher/modals/edit-module/
       DeleteCourseComponent,
       CreateModuleComponent,
       AddStudentComponent,
-      EditModuleComponent
+      EditModuleComponent,
+      FileSelectDirective,
+      CreateActivityComponent,
+      CreateLessonComponent,
+      EditLessonComponent,
+      UpdateActivityComponent
    ],
    imports: [
       //ANGULAR
@@ -152,6 +165,8 @@ import { EditModuleComponent } from './content/pages/teacher/modals/edit-module/
       SidemenuService,
       utilService,
       EnrollmentService,
+      ActivityService,
+      LessonService,
       //GUARDS
       LoginGuard,
       AdminGuard,
@@ -172,7 +187,11 @@ import { EditModuleComponent } from './content/pages/teacher/modals/edit-module/
       DeleteCourseComponent,
       CreateModuleComponent,
       AddStudentComponent,
-      EditModuleComponent
+      EditModuleComponent,
+      CreateActivityComponent,
+      CreateLessonComponent,
+      EditLessonComponent,
+      UpdateActivityComponent
    ],
    bootstrap: [AppComponent]
 })

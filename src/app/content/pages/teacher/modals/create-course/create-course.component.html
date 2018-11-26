@@ -1,6 +1,6 @@
 <div class="modal-header">
    <h4 class="modal-title">Crear Curso</h4>
-   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
 </div>
@@ -87,7 +87,7 @@
             <span class="text-danger" *ngIf="courseForm.controls.goalsForm.errors && courseForm.controls.goalsForm.touched">
                La meta por estudiante debe ser menor a la meta por curso.
             </span>
-         </ng-container>            
+         </ng-container>
 
       </div>
 

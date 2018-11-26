@@ -9,6 +9,7 @@ import { ModuleService } from 'src/app/core/services/API/module.service';
 //SWEETALERT2
 import Swal from 'sweetalert2';
 import { EditModuleComponent } from '../../../modals/edit-module/edit-module.component';
+import { Subscription } from 'rxjs';
 
 @Component({
    selector: 'cw-modules',
@@ -38,6 +39,7 @@ export class ModulesComponent implements OnInit {
       modalRef.componentInstance.id_course = this.id_course;
 
       modalRef.result.then((result) => {
+         console.log(`result: ${result}, ${typeof(result)}`)
          if (result) this.getModules()
       });
    }
@@ -46,7 +48,7 @@ export class ModulesComponent implements OnInit {
       this._moduleSrv.getModulesByCourseId(this.id_course)
          .subscribe((value: any) => {
             console.log("modulos: ", value);
-            this.modules = value.results;
+            this.modules = value;
          })
    }
 
@@ -98,4 +100,6 @@ export class ModulesComponent implements OnInit {
          }
       })
    }
+
+
 }

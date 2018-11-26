@@ -1,0 +1,75 @@
+<div class="modal-header">
+   <h4 class="modal-title">Actualizar Actividad</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="activityForm" (ngSubmit)="updateActivity(activityForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
+            <label class="form-control-label">Modulo:</label>
+            <select formControlName="module" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
+            </select>
+
+            <div class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
+               Este campo es requerido.
+            </div>
+
+         </div>
+
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
+            <label class="form-control-label">Clase:</label>
+            <select formControlName="lesson" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let lesson of options_lesson" [value]="lesson.id_class">{{lesson.description}}</option>
+            </select>
+
+            <div class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
+               Este campo es requerido.
+            </div>
+
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.name.invalid && activityForm.controls.name.touched }">
+            <label class="form-control-label">Nombre de la Actividad:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="activityForm.controls['name'].hasError('required') && (activityForm.controls['name'].dirty || activityForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.mode.invalid && activityForm.controls.mode.touched }">
+            <label class="form-control-label">Modalidad:</label>
+            <select formControlName="mode" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option [ngValue]="1">Individual</option>
+               <option [ngValue]="2">Grupal</option>
+            </select>
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.status.invalid && activityForm.controls.status.touched }">
+            <label class="form-control-label">Estado:</label>
+            <select formControlName="status" class="m-datatable__pager-size" style="width:160px">
+               <option value="">Seleccionar</option>
+               <option [ngValue]="true">Pendiente</option>
+               <option [ngValue]="false">Realizado</option>
+            </select>
+         </div>
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="activityForm.pristine || activityForm.invalid">Actualizar</button>
+   </div>
+</form>
+

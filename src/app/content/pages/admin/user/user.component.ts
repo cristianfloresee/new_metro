@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
    userForm: FormGroup;
 
    constructor(
-      fb: FormBuilder,
+      private fb: FormBuilder,
       private _userSrv: UserService,
       private ngModal: NgbModal
    ) {

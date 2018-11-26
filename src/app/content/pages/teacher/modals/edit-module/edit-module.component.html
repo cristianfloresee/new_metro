@@ -1,6 +1,6 @@
 <div class="modal-header">
    <h4 class="modal-title">Actualizar Modulo</h4>
-   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
 </div>
@@ -23,6 +23,6 @@
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-      <button type="submit" class="btn btn-info" [disabled]="moduleForm.invalid">Actualizar</button>
+      <button type="submit" class="btn btn-info" [disabled]="moduleForm.pristine || moduleForm.invalid">Actualizar</button>
    </div>
 </form>

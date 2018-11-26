@@ -90,7 +90,8 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
       this._calendarSrv.getCalendars()
          .subscribe(
             result => {
-               this.options_calendar = this.formatCalendarOptions(result.results);
+               console.log("pika: ", result);
+               this.options_calendar = this.formatCalendarOptions(result.items);
                // console.log("option_calendar: ", this.options_calendar);
             },
             error => {

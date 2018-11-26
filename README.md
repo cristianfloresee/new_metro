@@ -1,4 +1,7 @@
 ## Generación del Proyecto Angular
+
+Ver advaned porlets para tener cards con acciones mas bonitas
+Column Rendering para tener tablas con una columna que incluya foto nombre y los 2 apellidos del usuario
 ```
 ng new client --routing  --style scss --prefix cw
 ```
@@ -263,3 +266,28 @@ Incluye:
 
 + Reemplazar sweetalert2 por ngx-sweetalert2 (https://github.com/sweetalert2/ngx-sweetalert2)
   Con la versión ngx puedo ajustar opciones globales de estilo y aliviano el component.ts
+
+
+
+## Formateador en dd/MM/yyyy
+// Formatter using "dd-MM-yyyy" string format:
+class NgbDateStringParserFormatter extends NgbDateParserFormatter {
+  parse(value: string): NgbDateStruct {
+    if (!value) { return null; }
+
+    const parts = value.trim().split('-');
+    
+    return {
+      day: parts.length > 0 ? parseInt(parts[0], 10) : null,
+      month: parts.length > 1 ? parseInt(parts[1], 10) : null,
+      year: parts.length > 2 ? parseInt(parts[2], 10) : null,
+    };
+  }
+
+  format(date: NgbDateStruct): string {
+    const pad = (n) => Number.isInteger(n) ? ('0' + n).substr(-2) : '';
+    return date ? `${pad(date.day)}-${pad(date.month)}-${date.year}` : '';
+  }
+}
+
+https://gist.github.com/nrobinaubertin/61ff1c3db355c74f4e56f485b566ab22

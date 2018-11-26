@@ -75,4 +75,9 @@ export class UserService {
       return this.http.get(API.USER_ALL, { params })
    }
 
+   getUsersByDocumentId(document_no, id_course) {
+      const params = { document_no, id_course };
+      return this.http.get(`${API.USER_ALL}/students`, { params })
+   }
+
 }
