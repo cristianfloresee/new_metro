@@ -24,6 +24,8 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
    // Form para Creación
    activityForm: FormGroup;
 
+   data_students;
+
    // Detección de cambios en el Form
    moduleChanges$: Subscription;
    lessonChanges$: Subscription;
@@ -50,6 +52,7 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
       this.checkFormChanges();
       this.loadFormData();
       this.loadFormOptions();
+      this.getStudents();
    }
 
    initFormData() {
@@ -74,7 +77,7 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
 
    loadFormOptions() {
       // Obtiene los modulos por ID de Curso
-      this._moduleSrv.getModulesByCourseId(this.id_course)
+      this._moduleSrv.getModulesOptions({ id_course: this.id_course })
          .subscribe(
             result => {
                this.options_module = result;
@@ -89,9 +92,9 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
          this.activityForm.controls.lesson.setValue('');
          if (changes) {
             if (changes == this.activity.id_module) this.activityForm.get('module').markAsPristine();
-            this._lessonSrv.getLessonsByModuleId(changes)
+            this._lessonSrv.getLessonsOptions({ id_module: changes })
                .subscribe(
-                  result => {
+                  (result: any) => {
                      this.options_lesson = result;
                   },
                   error => {
@@ -135,6 +138,20 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
                this.toastr.error('La actividad no ha sido actualizada.', 'Ha ocurrido un error!');
             }
          );
+   }
+
+   getStudents() {
+
+      console.log("get students...");
+      this._activitySrv.getStudentsByActivityID(this.activity.id_activity)
+         .subscribe(
+            result => {
+               console.log("students: ", result);
+               this.data_students = result;
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
 
    ngOnDestroy() {

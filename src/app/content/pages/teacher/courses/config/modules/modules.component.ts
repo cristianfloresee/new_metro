@@ -1,14 +1,16 @@
+// Angular
 import { Component, OnInit, Input } from '@angular/core';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//MODALS
+// Modals
 import { CreateModuleComponent } from '../../../modals/create-module/create-module.component';
-//SERVICIOS
+// Services
 import { ModuleService } from 'src/app/core/services/API/module.service';
 //import { SessionService } from 'src/app/core/services/API/session.service';
-//SWEETALERT2
+// SweetAlert
 import Swal from 'sweetalert2';
 import { EditModuleComponent } from '../../../modals/edit-module/edit-module.component';
+// RxJS
 import { Subscription } from 'rxjs';
 
 @Component({

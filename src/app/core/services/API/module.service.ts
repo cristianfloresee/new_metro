@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //CONSTANTES
-import { API } from '../../../config/constants';
+import { API, API_URL } from '../../../config/constants';
 //SERVICIOS
 import { SessionService } from './session.service';
 //RXJS
@@ -20,6 +20,12 @@ export class ModuleService {
    getModulesByCourseId(id_course) {
       let params = { id_course };
       return this.http.get(API.MODULE_GET, { params });
+   }
+
+   // + { id_course }
+   getModulesOptions(params){
+      console.log("get lesson options");
+      return this.http.get(`${API_URL}modules/select_options`, { params });
    }
 
    createModule(name, id_course) {

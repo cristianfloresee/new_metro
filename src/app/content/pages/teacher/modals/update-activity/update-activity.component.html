@@ -9,60 +9,132 @@
    <div class="modal-body">
       <div class="m-portlet__body">
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
-            <label class="form-control-label">Modulo:</label>
-            <select formControlName="module" class="m-datatable__pager-size" style="width:160px">
-               <option value="">Seleccionar</option>
-               <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
-            </select>
-
-            <div class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
-               Este campo es requerido.
+         <!-- LEYENDA -->
+         <div class="form-group m-form__group m--margin-top-10">
+            <div class="alert m-alert m-alert--default" role="alert">
+               Indique a sus estudiantes que se inscriban con el <b>código del curso</b> o inscribalos usted mediante
+               el <b>número de cédula</b>.
+               Recuere que sus estudiantes deben estar registrados en la plataforma para poder inscribirlos.
             </div>
-
          </div>
 
+         <!-- CONTENEDOR -->
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
-            <label class="form-control-label">Clase:</label>
-            <select formControlName="lesson" class="m-datatable__pager-size" style="width:160px">
-               <option value="">Seleccionar</option>
-               <option *ngFor="let lesson of options_lesson" [value]="lesson.id_class">{{lesson.description}}</option>
-            </select>
+         <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
 
-            <div class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
-               Este campo es requerido.
+               <!-- BODY 1 -->
+               <div class="col-lg-6">
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
+                     <label class="form-control-label">Modulo:</label>
+                     <select formControlName="module" class="m-datatable__pager-size" style="width:160px">
+                        <option value="">Seleccionar</option>
+                        <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
+                     </select>
+
+                     <div class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
+                     <label class="form-control-label">Clase:</label>
+                     <select formControlName="lesson" class="m-datatable__pager-size" style="width:160px">
+                        <option value="">Seleccionar</option>
+                        <option *ngFor="let lesson of options_lesson" [value]="lesson.id_class">{{lesson.description}}</option>
+                     </select>
+
+                     <div class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.name.invalid && activityForm.controls.name.touched }">
+                     <label class="form-control-label">Nombre de la Actividad:</label>
+                     <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+                     <!--===================== ERRORES DE NOMBRE =====================-->
+                     <div class="form-control-feedback" *ngIf="activityForm.controls['name'].hasError('required') && (activityForm.controls['name'].dirty || activityForm.controls['name'].touched)">
+                        Este campo es requerido.
+                     </div>
+                     <!-- FIN ERRORES DE NOMBRE -->
+                  </div>
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.mode.invalid && activityForm.controls.mode.touched }">
+                     <label class="form-control-label">Modalidad:</label>
+                     <select formControlName="mode" class="m-datatable__pager-size" style="width:160px">
+                        <option value="">Seleccionar</option>
+                        <option [ngValue]="1">Individual</option>
+                        <option [ngValue]="2">Grupal</option>
+                     </select>
+                  </div>
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.status.invalid && activityForm.controls.status.touched }">
+                     <label class="form-control-label">Estado:</label>
+                     <select formControlName="status" class="m-datatable__pager-size" style="width:160px">
+                        <option value="">Seleccionar</option>
+                        <option [ngValue]="true">Pendiente</option>
+                        <option [ngValue]="false">Realizado</option>
+                     </select>
+                  </div>
+
+               </div>
+
+               <!-- BODY 2 -->
+               <div class="col-lg-6">
+                  <label class="form-control-label">Ganadores:</label>
+
+                  <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+                     <table class="cw-table">
+                        <thead>
+                           <tr>
+                              <th class="center">#</th>
+                              <th>Estudiante</th>
+                              <th>Ganador</th>
+                              <!-- <th class="center">Acciones</th> -->
+                           </tr>
+                        </thead>
+                        <tbody>
+
+                           <tr *ngFor="let student of data_students; let i=index">
+                              <td>{{i+1}}</td>
+
+                              <td class="nowrap">
+                                 <div class="m-widget4__item">
+
+                                    <div class="m-widget4__info">
+                                       <span class="m-widget4__title">
+                                          {{student.name}} {{student.last_name}} {{student.middle_name}}
+                                       </span><br>
+                                       <span class="m-widget4__sub" style="font-size: .8rem;">
+                                          Subtitulo
+                                          <!-- {{student.email}} -->
+                                       </span>
+                                    </div>
+
+                                 </div>
+                              </td>
+                              <td>{{student.status}}</td>
+
+                           </tr>
+                        </tbody>
+                     </table>
+                     <p>Total de Ganadores: {{data_students?.length}}</p>
+                  </div>
+
+
+
+               </div>
             </div>
-
          </div>
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.name.invalid && activityForm.controls.name.touched }">
-            <label class="form-control-label">Nombre de la Actividad:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
-            <!--===================== ERRORES DE NOMBRE =====================-->
-            <div class="form-control-feedback" *ngIf="activityForm.controls['name'].hasError('required') && (activityForm.controls['name'].dirty || activityForm.controls['name'].touched)">
-               Este campo es requerido.
-            </div>
-            <!-- FIN ERRORES DE NOMBRE -->
-         </div>
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.mode.invalid && activityForm.controls.mode.touched }">
-            <label class="form-control-label">Modalidad:</label>
-            <select formControlName="mode" class="m-datatable__pager-size" style="width:160px">
-               <option value="">Seleccionar</option>
-               <option [ngValue]="1">Individual</option>
-               <option [ngValue]="2">Grupal</option>
-            </select>
-         </div>
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.status.invalid && activityForm.controls.status.touched }">
-            <label class="form-control-label">Estado:</label>
-            <select formControlName="status" class="m-datatable__pager-size" style="width:160px">
-               <option value="">Seleccionar</option>
-               <option [ngValue]="true">Pendiente</option>
-               <option [ngValue]="false">Realizado</option>
-            </select>
-         </div>
+
 
       </div>
 
@@ -72,4 +144,3 @@
       <button type="submit" class="btn btn-info" [disabled]="activityForm.pristine || activityForm.invalid">Actualizar</button>
    </div>
 </form>
-

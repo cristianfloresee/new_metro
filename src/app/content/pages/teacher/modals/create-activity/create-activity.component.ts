@@ -79,7 +79,7 @@ export class CreateActivityComponent implements OnInit {
 
    loadFormOptions() {
       // Obtiene los modulos por ID de Curso
-      this._moduleSrv.getModulesByCourseId(this.id_course)
+      this._moduleSrv.getModulesOptions({ id_course: this.id_course })
          .subscribe(
             result => {
                this.options_module = result;
@@ -93,10 +93,10 @@ export class CreateActivityComponent implements OnInit {
       this.moduleChanges$ = this.activityForm.get('module').valueChanges.subscribe((changes) => {
          this.activityForm.controls.lesson.setValue('');
          if (changes) {
-            this._lessonSrv.getLessonsByModuleId(changes)
+            this._lessonSrv.getLessonsOptions({ id_module: changes })
                .subscribe(
-                  result => {
-
+                  (result: any) => {
+                     console.log("lesson options: ", result);
                      this.options_lesson = result;
                   },
                   error => {

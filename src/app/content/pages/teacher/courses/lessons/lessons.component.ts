@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 //NG-BOOTSTRAP
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+//NGX-TOASTR
+import { ToastrService } from 'ngx-toastr';
 //SWEETALERT2
 import Swal from 'sweetalert2';
 import { CreateActivityComponent } from '../../modals/create-activity/create-activity.component';
@@ -13,8 +15,6 @@ import { CreateLessonComponent } from '../../modals/create-lesson/create-lesson.
 import { LessonService } from 'src/app/core/services/API/lesson.service';
 import { EditLessonComponent } from '../../modals/edit-lesson/edit-lesson.component';
 
-
-
 @Component({
    selector: 'cw-lessons',
    templateUrl: './lessons.component.html',
@@ -22,17 +22,26 @@ import { EditLessonComponent } from '../../modals/edit-lesson/edit-lesson.compon
 })
 export class LessonsComponent implements OnInit {
 
-   options_module;
+   // Form para el Filtro y Búsqueda
    lessonForm: FormGroup;
 
-   data_lessons;
+   // Opciones de Selector
+   options_module;
 
    id_course;
-   from = 0;
-   limit = 5;
-   f_role = '';
+
+   // Evita se haga el mismo Filtro
+   f_module = '';
    f_status = '';
-   f_search = '';
+   //f_search = '';
+
+   data_lessons;
+   total_lessons = 0;
+   total_pages;
+   page_size = 20;
+   page = 1;
+   from = ((this.page - 1) * this.page_size);
+
    parameters$: Subscription;
 
    constructor(
@@ -40,7 +49,8 @@ export class LessonsComponent implements OnInit {
       private fb: FormBuilder,
       private _moduleSrv: ModuleService,
       private ngModal: NgbModal,
-      private _lessonSrv: LessonService
+      private _lessonSrv: LessonService,
+      private toastr: ToastrService
    ) {
    }
 
@@ -52,11 +62,11 @@ export class LessonsComponent implements OnInit {
       });
       this.initFormData();
       this.loadFormOptions();
-      this.getLessons();
+      this.getLessons({ id_course: this.id_course });
    }
 
    loadFormOptions() {
-      this._moduleSrv.getModulesByCourseId(this.id_course)
+      this._moduleSrv.getModulesOptions({ id_course: this.id_course })
          .subscribe(
             (result: any) => {
                console.log("opt: ", result)
@@ -68,16 +78,17 @@ export class LessonsComponent implements OnInit {
             });
    }
 
-   getLessons() {
-      this._lessonSrv.getLessonsByCourseId(this.id_course)
+   getLessons(params) {
+      this._lessonSrv.getLessons(params)
          .subscribe(
-            result => {
+            (result: any) => {
                console.log("lessons: ", result);
-               this.data_lessons = result;
+               this.data_lessons = result.items;
+               this.total_lessons = result.info.total_items;
+               this.total_pages = result.info.total_pages;
             },
             error => {
                console.log("error code:", error);
-
             }
          );
    }
@@ -89,7 +100,7 @@ export class LessonsComponent implements OnInit {
    }
 
 
-   updateLesson(lesson){
+   updateLesson(lesson) {
       const modalRef = this.ngModal.open(EditLessonComponent);
       modalRef.componentInstance.lesson = lesson;
       modalRef.componentInstance.options_module = this.options_module;
@@ -97,11 +108,59 @@ export class LessonsComponent implements OnInit {
 
    initFormData() {
       this.lessonForm = this.fb.group({
-         limit: [this.limit],
-         module: [this.f_role],
+         page_size: [this.page_size],
+         page: [1],
+         id_module: [this.f_module],
          status: [this.f_status],
-         search: [this.f_search]
       });
+   }
+
+   filterItems(params) {
+      console.log("params: ", params);
+      this.f_module = params.id_module;
+      this.f_status = params.status;
+
+      Object.assign(params, { id_course: this.id_course });
+      this.getLessons(params);
+   }
+
+   deleteLesson(id_lesson) {
+      const swalWithBootstrapButtons = Swal.mixin({
+         confirmButtonClass: 'btn btn-success',
+         cancelButtonClass: 'btn btn-danger',
+         buttonsStyling: false,
+      })
+
+      swalWithBootstrapButtons({
+         title: '¿Está seguro?',
+         text: "¿seguro desea eliminar la clase?",
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Si, Eliminar',
+         cancelButtonText: 'Cancelar',
+         reverseButtons: true
+      }).then((result) => {
+
+         if (result.value) {
+            this._lessonSrv.deleteLesson(id_lesson)
+               .subscribe(
+                  result => {
+                     console.log("result: ", result);
+
+                     swalWithBootstrapButtons(
+                        'Acción realizada!',
+                        'El usuario ha sido eliminado',
+                        'success'
+                     )
+                     //this.getUsers()
+                  },
+                  error => {
+                     console.log("error:", error);
+                     this.toastr.error('La clase no ha sido eliminada porque contiene actividades.', 'Ha ocurrido un error!');
+                     //Mostrar Error en Toastr
+                  });
+         }
+      })
    }
 
 }

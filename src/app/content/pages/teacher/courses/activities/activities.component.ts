@@ -19,24 +19,22 @@ import { UpdateActivityComponent } from '../../modals/update-activity/update-act
 })
 export class ActivitiesComponent implements OnInit, OnDestroy {
 
-   // Form para el filtro y búsqueda
+   // Form para el Filtro y Búsqueda
    activityForm: FormGroup;
-
    id_course;
    parameters$: Subscription;
 
-   data_activities;
 
-   f_role = '';
+   // Evita se haga el mismo Filtro
+   f_mode = '';
    f_status = '';
-   f_search = '';
 
-   // Campos para hacer Filtro de Búsqueda
+   data_activities;
+   total_activities = 0;
+   total_pages;
    page_size = 20;
    page = 1;
-
-   total_users = 0;
-   total_pages;
+   from = ((this.page - 1) * this.page_size);
 
    constructor(
       private route: ActivatedRoute,
@@ -49,11 +47,12 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    ngOnInit() {
       this.initFormData();
       this.parameters$ = this.route.params.subscribe(params => {
-         this.id_course = params.id;
-         console.log("Curso: ", this.id_course);
+         this.id_course = parseInt(params.id);
+         console.log("Curso: ", this.id_course, `, typeof: ${typeof (this.id_course)}`);
       });
 
-      this.getActivities();
+      // Obtiene las Actividades por ID de Curso
+      this.getActivities({ id_course: this.id_course });
    }
 
    // Inicializa el Form
@@ -61,9 +60,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       this.activityForm = this.fb.group({
          page_size: [this.page_size],
          page: [1],
-         mode: [this.f_role],
+         mode: [this.f_mode],
          status: [this.f_status],
-         search: [this.f_search]
+         //search: [this.f_search]
       });
    }
 
@@ -77,20 +76,20 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    }
 
    updateActivity(activity) {
-      const modalRef = this.ngModal.open(UpdateActivityComponent);
+      const modalRef = this.ngModal.open(UpdateActivityComponent, { size: 'lg'});
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.activity = activity;
-      //modalRef.componentInstance.options_module = this.options_module;
    }
 
 
-   getActivities() {
-      console.log("ssss");
-      this._activitySrv.getActivitiesByCourseId(this.id_course)
+   getActivities(params) {
+      this._activitySrv.getActivities(params)
          .subscribe(
-            result => {
+            (result: any) => {
                console.log("activities: ", result);
-               this.data_activities = result;
+               this.data_activities = result.items;
+               this.total_activities = result.info.total_items;
+               this.total_pages = result.info.total_pages;
             },
             error => {
                console.log("error code:", error);
@@ -98,31 +97,56 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
          );
    }
 
-   filter(value) {
-      console.log("filter: ", value);
-
+   // ----------------------------------------
+   // Filtra los registros de la tabla
+   // ----------------------------------------
+   filterItems(params) {
+      this.f_mode = params.mode;
+      this.f_status = params.status;
       //Interface: { id_course, mode, status, page, page_size}
+      Object.assign(params, { id_course: this.id_course });
+      this.getActivities(params);
+   }
 
-      //this.f_role = this.userForm.value.role; value.mode
-      //this.f_status = this.userForm.value.status; value.status
 
-      /*
-            this._activitySrv.getActivitiesByCourseId(this.from, this.limit, this.f_role, this.f_status, this.f_search)
+   deleteActivity(id_activity) {
+      const swalWithBootstrapButtons = Swal.mixin({
+         confirmButtonClass: 'btn btn-success',
+         cancelButtonClass: 'btn btn-danger',
+         buttonsStyling: false,
+      })
+
+      swalWithBootstrapButtons({
+         title: '¿Está seguro?',
+         text: "¿seguro desea eliminar la actividad?",
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Si, Eliminar',
+         cancelButtonText: 'Cancelar',
+         reverseButtons: true
+      }).then((result) => {
+
+         if (result.value) {
+            this._activitySrv.deleteActivity(id_activity)
                .subscribe(
                   result => {
                      console.log("result: ", result);
-                     this.users = result.users;
-                     this.total_users = result.total;
-                     this.total_pages = Math.ceil(result.total / this.limit);
-                     this.current_page = (this.from / this.limit) + 1;
-                     console.log("current page: ", this.current_page)
+
+                     swalWithBootstrapButtons(
+                        'Acción realizada!',
+                        'El usuario ha sido eliminado',
+                        'success'
+                     )
+                     //this.getUsers()
                   },
                   error => {
                      console.log("error:", error);
                   });
-      */
-
+         }
+      })
    }
+
+
 
 
 

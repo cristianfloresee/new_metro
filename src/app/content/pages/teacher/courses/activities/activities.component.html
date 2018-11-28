@@ -44,7 +44,7 @@
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <form [formGroup]="activityForm" (ngSubmit)="filter(activityForm.value)">
+         <form [formGroup]="activityForm" (ngSubmit)="filterItems(activityForm.value)">
             <div class="row align-items-center">
 
 
@@ -103,7 +103,8 @@
 
                </div>
                <div class="col-xl-3 order-1 order-xl-2 m--align-right">
-                  <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                  <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                  [disabled]="activityForm.value.mode === f_mode && activityForm.value.status === f_status">
                      <span>
                         <span>Filtrar</span>
                      </span>
@@ -163,7 +164,7 @@
                         <a (click)="updateActivity(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a (click)="deleteUser(user.id_user)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="deleteActivity(activity.id_activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
                      </span>
@@ -194,8 +195,8 @@
                   <li>
                      <a class="m-datatable__pager-link m-datatable__pager-link-number">2</a>
                   </li>-->
-               <li *ngFor="let page of total_pages | fillArray" (click)="getUsersPage((page-1)*page_size)">
-                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': page == current_page}">{{page}}</a>
+               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage((page-1)*page_size)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
                </li>
                <li (click)="getUsersFrom(+page_size)">
                   <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
@@ -239,10 +240,10 @@
                   <div class="dropdown-menu" role="combobox" x-placement="top-start" style="max-height: 756.318px; overflow: hidden; min-height: 130px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -3px, 0px);">
                      <div class="inner show" role="listbox"></div>
                   </div> -->
-               <span class="m-datatable__pager-detail">Mostrando {{total_users ? ((current_page-1)*page_size + 1) : 0}}
+               <span class="m-datatable__pager-detail">Mostrando {{total_activities ? ((page-1)*page_size + 1) : 0}}
                   -
-                  {{(page_size*current_page > total_users) ? total_users : (page_size*current_page)}} de {{total_users}}
-                  usuarios</span>
+                  {{(page_size*page > total_activities) ? total_activities : (page_size*page)}} de {{total_activities}}
+                  actividades</span>
             </div>
          </div>
       </div>
