@@ -57,9 +57,11 @@
                      <a (click)="changeStatus(student)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                         <i class="la la-edit"></i>
                      </a>
-                     <a (click)="deleteStudent(student.id_user)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                     <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                         <i class="la la-trash"></i>
                      </a>
+                     <swal #deleteSwal (confirm)="deleteStudent(student.id_user)" [options]="SWAL_DELETE_STUDENT"></swal>
+                     <swal #successSwal [options]="SWAL_SUCCESS_DELETE_STUDENT"></swal>
                   </span>
                </td>
             </tr>

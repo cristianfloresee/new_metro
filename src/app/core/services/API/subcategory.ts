@@ -17,19 +17,27 @@ export class SubcategoryService {
       public http: HttpClient
    ) { }
 
+   getSubcategories(params) {
+      // + Necesito una interface:
+      // + { id_user, id_subject, id_category, search, page, page_size }
+      return this.http.get(API.SUBCATEGORIES, { params })
+   }
+
    createSubcategory(id_category, name) {
-      return this.http.post(API.SUBCATEGORY_CREATE, { id_category, name })
+      return this.http.post(API.SUBCATEGORIES, { id_category, name })
    }
 
-   getSubcategoriesByCategoryId(id_category){
-      let params = `?category_options=${id_category}`
-      return this.http.get(`${API.SUBCATEGORY_GET}${params}`)
+   updateSubcategory(id_subcategory, id_category, name) {
+      return this.http.put(`${API.SUBCATEGORIES}/${id_subcategory}`, { id_category, name });
    }
 
-   getLastSubcategoriesByTeacherId(id_user){
-      let params = `?last_by_teacher=${id_user}`;
-      return this.http.get(`${API.SUBCATEGORY_GET}${params}`)
+   // Interface: { id_category }
+   getSubcategoriesOptions(params) {
+      return this.http.get(API.SUBCATEGORIES_AS_SELECT_OPTION, { params });
    }
 
+   deleteSubcategory(id_subcategory) {
+      return this.http.delete(`${API.SUBCATEGORIES}/${id_subcategory}`);
+   }
 
 }

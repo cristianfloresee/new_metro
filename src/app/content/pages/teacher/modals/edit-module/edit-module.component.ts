@@ -42,7 +42,7 @@ export class EditModuleComponent implements OnInit, OnDestroy {
    loadFormData() {
       this.moduleForm.setValue({
          name: this.module.name,
-      })
+      });
    }
 
    updateModule(module) {

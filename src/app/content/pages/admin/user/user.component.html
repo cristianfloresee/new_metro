@@ -105,7 +105,8 @@
                      <div class="col-md-4">
                         <div class="m-input-icon m-input-icon--left">
 
-                           <input formControlName="search" type="text" maxLength="25" class="form-control m-input" placeholder="nombre, rut, correo, usuario">
+                           <input formControlName="search" type="text" maxLength="25" class="form-control m-input"
+                              placeholder="nombre, rut, correo, usuario">
 
                            <span class="m-input-icon__icon m-input-icon__icon--left">
                               <span>
@@ -186,9 +187,11 @@
                         <a (click)="openUserEdit(user)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a (click)="deleteUser(user.id_user)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
+                        <swal #deleteSwal (confirm)="deleteUser(user.id_user)" [options]="SWAL_DELETE_USER"></swal>
+                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_USER"></swal>
                      </span>
                   </td>
                </tr>

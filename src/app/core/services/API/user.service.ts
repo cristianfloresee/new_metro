@@ -5,11 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../../../config/constants';
 //SERVICIOS
 import { SessionService } from './session.service';
-//RXJS
+// RxJS
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-//SWEETALERT2
-import Swal from 'sweetalert2';
 //MODELOS
 import { User } from '../../models/user.model';
 

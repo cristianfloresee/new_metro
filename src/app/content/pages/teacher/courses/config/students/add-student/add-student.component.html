@@ -71,10 +71,12 @@
                               <!-- <button type="button" class="btn btn-danger" style="position: absolute; right: 20px; border-radius: 3rem; font-size: 1rem; padding: 5px 10px;"
                                  (click)="deleteEnrollment(result)">Quitar
                               </button> -->
-                              <a class="btn btn-danger m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;"
-                                 (click)="deleteEnrollment(result)">
+                              <a [swal]="deleteSwal" class="btn btn-danger m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;">
                                  <i class="la la-times"></i>
                               </a>
+
+                              <swal #deleteSwal (confirm)="deleteEnrollment(result)" [options]="SWAL_DELETE_STUDENT"></swal>
+                              <swal #successSwal [options]="SWAL_SUCCESS_DELETE_STUDENT"></swal>
                            </ng-template>
 
                         </li>

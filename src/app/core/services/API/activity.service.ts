@@ -1,4 +1,4 @@
-//ANGULAR
+// Angular
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //CONSTANTES
@@ -28,13 +28,15 @@ export class ActivityService {
    }
 
    // Actualiza una Actividad
-   updateActivity(id_activity, id_lesson, name, status, mode) {
-      return this.http.put(`${API.ACTIVITIES}/${id_activity}`, { id_lesson, name, status, mode });
+   updateActivity(id_activity, id_lesson, name, status, mode, array_participation) {
+      return this.http.put(`${API.ACTIVITIES}/${id_activity}`, { id_lesson, name, status, mode, array_participation });
    }
 
-   // Elimina una Actividad
+   // Elimina una Actividad (eliminaría todas las participaciones de esa actividad)
    deleteActivity(id_activity) {
       return this.http.delete(`${API.ACTIVITIES}/${id_activity}`);
    }
+
+
 
 }

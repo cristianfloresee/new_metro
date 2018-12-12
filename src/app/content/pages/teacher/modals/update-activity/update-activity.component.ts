@@ -10,6 +10,7 @@ import { ModuleService } from 'src/app/core/services/API/module.service';
 import { Subscription } from 'rxjs';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
 import { ActivityService } from 'src/app/core/services/API/activity.service';
+import { ActivityParticipationService } from 'src/app/core/services/API/activity_participation.service';
 
 
 @Component({
@@ -37,13 +38,17 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
    options_lesson;
    options_module;
 
+   // Solicitud de Estado de Ganadores
+   winner_status_request = [];
+
    constructor(
       public fb: FormBuilder,
       public activeModal: NgbActiveModal,
       private _moduleSrv: ModuleService,
       private _lessonSrv: LessonService,
       private toastr: ToastrService,
-      private _activitySrv: ActivityService
+      private _activitySrv: ActivityService,
+      private _ActivityParticipationSrv: ActivityParticipationService
    ) { }
 
    ngOnInit() {
@@ -124,9 +129,15 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
 
    }
 
+   // Actualiza la Actividad (Submit)
    updateActivity(activity) {
       console.log("activity: ", activity);
-      this._activitySrv.updateActivity(this.activity.id_activity, activity.lesson, activity.name, activity.status, activity.mode)
+      //console.log(`students: ${typeof(this.winner_status_request)}`)
+      //console.log(`students: ${typeof()}`)
+
+      // Convierto el Array
+      //let winner_status_array = JSON.stringify(this.winner_status_request);
+      this._activitySrv.updateActivity(this.activity.id_activity, activity.lesson, activity.name, activity.status, activity.mode, this.winner_status_request)
          .subscribe(
             result => {
                this.activeModal.close(true);
@@ -147,12 +158,51 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
          .subscribe(
             result => {
                console.log("students: ", result);
-               this.data_students = result;
+               // Formatea el array de estudiantes con un campo 'original_status' que contendrá el estado original ganador/perdedor
+
+               this.data_students = this.formatActivityParticipationArray(result);
+               console.log("participacion formateada: ", this.data_students);
             },
             error => {
                console.log("error:", error);
             });
    }
+
+   changeWinnerStatus(participation) {
+      // Cambia el estado ganador/perdedor
+      participation.status = !participation.status;
+
+      // Si el nuevo estado 'status' (ganador/perdedor) es diferente al estado original 'original_status'
+      if (participation.status != participation.original_status) {
+         // Inserta el cambio de estado el el array de peticiones
+         this.insertWinnerStatusRequest(participation.id_user, participation.status)
+      } else {
+         // Elimina el cambio de estado en el array de peticiones
+         this.deleteWinnerStatusRequest(participation.id_user)
+      }
+   }
+
+
+
+
+
+
+
+   //console.log(participation);
+   //this.insertWinnerStatusRequest(participation.id_user, participation.status)
+   //participation.status = !participation.status;
+
+
+   /*this._ActivityParticipationSrv.updateActivityParticipation(this.activity.id_activity, participation.id_user, !participation.status)
+   .subscribe(
+      result => {
+         console.log("result: ", result);
+         participation.status = !participation.status;
+      },
+      error => {
+         console.log("error:", error);
+      });*/
+
 
    ngOnDestroy() {
       this.moduleChanges$.unsubscribe();
@@ -161,5 +211,26 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
       this.modeChanges$.unsubscribe();
       this.statusChanges$.unsubscribe();
    }
+
+   insertWinnerStatusRequest(id_user, status) {
+      this.winner_status_request.push({ id_user, status });
+      console.log("winner status: ", this.winner_status_request);
+   }
+
+   deleteWinnerStatusRequest(id_user) {
+      // Busco el indice de la solicitud en el array de Solicitudes
+      let index = this.winner_status_request.map(i => i.id_user).indexOf(id_user);
+      // Elimino la solicitud
+      this.winner_status_request.splice(index, 1);
+      console.log("resquests: ", this.winner_status_request);
+   }
+
+   formatActivityParticipationArray(activity_participation) {
+      activity_participation.forEach(participation => {
+         participation.original_status = participation.status;
+      });
+      return activity_participation;
+   }
+
 
 }

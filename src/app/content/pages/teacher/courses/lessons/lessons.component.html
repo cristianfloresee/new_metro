@@ -32,11 +32,11 @@
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <form [formGroup]="lessonForm" (ngSubmit)="filterItems(lessonForm.value)">
+         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
             <div class="row align-items-center">
                <div class="col-xl-9 order-2 order-xl-1">
 
-                  <!-- <form [formGroup]="lessonForm" style="display:inline;"> -->
+                  <!-- <form [formGroup]="filterForm" style="display:inline;"> -->
                   <div class="form-group m-form__group row align-items-center">
                      <div class="col-md-4">
                         <div class="m-form__group m-form__group--inline">
@@ -87,7 +87,7 @@
                </div>
                <div class="col-xl-3 order-1 order-xl-2 m--align-right">
                   <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                  [disabled]="lessonForm.value.id_module === f_module && lessonForm.value.status === f_status">
+                     [disabled]="filterForm.value.id_module === f_module && filterForm.value.status === f_status">
                      <span>
                         <span>Filtrar</span>
                      </span>
@@ -137,9 +137,11 @@
                         <a (click)="updateLesson(lesson)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a (click)="deleteLesson(lesson.id_class)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
+                        <swal #deleteSwal (confirm)="deleteLesson(lesson.id_class)" [options]="SWAL_DELETE_LESSON"></swal>
+                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_LESSON"></swal>
                      </span>
                   </td>
                </tr>
@@ -192,7 +194,7 @@
                         <option value="50">50</option>
                         <option value="100">100</option>
                      </select>-->
-               <!-- <form [formGroup]="lessonForm" style="display:inline;">
+               <!-- <form [formGroup]="filterForm" style="display:inline;">
                         <select formControlName="limit" class="m-datatable__pager-size" style="width:160px" (change)="kisa()">>
                            <option value="5">5</option>
                            <option value="10">10</option>

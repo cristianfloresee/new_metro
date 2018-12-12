@@ -44,14 +44,14 @@
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <form [formGroup]="activityForm" (ngSubmit)="filterItems(activityForm.value)">
+         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
             <div class="row align-items-center">
 
 
                <div class="col-xl-9 order-2 order-xl-1" style="display:inline;">
 
                   <!-- INICIA FORMULARIO -->
-                  <!-- <form [formGroup]="activityForm"> -->
+                  <!-- <form [formGroup]="filterForm"> -->
                   <div class="form-group m-form__group row align-items-center">
                      <div class="col-md-4">
                         <div class="m-form__group m-form__group--inline">
@@ -104,7 +104,7 @@
                </div>
                <div class="col-xl-3 order-1 order-xl-2 m--align-right">
                   <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                  [disabled]="activityForm.value.mode === f_mode && activityForm.value.status === f_status">
+                     [disabled]="filterForm.value.mode === f_mode && filterForm.value.status === f_status">
                      <span>
                         <span>Filtrar</span>
                      </span>
@@ -147,7 +147,18 @@
                   <td>{{activity.mode}}</td>
                   <td>{{activity.lesson}}</td>
                   <td>{{activity.module}}</td>
-                  <td>{{activity.winners}}</td>
+                  <td style="text-align: center">
+
+                     <!-- {{activity.winners}} -->
+                     <div style="width: 30%; cursor: pointer; margin: auto;" (click)="changeWinnerStatus(student)">
+                        <img *ngIf="activity.winners; else blank" src="assets/images/checked.svg" alt="">
+                        <ng-template #blank>
+                           <img src="assets/images/blank.svg" alt="">
+                        </ng-template>
+                     </div>
+
+
+                  </td>
                   <td class="nowrap">
                      <span style="width: 100%">
                         <span class="m-badge m-badge--dot" [ngClass]="(activity.status)?'m-badge--success':'m-badge--danger'"></span>
@@ -164,9 +175,19 @@
                         <a (click)="updateActivity(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a (click)="deleteActivity(activity.id_activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <!-- <a (click)="deleteActivity(activity.id_activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a> -->
+                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
+
+                        <!-- <swal #deleteSwal title="¿Está seguro?" text="¿seguro desea eliminar la actividad?" (confirm)="deleteFile(file)"
+                        type="warning" [showCancelButton]="true" [focusCancel]="true" confirmButtonText="Si, eliminar" cancelButtonText="Cancelar" >
+                        </swal> -->
+
+                        <swal #deleteSwal (confirm)="deleteActivity(activity.id_activity)" [options]="SWAL_DELETE_ACTIVITY"></swal>
+                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_ACTIVITY"></swal>
                      </span>
                   </td>
                </tr>
@@ -219,7 +240,7 @@
                      <option value="50">50</option>
                      <option value="100">100</option>
                   </select>-->
-               <form [formGroup]="activityForm" style="display:inline;">
+               <form [formGroup]="filterForm" style="display:inline;">
                   <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="kisa()">>
                      <option value="20">20</option>
                      <option value="50">50</option>
@@ -240,9 +261,9 @@
                   <div class="dropdown-menu" role="combobox" x-placement="top-start" style="max-height: 756.318px; overflow: hidden; min-height: 130px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -3px, 0px);">
                      <div class="inner show" role="listbox"></div>
                   </div> -->
-               <span class="m-datatable__pager-detail">Mostrando {{total_activities ? ((page-1)*page_size + 1) : 0}}
+               <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}}
                   -
-                  {{(page_size*page > total_activities) ? total_activities : (page_size*page)}} de {{total_activities}}
+                  {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
                   actividades</span>
             </div>
          </div>

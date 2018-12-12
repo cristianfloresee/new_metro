@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Modals
@@ -7,11 +7,14 @@ import { CreateModuleComponent } from '../../../modals/create-module/create-modu
 // Services
 import { ModuleService } from 'src/app/core/services/API/module.service';
 //import { SessionService } from 'src/app/core/services/API/session.service';
-// SweetAlert
-import Swal from 'sweetalert2';
 import { EditModuleComponent } from '../../../modals/edit-module/edit-module.component';
 // RxJS
 import { Subscription } from 'rxjs';
+// Constants
+import { SWAL_DELETE_MODULE, SWAL_SUCCESS_DELETE_MODULE } from 'src/app/config/swal_config';
+// ngx-sweetalert2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+
 
 @Component({
    selector: 'cw-modules',
@@ -21,6 +24,11 @@ import { Subscription } from 'rxjs';
 export class ModulesComponent implements OnInit {
    @Input() id_course;
 
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   SWAL_DELETE_MODULE = SWAL_DELETE_MODULE;
+   SWAL_SUCCESS_DELETE_MODULE = SWAL_SUCCESS_DELETE_MODULE;
    //id_user;
    modules;
 
@@ -41,7 +49,7 @@ export class ModulesComponent implements OnInit {
       modalRef.componentInstance.id_course = this.id_course;
 
       modalRef.result.then((result) => {
-         console.log(`result: ${result}, ${typeof(result)}`)
+         console.log(`result: ${result}, ${typeof (result)}`)
          if (result) this.getModules()
       });
    }
@@ -54,7 +62,7 @@ export class ModulesComponent implements OnInit {
          })
    }
 
-   updateModule(module){
+   updateModule(module) {
       console.log("update: ", module);
       const modalRef = this.ngModal.open(EditModuleComponent);
       modalRef.componentInstance.module = module;
@@ -66,42 +74,17 @@ export class ModulesComponent implements OnInit {
 
 
    deleteModule(id_module) {
-      console.log("id_module: ", id_module);
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
 
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿Seguro desea eliminar el modulo?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
-
-         if (result.value) {
-            this._moduleSrv.deleteModule(id_module)
-               .subscribe(
-                  result => {
-                     console.log("result: ", result);
-
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El modulo ha sido eliminado',
-                        'success'
-                     )
-                     this.getModules();
-                  },
-                  error => {
-                     console.log("error:", error);
-                  });
-         }
-      })
+      this._moduleSrv.deleteModule(id_module)
+         .subscribe(
+            result => {
+               console.log("result: ", result);
+               this.successSwal.show();
+               this.getModules();
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
-
 
 }

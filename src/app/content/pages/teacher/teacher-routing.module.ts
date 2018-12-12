@@ -7,6 +7,8 @@ import { ActivitiesComponent } from './courses/activities/activities.component';
 import { LessonsComponent } from './courses/lessons/lessons.component';
 import { StatisticsComponent } from './courses/statistics/statistics.component';
 import { QuestionsComponent } from './courses/questions/questions.component';
+import { QuestionLibraryComponent } from './subjects/question-library/question-library.component';
+import { SubjectConfigComponent } from './subjects/subject-config/subject-config.component';
 
 
 const routes: Routes = [
@@ -15,23 +17,31 @@ const routes: Routes = [
       component: TeacherComponent,
    },
    {
-      path: 'course/:id/lessons',
+      path: 'subject/:idSubject/library',
+      component: QuestionLibraryComponent
+   },
+   {
+      path: 'subject/:idSubject/config',
+      component: SubjectConfigComponent
+   },
+   {
+      path: 'subject/:idSubject/course/:idCourse/lessons',
       component: LessonsComponent
    },
    {
-      path: 'course/:id/config',
+      path: 'subject/:idSubject/course/:idCourse/config',
       component: ConfigComponent
    },
    {
-      path: 'course/:id/activities',
+      path: 'subject/:idSubject/course/:idCourse/activities',
       component: ActivitiesComponent
    },
    {
-      path: 'course/:id/questions',
+      path: 'subject/:idSubject/course/:idCourse/questions',
       component: QuestionsComponent
    },
    {
-      path: 'course/:id/statistics',
+      path: 'subject/:idSubject/course/:idCourse/statistics',
       component: StatisticsComponent
    },
    {

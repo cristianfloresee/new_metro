@@ -1,4 +1,4 @@
-//ANGULAR
+// Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -43,10 +43,11 @@ import { SubheaderService } from './core/services/layout/subheader.service';
 
 import { InterceptorService } from './core/services/interceptor.service';
 
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
-
-//GUARDS
+// ngx-sweetalert2
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+// Guards
 import { LoginGuard } from './core/services/guards/login.guard';
 import { AdminGuard } from './core/services/guards/role-admin.guard';
 import { TeacherGuard } from './core/services/guards/role-teacher.guard';
@@ -85,6 +86,13 @@ import { CreateLessonComponent } from './content/pages/teacher/modals/create-les
 import { LessonService } from './core/services/API/lesson.service';
 import { EditLessonComponent } from './content/pages/teacher/modals/edit-lesson/edit-lesson.component';
 import { UpdateActivityComponent } from './content/pages/teacher/modals/update-activity/update-activity.component';
+import { ActivityParticipationService } from './core/services/API/activity_participation.service';
+import { UpdateQuestionComponent } from './content/pages/teacher/modals/update-question/update-question.component';
+import { UpdateCategoryComponent } from './content/pages/teacher/modals/modal-category/update-category.component';
+import { SubjectInitComponent } from './content/pages/teacher/modals/subject-init/subject-init.component';
+import { DualListComponent } from './content/pages/teacher/shared/dual-list/dual-list.component';
+import { ModalSubcategoryComponent } from './content/pages/teacher/modals/modal-subcategory/modal-subcategory.component';
+import { WorkspaceService } from './core/services/API/workspace.service';
 
 @NgModule({
    declarations: [
@@ -108,7 +116,12 @@ import { UpdateActivityComponent } from './content/pages/teacher/modals/update-a
       CreateActivityComponent,
       CreateLessonComponent,
       EditLessonComponent,
-      UpdateActivityComponent
+      UpdateActivityComponent,
+      UpdateQuestionComponent,
+      UpdateCategoryComponent,
+      SubjectInitComponent,
+      DualListComponent,
+      ModalSubcategoryComponent
    ],
    imports: [
       //ANGULAR
@@ -125,6 +138,12 @@ import { UpdateActivityComponent } from './content/pages/teacher/modals/update-a
          closeButton: true,
          progressBar: true,
          progressAnimation: 'increasing'
+      }),
+      SweetAlert2Module.forRoot({
+         cancelButtonText: 'Cancelar',
+         confirmButtonClass: 'btn btn-success',
+         cancelButtonClass: 'btn btn-danger',
+         buttonsStyling: false,
       }),
       NgxEchartsModule,
       //ANGULAR MATERIAL
@@ -167,6 +186,8 @@ import { UpdateActivityComponent } from './content/pages/teacher/modals/update-a
       EnrollmentService,
       ActivityService,
       LessonService,
+      ActivityParticipationService,
+      WorkspaceService,
       //GUARDS
       LoginGuard,
       AdminGuard,
@@ -191,7 +212,11 @@ import { UpdateActivityComponent } from './content/pages/teacher/modals/update-a
       CreateActivityComponent,
       CreateLessonComponent,
       EditLessonComponent,
-      UpdateActivityComponent
+      UpdateActivityComponent,
+      UpdateQuestionComponent,
+      UpdateCategoryComponent,
+      SubjectInitComponent,
+      ModalSubcategoryComponent
    ],
    bootstrap: [AppComponent]
 })

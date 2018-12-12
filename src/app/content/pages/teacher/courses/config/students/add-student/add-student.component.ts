@@ -1,14 +1,22 @@
 
+
 import { EnrollmentService } from 'src/app/core/services/API/enrollments.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+// Angular
+import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+//ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/core/services/API/user.service';
+// RxJS
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-//SWEETALERT2
-import Swal from 'sweetalert2';
+// ngx-sweetalert2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+// Constants
+import { SWAL_DELETE_STUDENT, SWAL_SUCCESS_DELETE_STUDENT } from 'src/app/config/swal_config';
+
 
 @Component({
    selector: 'cw-add-student',
@@ -16,6 +24,11 @@ import Swal from 'sweetalert2';
    styleUrls: ['./add-student.component.scss']
 })
 export class AddStudentComponent implements OnInit {
+
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+   SWAL_DELETE_STUDENT = SWAL_DELETE_STUDENT;
+   SWAL_SUCCESS_DELETE_STUDENT = SWAL_SUCCESS_DELETE_STUDENT;
 
    @Input() course;
    @Input() students;
@@ -110,44 +123,21 @@ export class AddStudentComponent implements OnInit {
 
    }
 
-   deleteEnrollment(student){
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
+   deleteEnrollment(student) {
 
-
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿Seguro desea eliminar a este alumno del Curso?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
-
-         if (result.value) {
-            this._enrollmentSrv.deleteEnrollment(this.course.id_course, student.id_user)
-               .subscribe(
-                  result => {
-                     console.log("enrollments: ", result)
-                     student.enrolled = !student.enrolled;
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El estudiante ha sido eliminado',
-                        'success'
-                     )
-                     //this.getModules();
-                  },
-                  error => {
-                     console.log("error:", error);
-                  });
-         }
-      })
-
+      this._enrollmentSrv.deleteEnrollment(this.course.id_course, student.id_user)
+         .subscribe(
+            result => {
+               console.log("enrollments: ", result)
+               student.enrolled = !student.enrolled;
+               this.successSwal.show();
+               //this.getModules();
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
+
 
 
 }

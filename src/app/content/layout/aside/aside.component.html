@@ -70,6 +70,7 @@
                <span class="m-menu__link-text">(Crear Curso)</span>
                <i class="m-menu__ver-arrow la la-angle-right"></i>
             </a>
+
          </li>
 
 
@@ -91,6 +92,24 @@
                      </span>
                   </li>
 
+                  <li class="m-menu__item " aria-haspopup="true">
+                     <a [routerLink]="['subject', subject.id_subject, 'library']" class="m-menu__link">
+                        <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                           <span></span>
+                        </i>
+                        <span class="m-menu__link-text">Biblioteca</span>
+                     </a>
+                  </li>
+
+                  <li class="m-menu__item " aria-haspopup="true">
+                     <a [routerLink]="['subject', subject.id_subject, 'config']" class="m-menu__link">
+                        <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                           <span></span>
+                        </i>
+                        <span class="m-menu__link-text">Configuración</span>
+                     </a>
+                  </li>
+
                   <li *ngFor="let year of subject.years" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
                      m-menu-submenu-toggle="hover">
 
@@ -105,6 +124,7 @@
                      <div class="m-menu__submenu">
                         <span class="m-menu__arrow"></span>
                         <ul class="m-menu__subnav">
+
                            <li *ngFor="let semester of year.semesters" class="m-menu__item  m-menu__item--submenu"
                               aria-haspopup="true" m-menu-submenu-toggle="hover">
 
@@ -133,7 +153,8 @@
                                           <span class="m-menu__arrow"></span>
                                           <ul class="m-menu__subnav">
                                              <li class="m-menu__item " aria-haspopup="true">
-                                                <a [routerLink]="['course', group.id_course, 'lessons']" class="m-menu__link">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'lessons']"
+                                                   class="m-menu__link">
                                                    <i class="m-menu__link-bullet m-menu__link-bullet--line">
                                                       <span></span>
                                                    </i>
@@ -141,23 +162,29 @@
                                                 </a>
                                              </li>
                                              <li class="m-menu__item " aria-haspopup="true">
-                                                <a [routerLink]="['course', group.id_course, 'activities']" class="m-menu__link">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'activities']"
+                                                   class="m-menu__link">
                                                    <i class="m-menu__link-bullet m-menu__link-bullet--line">
                                                       <span></span>
                                                    </i>
                                                    <span class="m-menu__link-text">Actividades</span>
                                                 </a>
                                              </li>
+
                                              <li class="m-menu__item " aria-haspopup="true">
-                                                <a [routerLink]="['course', group.id_course, 'questions']" class="m-menu__link">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'questions']"
+                                                   class="m-menu__link">
                                                    <i class="m-menu__link-bullet m-menu__link-bullet--line">
                                                       <span></span>
                                                    </i>
+                                                   <!-- {{subject | json}} subject no tiene el id!!!!!!!!!! -->
                                                    <span class="m-menu__link-text">Preguntas</span>
                                                 </a>
                                              </li>
+
                                              <li class="m-menu__item " aria-haspopup="true">
-                                                <a [routerLink]="['course', group.id_course, 'statistics']" class="m-menu__link">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'statistics']"
+                                                   class="m-menu__link">
                                                    <i class="m-menu__link-bullet m-menu__link-bullet--line">
                                                       <span></span>
                                                    </i>
@@ -165,7 +192,8 @@
                                                 </a>
                                              </li>
                                              <li class="m-menu__item " aria-haspopup="true">
-                                                <a [routerLink]="['course', group.id_course, 'config']" class="m-menu__link">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'config']"
+                                                   class="m-menu__link">
                                                    <i class="m-menu__link-bullet m-menu__link-bullet--line">
                                                       <span></span>
                                                    </i>
@@ -177,6 +205,8 @@
                                     </li>
                                  </ul>
                               </div>
+
+
                            </li>
                         </ul>
                      </div>

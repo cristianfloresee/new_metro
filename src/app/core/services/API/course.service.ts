@@ -28,9 +28,15 @@ export class CourseService {
       return this.http.get(`${API.COURSE_GET}${params}`);
    }
 
+   /*
    getCoursesForSidemenu(id_user) {
       let params = `?all_courses_by_teacher=${id_user}`;
       return this.http.get(`${API.COURSE_GET}${params}`)
+   }*/
+
+   getCoursesForSidemenu(id_user) {
+      let params = { all_courses_by_teacher: id_user };
+      return this.http.get(API.COURSE_GET, { params })
    }
 
    getCourseById(id_user, id_course) {

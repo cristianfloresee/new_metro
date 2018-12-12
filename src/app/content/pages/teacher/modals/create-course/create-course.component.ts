@@ -77,7 +77,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
    }
 
    loadFormOptions() {
-      this._subjectSrv.getSubjects()
+      this._subjectSrv.getSubjectsOptions()
          .subscribe(
             result => {
                this.options_subject = result;

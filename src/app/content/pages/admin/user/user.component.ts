@@ -1,15 +1,19 @@
-//ANGULAR
-import { Component, OnInit } from '@angular/core';
+// Angular
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 //COMPONENTES
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 //SERVICIOS
 import { UserService } from '../../../../core/services/API/user.service';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//SWEETALERT2
-import Swal from 'sweetalert2';
+// ngx-sweetalert2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+// Constants
+import { SWAL_DELETE_USER, SWAL_SUCCESS_DELETE_USER } from 'src/app/config/swal_config';
+
+
 
 @Component({
    selector: 'cw-user',
@@ -17,6 +21,11 @@ import Swal from 'sweetalert2';
    styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   SWAL_DELETE_USER = SWAL_DELETE_USER;
+   SWAL_SUCCESS_DELETE_USER = SWAL_SUCCESS_DELETE_USER;
 
    users: any[] = [];
 
@@ -113,42 +122,18 @@ export class UserComponent implements OnInit {
    }
 
    deleteUser(id_user) {
-      console.log("delete user: ", id_user);
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
 
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿seguro desea eliminar el usuario?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
-
-         if (result.value) {
-            this._userSrv.deleteUser(id_user)
-               .subscribe(
-                  result => {
-                     console.log("result: ", result);
-
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El usuario ha sido eliminado',
-                        'success'
-                     )
-                     this.getUsers()
-                  },
-                  error => {
-                     console.log("error:", error);
-                  });
-         }
-      })
+      this._userSrv.deleteUser(id_user)
+         .subscribe(
+            result => {
+               this.successSwal.show();
+               this.getUsers();
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
+
 
    openUserEdit(user) {
       const modalRef = this.ngModal.open(EditUserComponent);
@@ -156,18 +141,18 @@ export class UserComponent implements OnInit {
 
       modalRef.result.then((result) => {
          console.log("result: ", result);
-         if(result){
+         if (result) {
             console.log("correct update..");
             this.getUsers()
          }
       }, (reason) => {
-        console.log("reason: ", reason);
+         console.log("reason: ", reason);
       });
       //DETECTAR SI SE HACE EL EDIT PARA ACTUALIZAR DATOS....
       //RECIBO LOS DATOS USER Y HAGO EDIT ACA O... HAGO EDIT EN MODAL Y DEVUELVO SI FUE SUCCES O ERROR
    }
 
-   openCreateUser(){
+   openCreateUser() {
       const modalRef = this.ngModal.open(CreateUserComponent);
    }
 

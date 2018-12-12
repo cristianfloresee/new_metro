@@ -1,6 +1,6 @@
 
 //ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 //NG-BOOTSTRAP
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,7 @@ import { SessionService } from 'src/app/core/services/API/session.service';
    styleUrls: ['./create-category.component.scss']
 })
 export class CreateCategoryComponent implements OnInit {
+   @Input() id_subject;
 
    categoryForm: FormGroup;
    options_subject;
@@ -33,6 +34,9 @@ export class CreateCategoryComponent implements OnInit {
    ngOnInit() {
       this.initFormData();
       this.loadFormOptions();
+
+      // Establece opción por defecto si recibe 'id_subject'
+      if(this.id_subject) this.categoryForm.patchValue({ subject: this.id_subject });
    }
 
    initFormData() {
@@ -43,7 +47,7 @@ export class CreateCategoryComponent implements OnInit {
    }
 
    loadFormOptions() {
-      this._subjectSrv.getSubjects()
+      this._subjectSrv.getSubjectsOptions()
          .subscribe(
             result => {
                this.options_subject = result;

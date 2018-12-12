@@ -1,23 +1,38 @@
-//ANGULAR
+// Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//COMPONENTES
-import { TeacherComponent } from './teacher.component';
-import { NgxEchartsModule } from 'ngx-echarts';
+// Routing
 import { TeacherRoutingModule } from './teacher-routing.module';
-import { ConfigComponent } from './courses/config/config.component';
-import { ModulesComponent } from './courses/config/modules/modules.component';
-import { StudentsComponent } from './courses/config/students/students.component';
+// Core Module
 import { CoreModule } from 'src/app/core/core.module';
-import { GeneralComponent } from './courses/config/general/general.component';
+// ng-bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// ngx-echarts
+import { NgxEchartsModule } from 'ngx-echarts';
+// ngx-sweetaert2
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+// Components
+import { TeacherComponent } from './teacher.component';
+
+// Courses Components
 import { ActivitiesComponent } from './courses/activities/activities.component';
+import { LessonsComponent } from './courses/lessons/lessons.component';
 import { QuestionsComponent } from './courses/questions/questions.component';
 import { StatisticsComponent } from './courses/statistics/statistics.component';
-import { LessonsComponent } from './courses/lessons/lessons.component';
+// Config Courses Components
+import { ConfigComponent } from './courses/config/config.component';
+import { GeneralComponent } from './courses/config/general/general.component';
+import { ModulesComponent } from './courses/config/modules/modules.component';
+import { StudentsComponent } from './courses/config/students/students.component';
 
-//RUTAS
+// Subject Components
+import { QuestionLibraryComponent } from './subjects/question-library/question-library.component';
+// Config Subjects Components
+import { SubjectConfigComponent } from './subjects/subject-config/subject-config.component';
+import { CategoriesComponent } from './subjects/subject-config/categories/categories.component';
+import { SubcategoriesComponent } from './subjects/subject-config/subcategories/subcategories.component';
+
 @NgModule({
    imports: [
       NgxEchartsModule,
@@ -27,6 +42,7 @@ import { LessonsComponent } from './courses/lessons/lessons.component';
       TeacherRoutingModule,
       FormsModule,
       ReactiveFormsModule,
+      SweetAlert2Module
    ],
    declarations: [
       TeacherComponent,
@@ -38,6 +54,10 @@ import { LessonsComponent } from './courses/lessons/lessons.component';
       QuestionsComponent,
       StatisticsComponent,
       LessonsComponent,
+      QuestionLibraryComponent,
+      SubjectConfigComponent,
+      CategoriesComponent,
+      SubcategoriesComponent,
    ]
 })
 export class TeacherModule { }

@@ -11,9 +11,13 @@ import { CreateQuestionComponent } from './modals/create-question/create-questio
 import { SessionService } from 'src/app/core/services/API/session.service';
 //NGX-TOASTR
 import { ToastrService } from 'ngx-toastr';
+// Services
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { QuestionService } from 'src/app/core/services/API/question.service';
+import { SubjectInitComponent } from './modals/subject-init/subject-init.component';
+import { WorkspaceService } from 'src/app/core/services/API/workspace.service';
+import { SidemenuService } from 'src/app/core/services/sidemenu.service';
 
 @Component({
    selector: 'cw-teacher',
@@ -39,7 +43,9 @@ export class TeacherComponent implements OnInit {
       private _categorySrv: CategoryService,
       private _subcategorySrv: SubcategoryService,
       private _questionSrv: QuestionService,
-      private toastr: ToastrService
+      private toastr: ToastrService,
+      private _workspaceSrv: WorkspaceService,
+      private _sidemenuSrv: SidemenuService
    ) { }
 
    ngOnInit() {
@@ -176,14 +182,12 @@ export class TeacherComponent implements OnInit {
 
    }
 
-
-
    openCreateCourse() {
       const modalRef = this.ngModal.open(CreateCourseComponent);
    }
 
    openCreateAnswer() {
-      const modalRef = this.ngModal.open(CreateQuestionComponent,{
+      const modalRef = this.ngModal.open(CreateQuestionComponent, {
          size: "lg"
       });
    }
@@ -196,6 +200,18 @@ export class TeacherComponent implements OnInit {
       const modalRef = this.ngModal.open(CreateSubcategoryComponent);
    }
 
+   initSubject() {
+      const modalRef = this.ngModal.open(SubjectInitComponent, { size: "lg"});
+      modalRef.componentInstance.id_user = this.id_user;
+      modalRef.result
+      .then((result) => {
+         if (result) {
+            // Actualiza el sidemenu con rol de profesor
+            this._sidemenuSrv.changeSidemenuByRole(2);
+         }
+      })
+      .catch(reason => reason);
+   }
 
    getLastCourses() {
       this._courseSrv.getCoursesByTeacherId(this.id_user)
@@ -331,11 +347,11 @@ export class TeacherComponent implements OnInit {
    }
 
    getLastCategories() {
-      this._categorySrv.getLastCategoriesByTeacherId(this.id_user)
+      this._categorySrv.getCategories({ id_user: this.id_user, page_size: 5 })
          .subscribe(
-            result => {
-               //console.log("resultH: ", result);
-               this.categories = result;
+            (result: any) => {
+               console.log("miamal: ", result);
+               this.categories = result.items;
             },
             error => {
                console.log("error: ", error);
@@ -344,11 +360,11 @@ export class TeacherComponent implements OnInit {
    }
 
    getLastSubcategories() {
-      this._subcategorySrv.getLastSubcategoriesByTeacherId(this.id_user)
+      this._subcategorySrv.getSubcategories({ id_user: this.id_user, page_size: 5 })
          .subscribe(
-            result => {
+            (result: any) => {
                //console.log("resultH: ", result);
-               this.subcategories = result;
+               this.subcategories = result.items;
             },
             error => {
                console.log("error: ", error);
@@ -359,9 +375,9 @@ export class TeacherComponent implements OnInit {
    getLastQuestions() {
       this._questionSrv.getLastQuestionsByTeacherId(this.id_user)
          .subscribe(
-            result => {
+            (result: any) => {
                console.log("questions: ", result);
-               this.questions = result;
+               this.questions = result.items;
             },
             error => {
                console.log("error: ", error);

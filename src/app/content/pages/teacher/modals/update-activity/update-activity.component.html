@@ -118,7 +118,15 @@
 
                                  </div>
                               </td>
-                              <td>{{student.status}}</td>
+                              <!-- <td>{{student.status}}</td> -->
+                              <td>
+                                 <div style="width: 50%; cursor: pointer;" (click)="changeWinnerStatus(student)">
+                                    <img *ngIf="student.status;else blank" src="assets/images/checked.svg" alt="">
+                                    <ng-template #blank>
+                                       <img src="assets/images/blank.svg" alt="">
+                                    </ng-template>
+                                 </div>
+                              </td>
 
                            </tr>
                         </tbody>
@@ -141,6 +149,6 @@
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-      <button type="submit" class="btn btn-info" [disabled]="activityForm.pristine || activityForm.invalid">Actualizar</button>
+      <button type="submit" class="btn btn-info" [disabled]="(activityForm.pristine && winner_status_request.length == 0) || activityForm.invalid">Actualizar</button>
    </div>
 </form>

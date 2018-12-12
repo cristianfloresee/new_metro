@@ -126,11 +126,11 @@ export class GeneralComponent implements OnInit {
 
    loadFormOptions() {
       //CARGA LAS ASIGNATURAS
-      this._subjectSrv.getSubjects()
+      this._subjectSrv.getSubjectsOptions()
          .subscribe(
             result => {
                this.options_subject = result;
-               console.log("result: ", result);
+
             },
             error => {
                console.log("error:", error);

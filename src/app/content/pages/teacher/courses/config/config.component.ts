@@ -1,8 +1,9 @@
-//ANGULAR
+// Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-//RXJS
+// RxjS
 import { Subscription } from 'rxjs';
+// Services
 import { CourseService } from 'src/app/core/services/API/course.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 
@@ -13,9 +14,12 @@ import { SessionService } from 'src/app/core/services/API/session.service';
 })
 export class ConfigComponent implements OnInit, OnDestroy {
    id_user;
-   id_course;
    course;
-   parameters$: Subscription;
+
+   // Parámetros de la url
+   urlParamChanges$: Subscription;
+   id_subject;
+   id_course;
 
    constructor(
       private route: ActivatedRoute,
@@ -27,14 +31,18 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
    ngOnInit() {
 
-      this.parameters$ = this.route.params.subscribe(params => {
-         this.id_course = params.id;
+
+
+      this.urlParamChanges$ = this.route.params.subscribe(params => {
+         this.id_subject = params.idSubject;
+         this.id_course = params.idCourse;
+         // Revisar esto...
          this.getCourse();
       });
    }
 
    ngOnDestroy() {
-      this.parameters$.unsubscribe();
+      this.urlParamChanges$.unsubscribe();
    }
 
    getCourse() {

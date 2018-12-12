@@ -13,6 +13,7 @@ import { UserComponent } from './user/user.component';
 import { CalendarComponent } from './calendar/calendar.component';
 //NGX-BOOTSTRAP
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 @NgModule({
    imports: [
@@ -21,6 +22,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
       AdminRoutingModule,
       FormsModule,
       ReactiveFormsModule,
+      SweetAlert2Module
    ],
    declarations: [
       AdminComponent,

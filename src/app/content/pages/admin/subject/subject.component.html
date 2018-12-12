@@ -4,7 +4,8 @@
       <i class="flaticon-exclamation m--font-brand"></i>
    </div>
    <div class="m-alert__text">
-      En esta sección usted podrá administrar todas las asignaturas disponibles en la plataforma teniendo a su disposición
+      En esta sección usted podrá administrar todas las asignaturas disponibles en la plataforma teniendo a su
+      disposición
       herramientas de filtrado y búsqueda.
    </div>
 </div>
@@ -41,7 +42,7 @@
                                     <span class="m-nav__section-text">Acciones</span>
                                  </li>
                                  <li class="m-nav__item">
-                                    <a (click)="openCreateSubject()" class="m-nav__link pointer">
+                                    <a (click)="createSubject()" class="m-nav__link pointer">
                                        <i class="m-nav__link-icon flaticon-share"></i>
                                        <span class="m-nav__link-text">Crear Asignatura</span>
                                     </a>
@@ -65,15 +66,17 @@
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
 
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <div class="row align-items-center">
-            <div class="col-xl-8 order-2 order-xl-1">
 
-               <form [formGroup]="subjectForm" style="display:inline;">
+         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
+
+            <div class="row align-items-center">
+               <div class="col-xl-8 order-2 order-xl-1">
                   <div class="form-group m-form__group row align-items-center">
                      <div class="col-md-4">
                         <div class="m-input-icon m-input-icon--left">
 
-                           <input formControlName="search" type="text" maxLength=15 class="form-control m-input" placeholder="Buscar asignatura ...">
+                           <input formControlName="search" type="text" maxLength=15 class="form-control m-input"
+                              placeholder="Buscar asignatura ...">
 
                            <span class="m-input-icon__icon m-input-icon__icon--left">
                               <span>
@@ -83,19 +86,19 @@
                         </div>
                      </div>
                   </div>
-               </form>
 
+               </div>
+               <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                  <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                     [disabled]="(filterForm.value.search == lock_search) || filterForm.invalid">
+                     <span>
+                        <span>Filtrar</span>
+                     </span>
+                  </button>
+                  <div class="m-separator m-separator--dashed d-xl-none"></div>
+               </div>
             </div>
-            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-               <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                  [disabled]="(subjectForm.value.search == f_search) || subjectForm.invalid">
-                  <span>
-                     <span>Filtrar</span>
-                  </span>
-               </button>
-               <div class="m-separator m-separator--dashed d-xl-none"></div>
-            </div>
-         </div>
+         </form>
       </div>
       <!-- FIN FILTRO/BUSQUEDA -->
 
@@ -113,19 +116,21 @@
             </thead>
 
             <tbody>
-               <tr *ngFor="let subject of subjects; let i=index">
-                     <td>{{i+1}}</td>
-                     <td>{{subject.name}}</td>
-                     <td class="nowrap">{{subject.created_at | timeAgo}}</td>
-                     <td class="nowrap">{{subject.updated_at | timeAgo}}</td>
+               <tr *ngFor="let subject of data_subjects; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{subject.name}}</td>
+                  <td class="nowrap">{{subject.created_at | timeAgo}}</td>
+                  <td class="nowrap">{{subject.updated_at | timeAgo}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                         <a (click)="openSubjectEdit(subject)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a (click)="deleteSubject(subject.id_subject)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
+                        <swal #deleteSwal (confirm)="deleteSubject(subject.id_subject)" [options]="SWAL_DELETE_SUBJECT"></swal>
+                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_SUBJECT"></swal>
                      </span>
                   </td>
                </tr>

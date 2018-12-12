@@ -1,23 +1,20 @@
-//ANGULAR
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+// Angular
+import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-//SERVICIOS
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { QuestionService } from 'src/app/core/services/API/question.service';
-//RXJS
+// RxJS
 import { Subscription } from 'rxjs';
-//CONSTANTES
-import { DIFFICULTIES } from 'src/app/config/constants';
-const IMAGE_EXTS = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
-
-const URL = 'http://localhost:8000/api/upload';
+// Constants
+import { DIFFICULTIES, IMAGE_EXTS } from 'src/app/config/constants';
 
 @Component({
    selector: 'cw-create-question',
@@ -26,9 +23,10 @@ const URL = 'http://localhost:8000/api/upload';
 })
 export class CreateQuestionComponent implements OnInit, OnDestroy {
 
+   @Input() id_subject;
    @ViewChild('image_upload') image_upload;
    questionForm: FormGroup;
-   public files: any[];
+   files: any[];
 
    image_url;
    id_user;
@@ -38,13 +36,14 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
    categoryChanges$: Subscription;
    imageChanges$: Subscription;
 
+   // Opciones de selector
    options_subject: Array<any>;
    options_difficulties: Array<any>;
    options_category: Array<any>;
-   options_subcategory: Array<any>
+   options_subcategory: Array<any>;
 
    constructor(
-      public fb: FormBuilder,
+      private fb: FormBuilder,
       public activeModal: NgbActiveModal,
       private _subjectSrv: SubjectService,
       private _sessionSrv: SessionService,
@@ -63,6 +62,8 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
       this.loadFormOptions();
       this.checkValidFields();
 
+      // Asigno el 'id_subject' si es que lo recibo por input() (desde la bilioteca)
+      if(this.id_subject) this.questionForm.patchValue({ subject: this.id_subject });
    }
 
    initFormData() {
@@ -78,7 +79,7 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
 
    loadFormOptions() {
       // Load Subject Options
-      this._subjectSrv.getSubjectsByUserId(this.id_user)
+      this._subjectSrv.getSubjectsOptions({ id_user: this.id_user })
          .subscribe(
             (result: any) => {
                this.options_subject = result;
@@ -93,7 +94,8 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
          this.questionForm.controls.subcategory.setValue('');
          if (changes) {
             //Load Subcategory Options
-            this._subcategorySrv.getSubcategoriesByCategoryId(changes)
+            //this._subcategorySrv.getSubcategoriesByCategoryId(changes)
+            this._subcategorySrv.getSubcategoriesOptions({ id_category: changes })
                .subscribe(
                   (result: any) => {
                      this.options_subcategory = result;
@@ -109,6 +111,7 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
       });
    }
 
+   // ##### Diferente
    createQuestion(question) {
       this._questionSrv.createQuestion(question.subcategory, question.description, question.difficulty, question.image)
          .subscribe(
@@ -121,7 +124,6 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
                this.toastr.error('No se ha podido crear la pregunta.', 'Ha ocurrido un error!');
             }
          );
-
    }
 
    checkValidFields() {
@@ -129,9 +131,10 @@ export class CreateQuestionComponent implements OnInit, OnDestroy {
       this.subjectChanges$ = this.questionForm.get('subject').valueChanges.subscribe((changes) => {
          this.questionForm.controls.category.setValue('');
          if (changes) {
-            this._categorySrv.getCategoriesByUserIdAndSubjectId(this.id_user, changes)
+            this._categorySrv.getCategoriesOptions({id_user: this.id_user, id_subject: changes})
                .subscribe(
                   (result: any) => {
+                     console.log("options: ", result);
                      this.options_category = result;
                   },
                   error => {

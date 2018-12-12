@@ -1,16 +1,22 @@
-//ANGULAR
-import { Component, OnInit, OnDestroy } from '@angular/core';
+// Angular
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+// RxJS
 import { Subscription } from 'rxjs';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//SWEETALERT2
-import Swal from 'sweetalert2';
+
 import { CreateActivityComponent } from '../../modals/create-activity/create-activity.component';
 import { ActivityService } from 'src/app/core/services/API/activity.service';
-import { ToastrService } from 'ngx-toastr';
+
 import { UpdateActivityComponent } from '../../modals/update-activity/update-activity.component';
+// ngx-toastr
+import { ToastrService } from 'ngx-toastr';
+// ngx-sweetaler2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+// Constants
+import { SWAL_DELETE_ACTIVITY, SWAL_SUCCESS_DELETE_ACTIVITY } from 'src/app/config/swal_config';
 
 @Component({
    selector: 'cw-activities',
@@ -19,18 +25,30 @@ import { UpdateActivityComponent } from '../../modals/update-activity/update-act
 })
 export class ActivitiesComponent implements OnInit, OnDestroy {
 
-   // Form para el Filtro y Búsqueda
-   activityForm: FormGroup;
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   // Form para el filtro y búsqueda
+   filterForm: FormGroup;
+
+   // Opciones de los swal
+   SWAL_DELETE_ACTIVITY = SWAL_DELETE_ACTIVITY;
+   SWAL_SUCCESS_DELETE_ACTIVITY = SWAL_SUCCESS_DELETE_ACTIVITY;
+
+   // Parámetros de la url
+   urlParamChanges$: Subscription;
+   id_subject;
    id_course;
-   parameters$: Subscription;
 
-
-   // Evita se haga el mismo Filtro
+   // Evita se haga el mismo filtro de búsqueda
+   // también se puede manejar con markPristine(), averiguar que opción es mejor.
+   // teniendo en cuenta el detectChanges(), usar markPristine limpiaría la plantilla!
    f_mode = '';
    f_status = '';
 
+   // Data para la tabla
    data_activities;
-   total_activities = 0;
+   total_items = 0;
    total_pages;
    page_size = 20;
    page = 1;
@@ -46,9 +64,10 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
    ngOnInit() {
       this.initFormData();
-      this.parameters$ = this.route.params.subscribe(params => {
-         this.id_course = parseInt(params.id);
-         console.log("Curso: ", this.id_course, `, typeof: ${typeof (this.id_course)}`);
+      // Obtiene los params de la url
+      this.urlParamChanges$ = this.route.params.subscribe(params => {
+         this.id_course = params.idCourse;
+         this.id_subject = params.idSubject;
       });
 
       // Obtiene las Actividades por ID de Curso
@@ -57,7 +76,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
    // Inicializa el Form
    initFormData() {
-      this.activityForm = this.fb.group({
+      this.filterForm = this.fb.group({
          page_size: [this.page_size],
          page: [1],
          mode: [this.f_mode],
@@ -67,7 +86,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    }
 
    ngOnDestroy() {
-      this.parameters$.unsubscribe();
+      this.urlParamChanges$.unsubscribe();
    }
 
    createActivity() {
@@ -76,9 +95,13 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    }
 
    updateActivity(activity) {
-      const modalRef = this.ngModal.open(UpdateActivityComponent, { size: 'lg'});
+      const modalRef = this.ngModal.open(UpdateActivityComponent, { size: 'lg' });
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.activity = activity;
+      modalRef.result.then((result) => {
+         if (result) this.getActivities({ id_course: this.id_course });
+      });
+
    }
 
 
@@ -88,7 +111,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
             (result: any) => {
                console.log("activities: ", result);
                this.data_activities = result.items;
-               this.total_activities = result.info.total_items;
+               this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
             },
             error => {
@@ -101,6 +124,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    // Filtra los registros de la tabla
    // ----------------------------------------
    filterItems(params) {
+      // Establece los params de filtro para no repetir la misma búsqueda
       this.f_mode = params.mode;
       this.f_status = params.status;
       //Interface: { id_course, mode, status, page, page_size}
@@ -110,44 +134,16 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
 
    deleteActivity(id_activity) {
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
-
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿seguro desea eliminar la actividad?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
-
-         if (result.value) {
-            this._activitySrv.deleteActivity(id_activity)
-               .subscribe(
-                  result => {
-                     console.log("result: ", result);
-
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El usuario ha sido eliminado',
-                        'success'
-                     )
-                     //this.getUsers()
-                  },
-                  error => {
-                     console.log("error:", error);
-                  });
-         }
-      })
+      this._activitySrv.deleteActivity(id_activity)
+         .subscribe(
+            result => {
+               console.log("nowa: ", result);
+               this.successSwal.show();
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
-
-
-
 
 
 }

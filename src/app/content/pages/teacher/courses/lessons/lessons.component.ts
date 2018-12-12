@@ -1,19 +1,24 @@
-//ANGULAR
-import { Component, OnInit, OnDestroy } from '@angular/core';
+// Angular
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+// RxJS
 import { Subscription } from 'rxjs';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-//SWEETALERT2
-import Swal from 'sweetalert2';
+// ngx-sweetaler2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+// Services
 import { CreateActivityComponent } from '../../modals/create-activity/create-activity.component';
 import { ModuleService } from 'src/app/core/services/API/module.service';
 import { CreateLessonComponent } from '../../modals/create-lesson/create-lesson.component';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
 import { EditLessonComponent } from '../../modals/edit-lesson/edit-lesson.component';
+// Constants
+import { SWAL_DELETE_LESSON, SWAL_SUCCESS_DELETE_LESSON } from 'src/app/config/swal_config';
+
 
 @Component({
    selector: 'cw-lessons',
@@ -22,17 +27,20 @@ import { EditLessonComponent } from '../../modals/edit-lesson/edit-lesson.compon
 })
 export class LessonsComponent implements OnInit {
 
-   // Form para el Filtro y Búsqueda
-   lessonForm: FormGroup;
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
 
+   // Form para el filtro y búsqueda
+   filterForm: FormGroup;
+
+   SWAL_DELETE_LESSON = SWAL_DELETE_LESSON;
+   SWAL_SUCCESS_DELETE_LESSON = SWAL_SUCCESS_DELETE_LESSON;
    // Opciones de Selector
    options_module;
 
-   id_course;
-
-   // Evita se haga el mismo Filtro
-   f_module = '';
-   f_status = '';
+   // Evita se haga el mismo Filtro (ver si se pueden sacar)
+   lock_id_module = '';
+   lock_status = '';
    //f_search = '';
 
    data_lessons;
@@ -42,7 +50,10 @@ export class LessonsComponent implements OnInit {
    page = 1;
    from = ((this.page - 1) * this.page_size);
 
-   parameters$: Subscription;
+   // Parámetros de la url
+   urlParamChanges$: Subscription;
+   id_subject;
+   id_course;
 
    constructor(
       private route: ActivatedRoute,
@@ -55,11 +66,12 @@ export class LessonsComponent implements OnInit {
    }
 
    ngOnInit() {
-
-      this.parameters$ = this.route.params.subscribe(params => {
-         this.id_course = params.id;
-         console.log("Curso: ", this.id_course);
+      // Obtiene los params de la url
+      this.urlParamChanges$ = this.route.params.subscribe(params => {
+         this.id_course = params.idCourse;
+         this.id_subject = params.idSubject;
       });
+
       this.initFormData();
       this.loadFormOptions();
       this.getLessons({ id_course: this.id_course });
@@ -107,60 +119,36 @@ export class LessonsComponent implements OnInit {
    }
 
    initFormData() {
-      this.lessonForm = this.fb.group({
+      this.filterForm = this.fb.group({
          page_size: [this.page_size],
          page: [1],
-         id_module: [this.f_module],
-         status: [this.f_status],
+         id_module: [this.lock_id_module],
+         status: [this.lock_status],
       });
    }
 
    filterItems(params) {
       console.log("params: ", params);
-      this.f_module = params.id_module;
-      this.f_status = params.status;
+      this.lock_id_module = params.id_module;
+      this.lock_status = params.status;
 
       Object.assign(params, { id_course: this.id_course });
       this.getLessons(params);
    }
 
    deleteLesson(id_lesson) {
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
+      this._lessonSrv.deleteLesson(id_lesson)
+         .subscribe(
+            result => {
+               console.log("result: ", result);
+               this.successSwal.show();
+            },
+            error => {
+               console.log("error:", error);
+               this.toastr.error('La clase no ha sido eliminada porque contiene actividades.', 'Ha ocurrido un error!');
 
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿seguro desea eliminar la clase?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
+            });
 
-         if (result.value) {
-            this._lessonSrv.deleteLesson(id_lesson)
-               .subscribe(
-                  result => {
-                     console.log("result: ", result);
-
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El usuario ha sido eliminado',
-                        'success'
-                     )
-                     //this.getUsers()
-                  },
-                  error => {
-                     console.log("error:", error);
-                     this.toastr.error('La clase no ha sido eliminada porque contiene actividades.', 'Ha ocurrido un error!');
-                     //Mostrar Error en Toastr
-                  });
-         }
-      })
    }
 
 }

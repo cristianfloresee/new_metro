@@ -1,16 +1,18 @@
-//ANGULAR
-import { Component, OnInit } from '@angular/core';
+// Angular
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//SWEETALERT2
-import Swal from 'sweetalert2';
-//SERVICIOS
+// Services
 import { SubjectService } from '../../../../core/services/API/subject.service';
 //import { SocketService } from '../../../../core/services/socket.service';
-//MODALES
+// Modals
 import { EditSubjectComponent } from './edit-subject/edit-subject.component';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
+// Constants
+import { SWAL_DELETE_SUBJECT, SWAL_SUCCESS_DELETE_SUBJECT } from 'src/app/config/swal_config';
+// ngx-sweetalert2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
 
 @Component({
    selector: 'cw-subject',
@@ -19,40 +21,68 @@ import { CreateSubjectComponent } from './create-subject/create-subject.componen
 })
 export class SubjectComponent implements OnInit {
 
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   // Opciones de los swal
+   SWAL_DELETE_SUBJECT = SWAL_DELETE_SUBJECT;
+   SWAL_SUCCESS_DELETE_SUBJECT = SWAL_SUCCESS_DELETE_SUBJECT;
+
+   // Form para el filtro y búsqueda
+   filterForm: FormGroup;
+
    subjects;
    //ioConnection;
    f_search = '';
-   subjectForm: FormGroup;
 
-    //PAGINATION
-    from = 0;
-    limit = 5;
-    total_calendars = 0;
-    total_pages;
-    current_page = 1;
+
+   //PAGINATION
+   limit = 5;
+   total_calendars = 0;
+   current_page = 1;
+
+   // Evitan que se haga el mismo filtro
+   lock_search = '';
+
+   // Data para la tabla
+   data_subjects;
+   total_items = 0;
+   total_pages;
+   page_size = 20;
+   page = 1;
+   from = ((this.page - 1) * this.page_size);
 
    constructor(
       private _subjectSrv: SubjectService,
-      fb: FormBuilder,
+      private fb: FormBuilder,
       private ngModal: NgbModal,
       //private _socketSrv: SocketService
    ) {
-      this.subjectForm = fb.group({
-         limit: [this.limit],
-         search: [this.f_search]
-      });
+      this.initFormData();
    }
 
    ngOnInit() {
       this.getSubjects();
    }
 
-   getSubjects() {
-      this._subjectSrv.getSubjects(this.from, this.limit)
+   initFormData() {
+      this.filterForm = this.fb.group({
+         page_size: [this.page_size],
+         page: [1],
+         // Ver si se puede dejar de depender de los locks
+         search: this.lock_search
+      });
+   }
+
+   getSubjects(params?) {
+      params = Object.assign({}, params);
+      this._subjectSrv.getSubjects(params)
          .subscribe(
-            result => {
-               //console.log("result: ", result);
-               this.subjects = result;
+            (result: any) => {
+               console.log("momia: ", result);
+               this.data_subjects = result.items;
+               this.total_items = result.info.total_items;
+               this.total_pages = result.info.total_pages;
             },
             error => {
                console.log("error:", error);
@@ -68,7 +98,7 @@ export class SubjectComponent implements OnInit {
       });
    }
 
-   openCreateSubject() {
+   createSubject() {
       const modalRef = this.ngModal.open(CreateSubjectComponent);
       modalRef.result.then((result) => {
          if (result) this.getSubjects()
@@ -76,61 +106,24 @@ export class SubjectComponent implements OnInit {
    }
 
    deleteSubject(id_subject) {
-      console.log("delete user: ", id_subject);
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
-
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿seguro desea eliminar la asignatura?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
-
-         if (result.value) {
-            this._subjectSrv.deleteSubject(id_subject)
-               .subscribe(
-                  result => {
-                     console.log("result: ", result);
-
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El perído ha sido eliminado',
-                        'success'
-                     )
-                     this.getSubjects()
-                  },
-                  error => {
-                     console.log("error:", error);
-                  });
-         }
-      })
-   }
-
-   filter() {
-      this.f_search = this.subjectForm.value.search;
-      console.log("filter: ", this.f_search);
-
-      this._subjectSrv.getSubjects(this.from, this.limit, this.f_search)
+      this._subjectSrv.deleteSubject(id_subject)
          .subscribe(
             result => {
                console.log("result: ", result);
-               this.subjects = result;
-               // this.users = result.users;
-               // this.total_users = result.total;
-               // this.total_pages = Math.ceil(result.total / this.limit);
-               // this.current_page = (this.from / this.limit) + 1;
-               // console.log("current page: ", this.current_page)
+               this.successSwal.show();
+               this.getSubjects()
             },
             error => {
                console.log("error:", error);
             });
+   }
+
+   filterItems(params) {
+      console.log("params: ", params);
+      // Evita que se vuelva a realizar el mismo filtro
+      this.lock_search = params.search;
+      //Realiza el filtro con los nuevos params
+      this.getSubjects(params);
    }
 
 }

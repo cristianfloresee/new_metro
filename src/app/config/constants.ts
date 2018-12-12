@@ -1,9 +1,9 @@
-//ENVIRONMENTS
+// Environments
 export const API_URL_DEV = '//localhost:3000/';
 export const API_URL_PROD = 'http://...';
 export const API_URL = API_URL_DEV;
 
-//ENDPOINTS
+// Endpoints
 export const API = {
    //SESIÓN
    LOGIN: `${API_URL}login`,
@@ -31,36 +31,30 @@ export const API = {
    COURSE_UPDATE: `${API_URL}courses/update/`,
    COURSE_DELETE: `${API_URL}courses/delete/`,
    //ASIGNATURAS
-   SUBJECT_ALL: `${API_URL}subjects`,
-   SUBJECT_CREATE: `${API_URL}subjects/create`,
-   SUBJECT_UPDATE: `${API_URL}subjects/update/`,
-   SUBJECT_DELETE: `${API_URL}subjects/delete/`,
+   SUBJECTS: `${API_URL}subjects`,
+   SUBJECTS_AS_SELECT_OPTION: `${API_URL}subjects/select_options`,
    SUBJECT_COUNT: `${API_URL}subjects/count`,
    //CATEGORIAS
-   CATEGORY_GET: `${API_URL}categories`,
-   CATEGORY_CREATE: `${API_URL}categories/create`,
-   CATEGORY_UPDATE: `${API_URL}categories/update`,
-   CATEGORY_DELETE: `${API_URL}categories/delete`,
-   CATEGORY_COUNT: `${API_URL}categories/count`,
+   CATEGORIES: `${API_URL}categories`,
+   CATEGORIES_AS_SELECT_OPTION: `${API_URL}categories/select_options`,
+   CATEGORY_COUNT: `${API_URL}categories/count`, //elimninar
    //SUBCATEGORÍAS
-   SUBCATEGORY_GET: `${API_URL}subcategories`,
-   SUBCATEGORY_CREATE: `${API_URL}subcategories/create`,
-   SUBCATEGORY_UPDATE: `${API_URL}subcategories/update`,
-   SUBCATEGORY_DELETE: `${API_URL}subcategories/delete`,
+   SUBCATEGORIES: `${API_URL}subcategories`,
+   SUBCATEGORIES_AS_SELECT_OPTION: `${API_URL}subcategories/select_options`,
    SUBCATEGORY_COUNT: `${API_URL}subcategories/count`,
    //PREGUNTAS
-   QUESTION_GET: `${API_URL}questions`,
-   QUESTION_CREATE: `${API_URL}questions/create`,
+   QUESTIONS: `${API_URL}questions`,
    //MODULOS
    MODULE_GET: `${API_URL}modules`,
    MODULE_CREATE: `${API_URL}modules/create`,
    MODULE_UPDATE: `${API_URL}modules/update/`,
    MODULE_DELETE: `${API_URL}modules/delete/`,
    //OTROS
-   UPLOAD_IMAGE: `${API_URL}image/`
+   UPLOAD_IMAGE: `${API_URL}image/`,
+   WORKSPACES: `${API_URL}workspaces`,
 };
 
-//ROLES
+// User roles
 export const ROLES = [
    { id_role: 1, name: 'Administrador', url: 'admin' },
    { id_role: 2, name: 'Profesor', url: 'teacher' },
@@ -85,29 +79,19 @@ export const PAGE_TITLES = {
    'admin.(user)': { title: 'Usuarios' },
    'admin.(subject)': { title: 'Asignaturas' },
    'admin.(calendar)': { title: 'Calendario' }
-}
+};
 
-//MENSAJES TOAST
-export const TOAST_MESSAGES = {
-   /* CALENDAR: {
+// Pagination
+export const DEFAULT_PAGE_SIZE = 5;
+export const PAGE_SIZES = [20, 50, 100];
 
-          TITLE: `${noun} ${action}!`,
-          BODY: `${subject} ha sido ${action} correctamente.`
-
-          ERROR: 'Ha ocurrido un error!',
-          BODY: 'El período no ha sido actualizado.',
-          BODY: 'El período ya existe.'
-
-    }*/
-
-}
-
-//PAGINACIÓN
-export const REGISTERS_PER_PAGE = 5;
-
-//DIFICULTADES
+// Difficulties
 export const DIFFICULTIES = [
    { difficulty: 1, name: 'Fácil' },
    { difficulty: 2, name: 'Media' },
    { difficulty: 3, name: 'Díficil' }
-]
+];
+
+// Image Extensions
+export const IMAGE_EXTS = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+

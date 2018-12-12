@@ -9,8 +9,7 @@ import { map, catchError } from 'rxjs/operators';
 // //RXJS
 // import { Observable, throwError } from 'rxjs';
 // import { map, catchError } from 'rxjs/operators';
-// //SWEETALERT2
-// import Swal from 'sweetalert2';
+
 // //MODELOS
 // import { User } from '../../models/user.model';
 
@@ -20,44 +19,30 @@ export class SubjectService {
    constructor(
       public http: HttpClient,
       public _sessionSrv: SessionService,
-   ) {
+   ) { }
 
+   // Interface: { search, page, page_size}
+   getSubjects(params) {
+      return this.http.get(API.SUBJECTS, { params })
    }
 
-   getSubjects(from?, limit?, search?) {
-
-      let params = '';
-      if (from != undefined && limit) {
-         params = `?from=${from}&limit=${limit}`;
-         if (search) params += `&search=${search}`;
-      }
-
-
-      return this.http.get(`${API.SUBJECT_ALL}${params}`)
-         .pipe(
-            map((response: any) => {
-               return response.subjects;
-            })
-         )
+   // Interface: { id_user }
+   getSubjectsOptions(params?) {
+      return this.http.get(API.SUBJECTS_AS_SELECT_OPTION, { params });
    }
 
-
-   getSubjectsByUserId(id_user){
-      let params = `?teacher_options=${id_user}`
-      return this.http.get(`${API.SUBJECT_ALL}${params}`)
-   }
    createSubject(subject) {
       const { name } = subject;
-      return this.http.post(API.SUBJECT_CREATE, { name });
+      return this.http.post(API.SUBJECTS, { name });
    }
 
    updateSubject(subject, id_subject) {
       const { name } = subject;
-      return this.http.put(`${API.SUBJECT_UPDATE}${id_subject}`, { name });
+      return this.http.put(`${API.SUBJECTS}/${id_subject}`, { name });
    }
 
    deleteSubject(id_subject) {
-      return this.http.delete(`${API.SUBJECT_DELETE}${id_subject}`);
+      return this.http.delete(`${API.SUBJECTS}/${id_subject}`);
    }
 
    countSubject() {

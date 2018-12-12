@@ -72,7 +72,8 @@
                      <div class="col-md-4">
                         <div class="m-input-icon m-input-icon--left">
 
-                           <input formControlName="search" type="number" (input)="validSearch($event.target.value)" class="form-control m-input" placeholder="Buscar año ...">
+                           <input formControlName="search" type="number" (input)="validSearch($event.target.value)"
+                              class="form-control m-input" placeholder="Buscar año ...">
 
                            <span class="m-input-icon__icon m-input-icon__icon--left">
                               <span>
@@ -124,9 +125,11 @@
                         <a (click)="openCalendarEdit(calendar)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a (click)="deleteCalendar(calendar.id_calendar)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
+                        <swal #deleteSwal (confirm)="deleteCalendar(calendar.id_calendar)" [options]="SWAL_DELETE_CALENDAR"></swal>
+                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_CALENDAR"></swal>
                      </span>
                   </td>
                </tr>
@@ -135,4 +138,3 @@
       </div>
    </div>
 </div>
-

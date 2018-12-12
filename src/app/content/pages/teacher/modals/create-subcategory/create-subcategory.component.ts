@@ -55,7 +55,7 @@ export class CreateSubcategoryComponent implements OnInit, OnDestroy {
    }
 
    loadFormOptions() {
-      this._subjectSrv.getSubjectsByUserId(this.id_user)
+      this._subjectSrv.getSubjectsOptions({ id_user: this.id_user })
          .subscribe(
             (result: any) => {
                this.options_subject = result;
@@ -69,9 +69,9 @@ export class CreateSubcategoryComponent implements OnInit, OnDestroy {
       this.subcategoryForm.get('subject').valueChanges.subscribe((changes) => {
          this.subcategoryForm.controls.category.setValue('');
          if (changes) {
-            this._categorySrv.getCategoriesByUserIdAndSubjectId(this.id_user, changes)
+            this._categorySrv.getCategoriesOptions({ id_user: this.id_user, id_subject: changes })
                .subscribe(
-                  (result: any) => {
+                  result => {
                      this.options_category = result;
                      console.log("categories: ", result);
                   },
@@ -106,7 +106,7 @@ export class CreateSubcategoryComponent implements OnInit, OnDestroy {
    }
 
 
-   ngOnDestroy(){
+   ngOnDestroy() {
 
    }
 

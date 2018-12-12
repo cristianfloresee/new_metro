@@ -1,15 +1,17 @@
 //ANGULAR
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //NG-BOOTSTRAP
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//SWEETALERT2
-import Swal from 'sweetalert2';
 //SERVICIOS
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
 //COMPONENTES
 import { CreateCalendarComponent } from './create-calendar/create-calendar.component';
 import { EditCalendarComponent } from './edit-calendar/edit-calendar.component';
+// ngx-sweetalert2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+// Constants
+import { SWAL_DELETE_CALENDAR, SWAL_SUCCESS_DELETE_CALENDAR } from 'src/app/config/swal_config';
 
 
 @Component({
@@ -19,6 +21,11 @@ import { EditCalendarComponent } from './edit-calendar/edit-calendar.component';
 })
 export class CalendarComponent implements OnInit {
 
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   SWAL_DELETE_CALENDAR = SWAL_DELETE_CALENDAR;
+   SWAL_SUCCESS_DELETE_CALENDAR = SWAL_SUCCESS_DELETE_CALENDAR;
    //FORM
    calendarForm: FormGroup;
    f_search = '';
@@ -46,6 +53,7 @@ export class CalendarComponent implements OnInit {
 
    ngOnInit() {
       this.getCalendars();
+      console.log("que wea...", SWAL_DELETE_CALENDAR);
    }
 
    getCalendars() {
@@ -72,41 +80,18 @@ export class CalendarComponent implements OnInit {
 
 
    deleteCalendar(id_calendar) {
-      console.log("delete user: ", id_calendar);
-      const swalWithBootstrapButtons = Swal.mixin({
-         confirmButtonClass: 'btn btn-success',
-         cancelButtonClass: 'btn btn-danger',
-         buttonsStyling: false,
-      })
 
-      swalWithBootstrapButtons({
-         title: '¿Está seguro?',
-         text: "¿seguro desea eliminar el período?",
-         type: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'Si, Eliminar',
-         cancelButtonText: 'Cancelar',
-         reverseButtons: true
-      }).then((result) => {
+      this._calendarSrv.deleteCalendar(id_calendar)
+         .subscribe(
+            result => {
+               console.log("result: ", result);
 
-         if (result.value) {
-            this._calendarSrv.deleteCalendar(id_calendar)
-               .subscribe(
-                  result => {
-                     console.log("result: ", result);
-
-                     swalWithBootstrapButtons(
-                        'Acción realizada!',
-                        'El perído ha sido eliminado',
-                        'success'
-                     )
-                     this.getCalendars()
-                  },
-                  error => {
-                     console.log("error:", error);
-                  });
-         }
-      })
+               this.successSwal.show();
+               this.getCalendars()
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
 
    openCreateCalendar() {
@@ -146,7 +131,7 @@ export class CalendarComponent implements OnInit {
    }
 
    validYear(value, limit) {
-      console.log(`value: ${value}, limit: ${limit}, value.length: ${value.length}, typeof: ${typeof(value)}`);
+      console.log(`value: ${value}, limit: ${limit}, value.length: ${value.length}, typeof: ${typeof (value)}`);
       if (value.length > limit) value = value.slice(0, limit); //SACAR LOS PRIMEROS 4
       return value;
    }
