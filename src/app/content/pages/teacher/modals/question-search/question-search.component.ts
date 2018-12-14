@@ -158,21 +158,7 @@ export class QuestionSearchComponent implements OnInit {
       return lesson_questions;
 
    }
-   /*
-   getLessonQuestions() {
-      this._lessonQuestionSrv.getLessonQuestions({ id_lesson: this.id_lesson })
-         .subscribe(
-            (result: any) => {
-               console.log("LESSON_QUESTIONS: ", result);
-               this.data_lesson_questions = result.items;
-               //this.total_items = result.info.total_items;
-               //this.total_pages = result.info.total_pages;
-            },
-            error => {
-               console.log("error:", error);
-            });
-   }
-*/
+
 
 
    filterItems(params) {
