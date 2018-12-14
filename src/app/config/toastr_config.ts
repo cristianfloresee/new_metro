@@ -13,6 +13,10 @@ export const TOAST_SUCCESS_DELETE_QUESTION = Object.assign({}, TOAST_SUCCESS, { 
 export const TOAST_SUCCESS_UPDATE_WORKSPACES = Object.assign({}, TOAST_SUCCESS, { message: 'Los workspaces se han actualizado correctamente.' });
 export const TOAST_ERROR_UPDATE_WORKSPACES = Object.assign({}, TOAST_ERROR, { message: 'Los workspaces no han podido ser actualizados.' });
 
+// Opciones toastr de las preguntas de la clase
+export const TOAST_SUCCESS_UPDATE_QUESTIONS = Object.assign({}, TOAST_SUCCESS, { message: 'Las preguntas se han actualizado correctamente.' });
+export const TOAST_ERROR_UPDATE_QUESTIONS = Object.assign({}, TOAST_ERROR, { message: 'Las preguntas no se han podido ser actualizadas.' });
+
 // Opciones toastr de las subcategorías
 export const TOAST_SUCCESS_CREATE_SUBCATEGORY = Object.assign({}, TOAST_SUCCESS, { message: 'La subcategoría ha sido creada correctamente.' });
 export const TOAST_ERROR_CREATE_SUBCATEGORY = Object.assign({}, TOAST_ERROR, { message: 'La subcategoría no ha podido ser creada.' });

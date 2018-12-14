@@ -44,6 +44,8 @@ export const API = {
    SUBCATEGORY_COUNT: `${API_URL}subcategories/count`,
    //PREGUNTAS
    QUESTIONS: `${API_URL}questions`,
+
+   LESSON_QUESTIONS: `${API_URL}lesson_questions`,
    //MODULOS
    MODULE_GET: `${API_URL}modules`,
    MODULE_CREATE: `${API_URL}modules/create`,

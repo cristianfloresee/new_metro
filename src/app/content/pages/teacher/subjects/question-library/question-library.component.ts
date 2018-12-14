@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 // ngx-sweetaler2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Constants
-import { DIFFICULTIES } from 'src/app/config/constants';
+import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
 // Modals
 import { UpdateQuestionComponent } from '../../modals/update-question/update-question.component';
@@ -35,6 +35,8 @@ export class QuestionLibraryComponent implements OnInit {
    // Opciones de los swal
    SWAL_DELETE_QUESTION = SWAL_DELETE_QUESTION;
    SWAL_SUCCESS_DELETE_QUESTION = SWAL_SUCCESS_DELETE_QUESTION;
+
+   page_sizes = PAGE_SIZES;
 
    // Form para el filtro y búsqueda
    filterForm: FormGroup;
@@ -107,7 +109,7 @@ export class QuestionLibraryComponent implements OnInit {
    loadFormOptions() {
 
       // Obtiene las categorías por id de usuario y id de asignatura
-      this._categorySrv.getCategoriesOptions({id_user: this.id_user, id_subject: this.id_subject})
+      this._categorySrv.getCategoriesOptions({ id_user: this.id_user, id_subject: this.id_subject })
          .subscribe(
             (result: any) => {
                this.options_category = result;
@@ -124,8 +126,8 @@ export class QuestionLibraryComponent implements OnInit {
          this.filterForm.controls.id_subcategory.setValue('');
          if (changes) {
             //Load Subcategory Options
-           //this._subcategorySrv.getSubcategoriesByCategoryId(changes)
-           this._subcategorySrv.getSubcategoriesOptions({ id_category: changes })
+            //this._subcategorySrv.getSubcategoriesByCategoryId(changes)
+            this._subcategorySrv.getSubcategoriesOptions({ id_category: changes })
                .subscribe(
                   (result: any) => {
                      this.options_subcategory = result;
@@ -158,21 +160,8 @@ export class QuestionLibraryComponent implements OnInit {
          .catch(reason => reason);
    }
 
-   getQuestions() {
-      this._questionSrv.getQuestionsByTeacherIdAndSubjectId(this.id_user, this.id_subject)
-         .subscribe(
-            (result: any) => {
-               this.data_questions = result.items;
-               this.total_items = result.info.total_items;
-               this.total_pages = result.info.total_pages;
-            },
-            error => {
-               console.log("error:", error);
-            });
-   }
-
-   getQuestions2(params) {
-      Object.assign(params, { id_user: this.id_user, id_subject: this.id_subject });
+   getQuestions(params?) {
+      params = Object.assign({}, params, { id_user: this.id_user, id_subject: this.id_subject });
       this._questionSrv.getQuestions(params)
          .subscribe(
             (result: any) => {
@@ -191,18 +180,19 @@ export class QuestionLibraryComponent implements OnInit {
          .subscribe(
             result => {
                this.getQuestions();
-               setTimeout(()=>{
+               setTimeout(() => {
                   this.successSwal.show();
-                }, 1000);
+               }, 1000);
             },
             error => {
                console.log("error:", error);
             });
    }
 
-   kisa() {
+   // Obtiene los items de la página correspondiente
+   changePage() {
       console.log(this.filterForm.value);
-      this.getQuestions2(this.filterForm.value);
+      this.getQuestions(this.filterForm.value);
    }
 
    filterItems(params) {
@@ -211,7 +201,7 @@ export class QuestionLibraryComponent implements OnInit {
       this.lock_id_subcategory = params.id_subcategory;
       this.lock_difficulty = params.difficulty;
 
-      Object.assign(params);
-      this.getQuestions2(params);
+      Object.assign(params); // necesario??
+      this.getQuestions(params);
    }
 }

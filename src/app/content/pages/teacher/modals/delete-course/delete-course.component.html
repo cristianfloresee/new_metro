@@ -8,8 +8,10 @@
 <form [formGroup]="courseForm" (ngSubmit)="deleteCourse()" class="m-form m-form--state m-form--label-align-right">
    <div class="modal-body">
       <div class="m-portlet__body">
-            <p>Cosas malas inesperadas sucederán si no lees esto!</p>
-         <p>Esta acción <b>no se puede</b> deshacer. Esto eliminará permanentemente el curso <b>{{course.subject}}/{{course.name}}</b>,problemas y comentarios, y eliminará todas las asociaciones de colaboradores.</p>
+
+         <p>Cosas malas inesperadas sucederán si no lees esto!</p>
+         <p>Esta acción <b>no se puede</b> deshacer. Esto eliminará permanentemente el curso <b>{{course.subject}}/{{course.name}}</b>,problemas
+            y comentarios, y eliminará todas las asociaciones de colaboradores.</p>
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
             <label class="form-control-label">Escriba el nombre del curso para confirmar:</label>

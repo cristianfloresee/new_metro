@@ -16,7 +16,7 @@
       <div class="m-portlet__head-caption">
          <div class="m-portlet__head-title">
             <h3 class="m-portlet__head-text">
-               Biblioteca de Preguntas
+               Preguntas de la Clase
             </h3>
          </div>
       </div>
@@ -32,7 +32,7 @@
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
+         <form [formGroup]="lessonForm" (ngSubmit)="filterItems(lessonForm.value)">
             <div class="row align-items-center">
                <div class="col-xl-9 order-2 order-xl-1">
 
@@ -100,14 +100,20 @@
                </div>
                <div class="col-xl-3 order-1 order-xl-2 m--align-right">
                   <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                     [disabled]="filterForm.value.id_category === f_id_category && filterForm.value.id_subcategory === f_id_subcategory">
+                     [disabled]="lessonForm.value.id_category === f_id_category && lessonForm.value.id_subcategory === f_id_subcategory">
                      <span>
                         <span>Filtrar</span>
                      </span>
                   </button>
+                  <button type="button" (click)="searchQuestion()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                     <span>
+                        <span>Añadir Pregunta</span>
+                     </span>
+                  </button>
+
                   <button type="button" (click)="createQuestion()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
                      <span>
-                        <span>Crear Pregunta</span>
+                        <span>Finalizar Clase</span>
                      </span>
                   </button>
                   <div class="m-separator m-separator--dashed d-xl-none"></div>
@@ -129,7 +135,9 @@
                   <th>Subcategoría</th>
                   <th>Dificultad</th>
                   <th>Compartida</th>
-                  <th>Fecha de Creación</th>
+                  <th>Ganadores</th>
+                  <th>Estado</th>
+                  <th>Fecha de Adición</th>
                   <th>Fecha de Actualización</th>
                   <th class="center">Acciones</th>
                </tr>
@@ -137,15 +145,17 @@
 
 
             <tbody>
-               <tr *ngFor="let question of data_questions; let i=index">
+               <tr *ngFor="let question of data_lesson_questions; let i=index">
                   <td>{{i+1}}</td>
                   <td class="nowrap">{{question.description}}</td>
                   <td>{{question.category}}</td>
                   <td>{{question.subcategory}}</td>
                   <td>{{question.difficulty}}</td>
                   <td>{{question.shared}}</td>
-                  <td>{{question.created_at}}</td>
-                  <td>{{question.updated_at}}</td>
+                  <td>--</td>
+                  <td>{{question.status}}</td>
+                  <td>--</td>
+                  <td>--</td>
 
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
@@ -155,11 +165,11 @@
                         <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
-                        <swal #deleteSwal (confirm)="deleteQuestion(question.id_question)" [options]="SWAL_DELETE_QUESTION"></swal>
+                        <swal #deleteSwal (confirm)="deleteQuestion(question.id_question)" [options]="SWAL_DELETE_LESSON_QUESTION"></swal>
                      </span>
                   </td>
                </tr>
-               <swal #successSwal [options]="SWAL_SUCCESS_DELETE_QUESTION"></swal>
+               <swal #successSwal [options]="SWAL_SUCCESS_DELETE_LESSON_QUESTION"></swal>
             </tbody>
          </table>
 
@@ -209,11 +219,13 @@
                         <option value="50">50</option>
                         <option value="100">100</option>
                      </select>-->
-               <form [formGroup]="filterForm" style="display:inline;">
-                  <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage()">
-                     <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
-                  </select>
-               </form>
+               <form [formGroup]="lessonForm" style="display:inline;">
+                        <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="kisa()">>
+                           <option value="20">20</option>
+                           <option value="10">10</option>
+                           <option value="50">50</option>
+                        </select>
+                     </form>
 
                <!-- <div class="dropdown bootstrap-select m-datatable__pager-size dropup" style="width: 70px">
 

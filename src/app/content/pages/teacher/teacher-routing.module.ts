@@ -9,6 +9,8 @@ import { StatisticsComponent } from './courses/statistics/statistics.component';
 import { QuestionsComponent } from './courses/questions/questions.component';
 import { QuestionLibraryComponent } from './subjects/question-library/question-library.component';
 import { SubjectConfigComponent } from './subjects/subject-config/subject-config.component';
+import { LessonDetailComponent } from './courses/lessons/lesson-detail/lesson-detail.component';
+
 
 
 const routes: Routes = [
@@ -27,6 +29,10 @@ const routes: Routes = [
    {
       path: 'subject/:idSubject/course/:idCourse/lessons',
       component: LessonsComponent
+   },
+   {
+      path: 'subject/:idSubject/course/:idCourse/lessons/:idLesson',
+      component: LessonDetailComponent
    },
    {
       path: 'subject/:idSubject/course/:idCourse/config',

@@ -32,6 +32,7 @@ import { QuestionLibraryComponent } from './subjects/question-library/question-l
 import { SubjectConfigComponent } from './subjects/subject-config/subject-config.component';
 import { CategoriesComponent } from './subjects/subject-config/categories/categories.component';
 import { SubcategoriesComponent } from './subjects/subject-config/subcategories/subcategories.component';
+import { LessonDetailComponent } from './courses/lessons/lesson-detail/lesson-detail.component';
 
 @NgModule({
    imports: [
@@ -58,6 +59,7 @@ import { SubcategoriesComponent } from './subjects/subject-config/subcategories/
       SubjectConfigComponent,
       CategoriesComponent,
       SubcategoriesComponent,
+      LessonDetailComponent,
    ]
 })
 export class TeacherModule { }

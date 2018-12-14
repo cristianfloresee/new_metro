@@ -93,6 +93,8 @@ import { SubjectInitComponent } from './content/pages/teacher/modals/subject-ini
 import { DualListComponent } from './content/pages/teacher/shared/dual-list/dual-list.component';
 import { ModalSubcategoryComponent } from './content/pages/teacher/modals/modal-subcategory/modal-subcategory.component';
 import { WorkspaceService } from './core/services/API/workspace.service';
+import { QuestionSearchComponent } from './content/pages/teacher/modals/question-search/question-search.component';
+import { LessonQuestionService } from './core/services/API/lesson-question.service';
 
 @NgModule({
    declarations: [
@@ -121,7 +123,8 @@ import { WorkspaceService } from './core/services/API/workspace.service';
       UpdateCategoryComponent,
       SubjectInitComponent,
       DualListComponent,
-      ModalSubcategoryComponent
+      ModalSubcategoryComponent,
+      QuestionSearchComponent
    ],
    imports: [
       //ANGULAR
@@ -188,6 +191,7 @@ import { WorkspaceService } from './core/services/API/workspace.service';
       LessonService,
       ActivityParticipationService,
       WorkspaceService,
+      LessonQuestionService,
       //GUARDS
       LoginGuard,
       AdminGuard,
@@ -216,7 +220,8 @@ import { WorkspaceService } from './core/services/API/workspace.service';
       UpdateQuestionComponent,
       UpdateCategoryComponent,
       SubjectInitComponent,
-      ModalSubcategoryComponent
+      ModalSubcategoryComponent,
+      QuestionSearchComponent
    ],
    bootstrap: [AppComponent]
 })

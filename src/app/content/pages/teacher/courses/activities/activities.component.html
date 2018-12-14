@@ -157,6 +157,9 @@
                         </ng-template>
                      </div>
 
+                     <a (click)="updateActivity(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-info-circle"></i>
+                     </a>
 
                   </td>
                   <td class="nowrap">
@@ -172,12 +175,18 @@
                   <td>{{activity.updated_at}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+
+                        <a (click)="updateActivity(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-play"></i>
+                        </a>
+
                         <a (click)="updateActivity(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
                         <!-- <a (click)="deleteActivity(activity.id_activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a> -->
+
                         <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
