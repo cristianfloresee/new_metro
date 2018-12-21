@@ -64,6 +64,7 @@ export class ModalSubcategoryComponent implements OnInit {
 
    initFormData() {
       this.subcategoryForm = this.fb.group({
+         id_subcategory: '',
          id_subject: ['', [Validators.required]],
          id_category: ['', [Validators.required]],
          name: ['', [Validators.required]],
@@ -72,6 +73,7 @@ export class ModalSubcategoryComponent implements OnInit {
 
    loadFormData() {
       this.subcategoryForm.setValue({
+         id_subcategory: this.subcategory.id_subcategory,
          id_subject: this.subcategory.id_subject,
          id_category: this.subcategory.id_category,
          name: this.subcategory.name,
@@ -135,7 +137,8 @@ export class ModalSubcategoryComponent implements OnInit {
    }
 
    updateSubcategory(subcategory) {
-      this._subcategorySrv.updateSubcategory(this.id_user, subcategory.id_category, subcategory.name)
+
+      this._subcategorySrv.updateSubcategory(subcategory.id_subcategory, subcategory.id_category, subcategory.name)
          .subscribe(
             result => {
                this.activeModal.close(true);

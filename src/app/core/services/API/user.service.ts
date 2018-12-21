@@ -23,17 +23,17 @@ export class UserService {
 
    createUser(user) {
       console.log("create user service: ", user);
-      const { name, last_name, middle_name, document_no, email, phone_no, username, password, roles } = user;
-      return this.http.post(API.USER_CREATE, { name, last_name, middle_name, document_no, email, phone_no, username, password, roles });
+      const { name, last_name, middle_name, document, email, phone, username, password, roles } = user;
+      return this.http.post(API.USER_CREATE, { name, last_name, middle_name, document, email, phone, username, password, roles });
    }
 
    updateUser(user, id_user?) {
-      const { name, last_name, middle_name, document_no, email, phone_no, username, active, add_roles, delete_roles } = user;
+      const { name, last_name, middle_name, document, email, phone, username, active, add_roles, delete_roles } = user;
       console.log("USER: ", user);
       id_user = id_user || this._sessionSrv.userSubject.value.id_user;
       console.log("ID USER: ", id_user)
 
-      return this.http.put(`${API.USER_UPDATE}${id_user}`, { name, last_name, middle_name, document_no, email, phone_no, username, active, add_roles, delete_roles })
+      return this.http.put(`${API.USER_UPDATE}${id_user}`, { name, last_name, middle_name, document, email, phone, username, active, add_roles, delete_roles })
          .pipe(
             map((response: any) => {
                //this._sessionSrv.saveStorage(response.user);
@@ -73,8 +73,8 @@ export class UserService {
       return this.http.get(API.USER_ALL, { params })
    }
 
-   getUsersByDocumentId(document_no, id_course) {
-      const params = { document_no, id_course };
+   getUsersByDocumentId(document, id_course) {
+      const params = { document, id_course };
       return this.http.get(`${API.USER_ALL}/students`, { params })
    }
 

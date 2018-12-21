@@ -34,7 +34,7 @@
 
                   <div  style="margin-top: 20px;">
                      <label class="form-control-label">Número de Cédula del Estudiante:</label>
-                     <input type="text" class="form-control m-input" formControlName="document_no" maxLength="15"
+                     <input type="text" class="form-control m-input" formControlName="document" maxLength="15"
                         autocomplete="nope">
 
                      <ul class="filter-select" style="padding: 0; position: inherit; width: 100%">
@@ -82,7 +82,7 @@
                         </li>
                      </ul>
                      <!--===================== ERRORES DE PATERNO =====================-->
-                     <div class="form-control-feedback" *ngIf="studentForm.controls['document_no'].hasError('required') && (studentForm.controls['document_no'].dirty || studentForm.controls['document_no'].touched)">
+                     <div class="form-control-feedback" *ngIf="studentForm.controls['document'].hasError('required') && (studentForm.controls['document'].dirty || studentForm.controls['document'].touched)">
                         Este campo es requerido.
                      </div>
                      <button type="submit" style="margin-top: 10px;" class="btn btn-info" [disabled]="studentForm.invalid">Buscar</button>
@@ -128,7 +128,7 @@
                               </td>
                               <td>{{student.enrollment_date}}</td>
                               <!-- <td>{{student.email}}</td>
-                                 <td>{{student.disabled}}</td>
+                                 <td>{{student.active}}</td>
                                  <td class="nowrap">{{student.enrollment_date }}</td>
                                  <td>
                                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">

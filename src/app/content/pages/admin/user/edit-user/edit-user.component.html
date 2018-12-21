@@ -34,11 +34,11 @@
             </div>
             <!-- FIN ERRORES DE MATERNO -->
          </div>
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.document_no.invalid && userForm.controls.document_no.touched }">
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.document.invalid && userForm.controls.document.touched }">
             <label class="form-control-label">RUT:</label>
-            <input type="text" class="form-control m-input" formControlName="document_no" maxlength="15" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="document" maxlength="15" autocomplete="nope">
             <!--===================== ERRORES DE RUT =====================-->
-            <div class="form-control-feedback" *ngIf="userForm.controls['document_no'].hasError('required') && (userForm.controls['document_no'].dirty || userForm.controls['document_no'].touched)">
+            <div class="form-control-feedback" *ngIf="userForm.controls['document'].hasError('required') && (userForm.controls['document'].dirty || userForm.controls['document'].touched)">
                Este campo es requerido.
             </div>
             <!-- FIN ERRORES DE RUT -->
@@ -57,11 +57,11 @@
             <!-- FIN ERRORES DE EMAIL -->
          </div>
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.phone_no.invalid && userForm.controls.phone_no.touched }">
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.phone.invalid && userForm.controls.phone.touched }">
             <label class="form-control-label">Teléfono:</label>
-            <input type="text" class="form-control m-input" formControlName="phone_no" maxlength="35" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="phone" maxlength="35" autocomplete="nope">
             <!--===================== ERRORES DE TELÉFONO =====================-->
-            <div class="form-control-feedback" *ngIf="userForm.controls['phone_no'].hasError('required') && (userForm.controls['phone_no'].dirty || userForm.controls['phone_no'].touched)">
+            <div class="form-control-feedback" *ngIf="userForm.controls['phone'].hasError('required') && (userForm.controls['phone'].dirty || userForm.controls['phone'].touched)">
                Este campo es requerido.
             </div>
             <!-- FIN ERRORES DE TELÉFONO -->

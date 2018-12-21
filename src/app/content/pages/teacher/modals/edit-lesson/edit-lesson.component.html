@@ -57,8 +57,9 @@
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.status.invalid && lessonForm.controls.status.touched }">
             <label class="form-control-label">Estado:</label>
             <select formControlName="status" class="m-datatable__pager-size" style="width:160px">>
-               <option [ngValue]="true">Activo</option>
-               <option [ngValue]="false">Inactivo</option>
+               <option [ngValue]="1">No inciada</option>
+               <option [ngValue]="2">En Juego</option>
+               <option [ngValue]="3">Terminada</option>
             </select>
          </div>
 

@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // RxJS
 import { Subscription } from 'rxjs';
 // ng-bootstrap
@@ -61,7 +61,8 @@ export class LessonsComponent implements OnInit {
       private _moduleSrv: ModuleService,
       private ngModal: NgbModal,
       private _lessonSrv: LessonService,
-      private toastr: ToastrService
+      private toastr: ToastrService,
+      private router: Router
    ) {
    }
 
@@ -109,6 +110,7 @@ export class LessonsComponent implements OnInit {
       const modalRef = this.ngModal.open(CreateLessonComponent);
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.options_module = this.options_module;
+
    }
 
 
@@ -116,6 +118,22 @@ export class LessonsComponent implements OnInit {
       const modalRef = this.ngModal.open(EditLessonComponent);
       modalRef.componentInstance.lesson = lesson;
       modalRef.componentInstance.options_module = this.options_module;
+      modalRef.result.then((result) => {
+         if (result) this.getLessons({ id_course: this.id_course })
+      });
+   }
+
+   // Usar snapshot del router para pasar parámetros
+   lessonDetail(lesson) {
+      console.log("navigate: ", lesson.id_class.toString());
+      //this.router.navigate([lesson.id_class])
+      //course/:idCourse/lessons
+
+      // Funciona
+      //this.router.navigate(['/teacher', 'subject', 1, 'course', 2, 'lesson', lesson.id_class])
+      this.router.navigate([lesson.id_class], { relativeTo: this.route })
+
+
    }
 
    initFormData() {

@@ -92,6 +92,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    createActivity() {
       const modalRef = this.ngModal.open(CreateActivityComponent);
       modalRef.componentInstance.id_course = this.id_course;
+      modalRef.result.then((result) => {
+         if (result) this.getActivities({ id_course: this.id_course })
+      });
    }
 
    updateActivity(activity) {

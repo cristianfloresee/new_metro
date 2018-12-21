@@ -76,8 +76,9 @@
                      <label class="form-control-label">Estado:</label>
                      <select formControlName="status" class="m-datatable__pager-size" style="width:160px">
                         <option value="">Seleccionar</option>
-                        <option [ngValue]="true">Pendiente</option>
-                        <option [ngValue]="false">Realizado</option>
+                        <option [ngValue]="1">no iniciada</option>
+                        <option [ngValue]="2">en juego</option>
+                        <option [ngValue]="3">terminada</option>
                      </select>
                   </div>
 

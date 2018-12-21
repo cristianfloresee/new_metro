@@ -15,7 +15,8 @@ export class UserRoleComponent implements OnInit {
 
    constructor(
       private router: Router,
-      private roleSrv: RoleService
+      private roleSrv: RoleService,
+
    ) { }
 
    ngOnInit() {

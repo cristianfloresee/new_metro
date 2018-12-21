@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 import { SWAL_DELETE_STUDENT, SWAL_SUCCESS_DELETE_STUDENT } from 'src/app/config/swal_config';
 // ngx-sweetalert2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
+import { SocketService } from 'src/app/core/services/socket.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -21,7 +23,7 @@ import { SwalComponent } from '@toverux/ngx-sweetalert2';
    templateUrl: './students.component.html',
    styleUrls: ['./students.component.scss']
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnDestroy {
    @Input() course;
 
    // Hace referencia al template 'successSwal'
@@ -31,18 +33,23 @@ export class StudentsComponent implements OnInit {
    SWAL_SUCCESS_DELETE_STUDENT = SWAL_SUCCESS_DELETE_STUDENT;
    students;
 
+   enrollment$: Subscription;
+
    constructor(
       private ngModal: NgbModal,
       public fb: FormBuilder,
       private _userSrv: UserService,
       private _enrollmentSrv: EnrollmentService,
-      private toastr: ToastrService
+      private toastr: ToastrService,
    ) { }
 
    ngOnInit() {
       //this._userSrv.getUsersByCourseId(this.id_course)
-      console.log("cursito: ", this.course);
+      console.log("CURSITO: ", this.course);
+
       this.getEnrollments();
+      //this._socketSrv.onCreateEnrollment();
+      this.initIoConnection();
    }
 
 
@@ -63,6 +70,7 @@ export class StudentsComponent implements OnInit {
             (result: any) => {
                console.log("enrollments: ", result)
                this.students = result.items;
+               console.log("STUDENTS: ", this.students);
             },
             error => {
                console.log("error:", error);
@@ -72,17 +80,17 @@ export class StudentsComponent implements OnInit {
    changeStatus(student) {
       console.log("student: ", student);
 
-      this._enrollmentSrv.changeStatusEnrollment(this.course.id_course, student.id_user, !student.disabled)
+      this._enrollmentSrv.changeStatusEnrollment(this.course.id_course, student.id_user, !student.active)
          .subscribe(
             result => {
                console.log("enrollments: ", result)
-               let status = student.disabled ? 'habilitado' : 'deshabilitado';
-               student.disabled = !student.disabled;
+               let status = student.active ? 'habilitado' : 'deshabilitado';
+               student.active = !student.active;
                this.toastr.success(`El estudiante ha sido ${status} correctamente.`, `Estudiante ${status}!`);
             },
             error => {
                console.log("error:", error);
-               let status = student.disabled ? 'habilitar' : 'deshabilitar';
+               let status = student.active ? 'habilitar' : 'deshabilitar';
                this.toastr.error(`No se ha podido ${status} al estudiante.`, 'Ha ocurrido un error!');
             });
    }
@@ -100,6 +108,23 @@ export class StudentsComponent implements OnInit {
             });
    }
 
+   initIoConnection(){
+      //No enviaré data por socket, solo me servirá para dar una señal y traer nueva data paginada desde el server.
+      //Me llegaran todos los emits de todas los cursos. ¿Cómo solucionar esto?
+      this.enrollment$ = this._enrollmentSrv.listenEnrollments()
+      .subscribe((data)=>{
+         console.log("enrollment socket: ", data);
+      })
+      /*this._socketSrv.onCreateEnrollment()
+      .subscribe((data) => {
+         this.getEnrollments();
+      })*/
+
+   }
+
+   ngOnDestroy(){
+      this.enrollment$.unsubscribe();
+   }
 
 
 }

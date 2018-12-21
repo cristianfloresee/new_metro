@@ -36,12 +36,15 @@ export class AddStudentComponent implements OnInit {
    results;
    private searchChanges$: Subscription;
    studentForm: FormGroup;
+
+   // Estado para indicar si se actualizo data en el modal
+   data_updated: boolean;
    constructor(
       private _enrollmentSrv: EnrollmentService,
       public fb: FormBuilder,
       public activeModal: NgbActiveModal,
       private _userSrv: UserService,
-      private toastr: ToastrService
+      private toastr: ToastrService,
    ) { }
 
    ngOnInit() {
@@ -55,14 +58,14 @@ export class AddStudentComponent implements OnInit {
    initFormData() {
       this.studentForm = this.fb.group({
          query_field: ['hola'],
-         document_no: ['', Validators.required],
+         document: ['', Validators.required],
       });
 
 
       this.searchChanges$ = this.studentForm.get('query_field').valueChanges.pipe(
          debounceTime(200),
          distinctUntilChanged(),
-         switchMap((document_no) => this._userSrv.getUsersByDocumentId(document_no, this.course.id_course))
+         switchMap((document) => this._userSrv.getUsersByDocumentId(document, this.course.id_course))
       )
          .subscribe(
             (result: any) => {
@@ -91,7 +94,7 @@ export class AddStudentComponent implements OnInit {
    // }
 
    searchStudent(student) {
-      this._userSrv.getUsersByDocumentId(student.document_no, this.course.id_course)
+      this._userSrv.getUsersByDocumentId(student.document, this.course.id_course)
          .subscribe(
             (result: any) => {
                this.results = result.items;
@@ -114,7 +117,9 @@ export class AddStudentComponent implements OnInit {
             result => {
                student.enrolled = !student.enrolled;
                console.log("enrollments: ", result)
+               this.getEnrollments();
                this.toastr.success(`El estudiante ha sido inscrito correctamente.`, `Estudiante Inscrito!`);
+
             },
             error => {
                console.log("error:", error);
@@ -131,7 +136,20 @@ export class AddStudentComponent implements OnInit {
                console.log("enrollments: ", result)
                student.enrolled = !student.enrolled;
                this.successSwal.show();
-               //this.getModules();
+               this.getEnrollments();
+            },
+            error => {
+               console.log("error:", error);
+            });
+   }
+
+   getEnrollments() {
+      this._enrollmentSrv.getEnrollmentsByCourseId(this.course.id_course)
+         .subscribe(
+            (result: any) => {
+               console.log("enrollments: ", result)
+               this.students = result.items;
+               console.log("STUDENTS: ", this.students);
             },
             error => {
                console.log("error:", error);

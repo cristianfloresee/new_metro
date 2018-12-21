@@ -31,14 +31,22 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
    ngOnInit() {
 
+      // Actualizar datos de acuerdo a los parámetros de la ruta.
+      // + No se actualizaba con this.route.params, porlo que se utilizó paramMap
+      // + Referncia: https://scotch.io/tutorials/handling-route-parameters-in-angular-v2
 
-
-      this.urlParamChanges$ = this.route.params.subscribe(params => {
+      /*this.urlParamChanges$ = this.route.params.subscribe(params => {
          this.id_subject = params.idSubject;
          this.id_course = params.idCourse;
          // Revisar esto...
          this.getCourse();
-      });
+      });*/
+
+      this.urlParamChanges$ = this.route.paramMap.subscribe(params => {
+         this.id_subject = params.get('idSubject');
+         this.id_course = params.get('idCourse');
+         this.getCourse();
+      })
    }
 
    ngOnDestroy() {
@@ -49,7 +57,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
       this._courseSrv.getCourseById(this.id_user, this.id_course)
          .subscribe(value => {
             this.course = value;
-
          })
    }
 

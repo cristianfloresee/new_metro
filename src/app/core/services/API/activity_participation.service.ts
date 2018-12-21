@@ -29,7 +29,7 @@ export class ActivityParticipationService {
    // }
 
    // Actualiza una Participación
-   updateActivityParticipation(id_activity, id_user, status) {
+   updateActivityParticipation(id_activity, id_user, status: number) {
       return this.http.put(`${API_URL}activity_participation/${id_activity}/${id_user}`, { status });
    }
 

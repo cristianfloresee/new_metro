@@ -3,50 +3,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // Constants
 import { API } from '../../../config/constants';
+import { SocketService } from '../socket.service';
 
 @Injectable()
 export class LessonQuestionService {
 
    constructor(
-      public http: HttpClient
+      public http: HttpClient,
+      private socketSrv: SocketService
    ) { }
-/*
-   // Formatea el el form incluyendo la imagen como binario (única forma por ahora de enviar imagen y otros campos al servidor)
-   private formatImageForm(id_subcategory, description, difficulty, image, shared) {
-      const formData: FormData = new FormData();
-      formData.append('id_subcategory', id_subcategory);
-      formData.append('description', description);
-      formData.append('difficulty', difficulty);
-      formData.append('shared', shared);
-      if (image) formData.append('image', image, image.name);
-      return formData;
-   }
-
-   createQuestion(id_subcategory, description, difficulty, image, shared?) {
-      return this.http.post(API.QUESTIONS, this.formatImageForm(id_subcategory, description, difficulty, image, shared))
-   }
-
-
-   updateQuestion(id_question, id_subcategory, description, difficulty, image, shared) {
-      // Si la imagen es un archivo(object)
-      if ((typeof (image) === 'object') && image !== null) {
-         return this.http.put(`${API.QUESTIONS}/${id_question}`, this.formatImageForm(id_subcategory, description, difficulty, image, shared));
-      }
-      else {
-         return this.http.put(`${API.QUESTIONS}/${id_question}`, { id_subcategory, description, difficulty, image, shared });
-      }
-   }
-
-   // Obtiene las preguntas por id de profesor (usado en la página principal del profesor)
-   getLastQuestionsByTeacherId(id_user) {
-      let params = { id_user, page_size: '5' };
-      return this.http.get(API.QUESTIONS, { params });
-   }
-
-   getQuestionsByTeacherIdAndSubjectId(id_user, id_subject) {
-      let params = { id_user, id_subject };
-      return this.http.get(API.QUESTIONS, { params });
-   }*/
 
    // Interface {id_user, id_subject, id_category, id_subcategory, difficulty, id_lesson, page_size, page}
    getLessonQuestions(params) {
@@ -58,8 +23,17 @@ export class LessonQuestionService {
       return this.http.get(`${API.LESSON_QUESTIONS}/all`, { params });
    }
 
+   // Actualiza el estado de la pregunta
+   updateLessonQuestion(id_lesson, id_question, status) {
+      return this.http.post(`${API.LESSON_QUESTIONS}/${id_lesson}/${id_question}`, { status })
+   }
+
    updateLessonQuestions(id_lesson, add_questions, delete_questions) {
-      return this.http.post(`${API.LESSON_QUESTIONS}`, { id_lesson, add_questions, delete_questions });
+      return this.http.post(API.LESSON_QUESTIONS, { id_lesson, add_questions, delete_questions });
+   }
+
+   deleteLessonQuestion(id_class, id_question) {
+      return this.http.delete(`${API.LESSON_QUESTIONS}/${id_class}/${id_question}`);
    }
 
    /*

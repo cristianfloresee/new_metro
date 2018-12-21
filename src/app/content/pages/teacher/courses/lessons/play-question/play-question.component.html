@@ -1,0 +1,136 @@
+<div class="modal-header">
+   <h4 class="modal-title">{{question.description}}</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close(update)">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<div class="modal-body">
+
+
+   <div class="m-portlet__body">
+
+
+      <div class="form-group m-form__group m--margin-top-10">
+         <div class="alert m-alert m-alert--default" role="alert">
+            A continuación se presentan los estudiantes que han decidido participar en responder la pregunta.
+         </div>
+      </div>
+
+
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+
+         <div class="row align-items-center">
+            <div class="col-xl-12">
+               <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                  <button type="button" (click)="initParticipation(question_status)" style="color: #ffffff; margin-left: 10px;" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                     <span>
+                        <span> {{ question_status  == 1 ? 'Iniciar' : question_status == 2 ? 'Detener' : 'Volver a Abrir'}} Participación</span>
+                     </span>
+                  </button>
+                  <div class="m-separator m-separator--dashed d-xl-none"></div>
+               </div>
+               <br>
+            </div>
+
+         </div>
+
+      </div>
+
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th></th>
+                  <th></th>
+                  <th>Total Preguntas</th>
+                  <th>Participa</th>
+                  <th>No Participa</th>
+                  <th>Correctas</th>
+                  <th>Incorrectas</th>
+                  <th>No Seleccionado</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+            <tbody>
+               <ng-container>
+                  <tr class="student">
+                     <td>1</td>
+                     <td class="nowrap">Cristian Flores</td>
+                     <td colspan="6"></td>
+                     <td>
+                        <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                           <a (click)="playQuestion(question)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                              <i class="la la-play"></i>
+                           </a>
+                        </span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td></td>
+                     <td>Semestre</td>
+                     <td class="center">2</td>
+                     <td class="center">2</td>
+                     <td class="center">3</td>
+                     <td class="center">5</td>
+                     <td class="center">8</td>
+                     <td class="center">9</td>
+                     <td></td>
+                  </tr>
+                  <tr>
+                     <td></td>
+                     <td>Clase</td>
+                     <td class="center">2</td>
+                     <td class="center">2</td>
+                     <td class="center">3</td>
+                     <td class="center">5</td>
+                     <td class="center">8</td>
+                     <td class="center">9</td>
+                     <td></td>
+                  </tr>
+               </ng-container>
+
+            </tbody>
+
+            <!--
+            <tbody>
+               <tr *ngFor="let question of data_questions; let i=index">
+                  <td>{{i+1}}</td>
+                  <td class="nowrap">{{question.description}}</td>
+                  <td>{{question.category}}</td>
+                  <td>{{question.subcategory}}</td>
+                  <td>{{question.difficulty}}</td>
+                  <td>{{question.updated_at}}</td>
+                  <td>
+                     <div style="width: 50%; cursor: pointer;" (click)="changeAvailabiltyLessonQuestion(question)">
+                        <img *ngIf="question.added; else blank" src="assets/images/checked.svg" alt="">
+                        <ng-template #blank>
+                           <img src="assets/images/blank.svg" alt="">
+                        </ng-template>
+                     </div>
+                  </td>
+
+
+
+               </tr>
+               <swal #successSwal [options]="SWAL_SUCCESS_DELETE_QUESTION"></swal>
+            </tbody>
+         -->
+         </table>
+
+
+
+
+
+      </div>
+
+
+   </div>
+</div>
+
+<div class="modal-footer">
+   <button type="button" class="btn btn-info" (click)="activeModal.close(update)">Cerrar</button>
+   <button type="submit" (click)="updateLessonQuestions()" class="btn btn-info" [disabled]="question_status == 1">Finalizar Pregunta</button>
+</div>

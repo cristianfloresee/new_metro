@@ -15,7 +15,7 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 
 
    header_config;
-   current_id_role;
+   current_role;
 
    constructor(
       private el: ElementRef,
@@ -126,7 +126,7 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
       // })
 
       this.roleSrv.role$.subscribe((role) => {
-         this.current_id_role = role;
+         this.current_role = role;
       })
    }
 

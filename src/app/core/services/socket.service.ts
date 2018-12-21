@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 //SOCKET
 import * as io from 'socket.io-client';
+// Opción 2
+import { Socket } from 'ngx-socket-io'
 //CONSTANTES
 import { API_URL } from '../../config/constants';
 
@@ -15,36 +17,76 @@ import { API_URL } from '../../config/constants';
 @Injectable()
 export class SocketService {
 
-   private socket;
+   // Opción 2 (check_status)
+   socket_status = false;
+   // Opción 1
+   //private socket;
 
-   constructor(private client: HttpClient) { }
+   constructor(
+      //private client: HttpClient,
+      private socket: Socket
+   ) { }
 
-   //INICIA LA CONEXIÓN DEL SOCKET
+   // PENDIENTES!!!!
+   // Inicia la conexión del Web Socket
    public initSocket() {
-      this.socket = io(API_URL);
+      console.log("INICIA EL WEBSOCKET...")
+      //this.socket = io(API_URL);
+      this.socket.connect()
    }
 
-   //CIERRA LA CONEXIÓN DEL SOCKET
+
+   // Cierra la conexión de lWeb Socket
    public offSocket() {
-      if (this.socket) this.socket.disconnect();
+      console.log("DESCONECTA EL SOCKET...")
+      //if (this.socket) this.socket.disconnect();
+   }
+
+   checkStatus() {
+      this.socket.on('connect', () => {
+         console.log('connected to server');
+         this.socket_status = true;
+      });
+
+      this.socket.on('disconnect', () => {
+         console.log('disconnected to server');
+         this.socket_status = false;
+      });
    }
 
 
 
-   public onUsers(): Observable<any> {
+
+   // Escucha cambios sobre el evento 'change_users'
+   /*public onUsers(): Observable<any> {
       return new Observable<any>(observer => {
          this.socket.on('change_users', (data) => observer.next(data))
       })
-   }
+   }*/
 
-   public onSubjects(): Observable<any> {
+   // Escucha cambios sobre el evento 'change_subjects'
+   /*public onSubjects(): Observable<any> {
       return new Observable<any>(observer => {
          this.socket.on('change_subjects', (data) => observer.next(data))
       })
+   }*/
+
+   /*
+   public onCreateEnrollment(): Observable<any> {
+      return new Observable<any>(observer => {
+         this.socket.on('create_enrollment', (data) => observer.next(data))
+      })
+   }*/
+
+   emit(event: string, payload?: any, callback?: Function) {
+      this.socket.emit(event, payload, callback);
    }
 
+   listen(event: string) {
+      return this.socket.fromEvent(event)
+   }
 
-   /**BORRAR?' */
+   /* Servicio HTTP Simple
    public getMatriculas(): Promise<any> {
       return this.client
          .get<any>(`${API_URL}/api/matriculas`)
@@ -53,8 +95,9 @@ export class SocketService {
             return response;
          })
          .catch(this.handleError);
-   }
+   }*/
 
+   // Manejador de errores
    private handleError(error: any): Promise<any> {
       console.error('An error occurred', error);
       return Promise.reject(error.message || error);

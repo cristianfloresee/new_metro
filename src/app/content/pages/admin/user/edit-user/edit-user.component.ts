@@ -47,9 +47,9 @@ export class EditUserComponent implements OnInit {
          name: ['', Validators.required],
          last_name: ['', Validators.required],
          middle_name: ['', Validators.required],
-         document_no: ['', Validators.required],
+         document: ['', Validators.required],
          email: ['', [Validators.required, Validators.email]],
-         phone_no: ['', Validators.required],
+         phone: ['', Validators.required],
          username: ['', Validators.required],
          active: [''],
          roles: this.fb.group({
@@ -66,9 +66,9 @@ export class EditUserComponent implements OnInit {
          name: this.user.name,
          last_name: this.user.last_name,
          middle_name: this.user.middle_name,
-         document_no: this.user.document_no,
+         document: this.user.document,
          email: this.user.email,
-         phone_no: this.user.phone_no,
+         phone: this.user.phone,
          username: this.user.username,
          active: this.user.active,
          roles: {

@@ -31,9 +31,9 @@ export class ProfileComponent implements OnInit {
          'name': [this.user.name, [Validators.required]],
          'last_name': [this.user.last_name, [Validators.required, Validators.minLength(4)]],
          'middle_name': [this.user.middle_name, Validators.required],
-         'document_no': [this.user.document_no, Validators.required],
+         'document': [this.user.document, Validators.required],
          'email': [this.user.email, [Validators.required, Validators.email]],
-         'phone_no': [this.user.phone_no, Validators.required],
+         'phone': [this.user.phone, Validators.required],
          'username': [this.user.username, Validators.required]
       });
    }

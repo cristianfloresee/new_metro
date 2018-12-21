@@ -60,8 +60,9 @@
                            <div class="m-form__control">
                               <select formControlName="status" class="form-control m-bootstrap-select" id="m_form_type">
                                  <option value="">Todos</option>
-                                 <option value="true">Abierta</option>
-                                 <option value="false">Cerrada</option>
+                                 <option [ngValue]="1">no iniciada</option>
+                                 <option [ngValue]="2">en juego</option>
+                                 <option [ngValue]="3">terminada</option>
                               </select>
                            </div>
                         </div>
@@ -127,7 +128,7 @@
                   <td>{{i+1}}</td>
                   <td class="nowrap">{{lesson.description}}</td>
                   <td>{{lesson.module}}</td>
-                  <td>{{lesson.status}}</td>
+                  <td>{{lesson.status == 1 ? 'no iniciada' : lesson.status == 2 ? 'en juego' : 'terminada' }}</td>
                   <td>{{lesson.date}}</td>
                   <td>{{lesson.created_at}}</td>
                   <td>{{lesson.updated_at}}</td>
@@ -135,7 +136,7 @@
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                         <!-- (click)="startLesson(lesson)" -->
-                        <a [routerLink]="[lesson.id_class]"  class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="lessonDetail(lesson)"  class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-play"></i>
                         </a>
 

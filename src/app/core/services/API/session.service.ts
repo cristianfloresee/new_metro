@@ -40,10 +40,12 @@ export class SessionService {
       this.loadStorage();
    }
 
+   //
    changeUser(user: User) {
       this.userSubject.next(user);
    }
 
+   //
    login(email, password) {
 
       return this.http.post(API.LOGIN, { email, password })
@@ -51,7 +53,15 @@ export class SessionService {
             map((response: any) => {  //token, user
                this._roleSrv.changeAvailableRoles(response.user.roles);
                this.saveStorage(response.user, response.token)
-               this._socketSrv.initSocket();
+               //this._socketSrv.initSocket();
+               console.log("TU MAMA: ", response.user);
+               let user = {
+                  'id_user': response.user.id_user,
+                  'username': response.user.username,
+                  'role': response.user.roles[0]
+               }
+               // Emite evento para
+               this._socketSrv.emit('connectedUser', user)
                return true;
             })
          )
@@ -75,15 +85,31 @@ export class SessionService {
 
    }
 
-   //VERIFICAR LA EXP DEL TOKEN: POR HACER...
+   // Verifica si el usuario ya esta logueado
+   // + Si esta logueado debería actualizar datos desde el servidor?
+   // + Verificar expiración del token.
    isLogged() {
+      console.log("TOKEN: ", this.token);
       return (this.token.length > 5) ? true : false;
    }
 
    loadStorage() {
+
+
       if (localStorage.getItem('token')) {
+         const user = JSON.parse(localStorage.getItem('user'));
+
          this.token = localStorage.getItem('token');
-         this.userSubject.next(JSON.parse(localStorage.getItem('user')));
+         this.userSubject.next(user);
+
+         // Emite evento para tener al usuario en la lista de usuarios conectados en el servidor
+         // user: {id_user}
+         let use = {
+            'id_user': user.id_user,
+            'username': user.username,
+            'role': user.roles[0]
+         }
+         this._socketSrv.emit('connectedUser', use)
       }
       else {
          this.token = '';
@@ -99,6 +125,10 @@ export class SessionService {
          localStorage.setItem('token', token);
          this.token = token;
       }
+   }
+
+   socketChangeRole(role){
+      console.log("CHANGE ROLE: ", role);
    }
 
 

@@ -40,7 +40,7 @@
          <tbody>
 
             <tr *ngFor="let subcategory of data_subcategories; let i=index">
-               <td>{{i+1}}</td>
+               <td>{{subcategory.id_subcategory}}</td>
                <td class="nowrap">{{subcategory.category}}</td>
                <td class="nowrap">{{subcategory.name}}</td>
                <td class="nowrap">{{subcategory.created_at}}</td>

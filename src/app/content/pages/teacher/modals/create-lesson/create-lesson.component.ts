@@ -9,6 +9,7 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 //SERVICIOS
 import { LessonService } from 'src/app/core/services/API/lesson.service';
+import { SocketService } from 'src/app/core/services/socket.service';
 
 @Component({
    selector: 'cw-create-lesson',
@@ -29,7 +30,8 @@ export class CreateLessonComponent implements OnInit {
       public activeModal: NgbActiveModal,
       private _lessonSrv: LessonService,
       private toastr: ToastrService,
-      private ngbDateParserFormatter: NgbDateParserFormatter
+      private ngbDateParserFormatter: NgbDateParserFormatter,
+      private _socketSrv: SocketService
    ) { }
 
    ngOnInit() {
@@ -53,6 +55,11 @@ export class CreateLessonComponent implements OnInit {
          .subscribe(
             result => {
                this.activeModal.close(true);
+               // Socket Service
+               // + Debo iniciar socket y luego cerrarlo?
+               // + Como 'emitir' datos?
+
+               //this._socketSrv.
                this.toastr.success('La clase ha sido creado correctamente.', 'Clase creada!');
             },
             error => {

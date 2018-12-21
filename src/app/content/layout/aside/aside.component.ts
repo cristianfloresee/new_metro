@@ -34,8 +34,8 @@ export class AsideComponent implements OnInit {
 
       this.getCurrentUrl();
       this.roleSrv.role$.subscribe((role) => {
-         this.current_role = role; //{id_role, index, name, url}
-         this._sidemenuSrv.changeSidemenuByRole(this.current_role.id_role)
+         this.current_role = role; //{role, index, name, url}
+         this._sidemenuSrv.changeSidemenuByRole(this.current_role.role)
 
 
          //SI SOY PROFESOR DEBO OBTENER LOS CURSOS........-----------------------------------------

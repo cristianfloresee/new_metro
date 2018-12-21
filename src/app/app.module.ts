@@ -95,6 +95,13 @@ import { ModalSubcategoryComponent } from './content/pages/teacher/modals/modal-
 import { WorkspaceService } from './core/services/API/workspace.service';
 import { QuestionSearchComponent } from './content/pages/teacher/modals/question-search/question-search.component';
 import { LessonQuestionService } from './core/services/API/lesson-question.service';
+import { PlayQuestionComponent } from './content/pages/teacher/courses/lessons/play-question/play-question.component';
+//import { WebSocketService } from './core/services/websocket.service';
+
+// Web Socket
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
+const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 @NgModule({
    declarations: [
@@ -124,7 +131,8 @@ import { LessonQuestionService } from './core/services/API/lesson-question.servi
       SubjectInitComponent,
       DualListComponent,
       ModalSubcategoryComponent,
-      QuestionSearchComponent
+      QuestionSearchComponent,
+      PlayQuestionComponent
    ],
    imports: [
       //ANGULAR
@@ -134,6 +142,7 @@ import { LessonQuestionService } from './core/services/API/lesson-question.servi
       BrowserAnimationsModule,
       FormsModule,
       ReactiveFormsModule,
+      SocketIoModule.forRoot(config),
       //BOOTSTRAP
       NgbModule.forRoot(),
       //NGX-TOASTR
@@ -192,6 +201,7 @@ import { LessonQuestionService } from './core/services/API/lesson-question.servi
       ActivityParticipationService,
       WorkspaceService,
       LessonQuestionService,
+      //WebSocketService,
       //GUARDS
       LoginGuard,
       AdminGuard,
@@ -221,7 +231,9 @@ import { LessonQuestionService } from './core/services/API/lesson-question.servi
       UpdateCategoryComponent,
       SubjectInitComponent,
       ModalSubcategoryComponent,
-      QuestionSearchComponent
+      QuestionSearchComponent,
+      PlayQuestionComponent
+
    ],
    bootstrap: [AppComponent]
 })

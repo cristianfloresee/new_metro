@@ -27,12 +27,17 @@ const routes: Routes = [
       component: SubjectConfigComponent
    },
    {
-      path: 'subject/:idSubject/course/:idCourse/lessons',
-      component: LessonsComponent
-   },
-   {
-      path: 'subject/:idSubject/course/:idCourse/lessons/:idLesson',
-      component: LessonDetailComponent
+      path: 'subject/:idSubject/course/:idCourse/lesson',
+      children: [
+         {
+            path: '',
+            component: LessonsComponent
+         },
+         {
+            path: ':idLesson',
+            component: LessonDetailComponent
+         }
+      ]
    },
    {
       path: 'subject/:idSubject/course/:idCourse/config',
@@ -50,12 +55,12 @@ const routes: Routes = [
       path: 'subject/:idSubject/course/:idCourse/statistics',
       component: StatisticsComponent
    },
-   {
+   /*{
       path: '**',
       redirectTo: 'course',
       pathMatch: 'full'
       //component: ErrorPageComponent
-   },
+   },*/
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 <div class="modal-header">
-   <h4 class="modal-title">Actualizar Pregunta</h4>
+   <h4 class="modal-title">{{action}} Pregunta</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
@@ -160,6 +160,6 @@
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-      <button type="submit" class="btn btn-info" [disabled]="questionForm.pristine || questionForm.invalid">{{title}}</button>
+      <button type="submit" class="btn btn-info" [disabled]="questionForm.pristine || questionForm.invalid">{{action}}</button>
    </div>
 </form>

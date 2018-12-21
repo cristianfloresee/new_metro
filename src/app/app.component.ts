@@ -3,16 +3,15 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NavigationEnd, Router } from '@angular/router';
 
-//SERVICIOS
-import { LoaderService } from './core/services/loader.service';
-
 //RXJS
 import { filter } from 'rxjs/operators';
+
+// Services
+import { LoaderService } from './core/services/loader.service';
 import { PageService } from './core/services/page.service';
 import { RoleService } from './core/services/role.service';
 import { SessionService } from './core/services/API/session.service';
 import { SocketService } from './core/services/socket.service';
-//import { SocketService } from './core/services/socket.service';
 
 
 
@@ -48,7 +47,6 @@ export class AppComponent implements OnInit {
       private _roleSrv: RoleService,
       private _sessionSrv: SessionService,
       private _socketService: SocketService
-      //private _socketSrv: SocketService
    ) {
 
       //OBTIENE EL NOMBRE DE LA PÁGINA ACTUAL
@@ -77,10 +75,12 @@ export class AppComponent implements OnInit {
    }
 
 
-   //CHEQUEA SI EL USUARIO TIENE UNA SESIÓN INICIADA Y ACTIVA EL WEBSOCKET EN CASO DE SER ASI.
+   //CHEQUEA SI EL USUARIO TIENE UNA SESIÓN INICIADA e inicia el Web Socket en caso de ser así
    checkIsAuth() {
+      // Comprueba si esta logueado
       if (this._sessionSrv.isLogged()) {
-         this._socketService.initSocket();
+
+         //this._socketService.initSocket();
       }
    }
 

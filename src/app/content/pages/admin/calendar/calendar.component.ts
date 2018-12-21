@@ -35,7 +35,7 @@ export class CalendarComponent implements OnInit {
 
    //PAGINATION
    from = 0;
-   limit = 5;
+   limit = 20;
    total_calendars = 0;
    total_pages;
    current_page = 1;
@@ -109,7 +109,7 @@ export class CalendarComponent implements OnInit {
          .subscribe(
             result => {
                console.log("result: ", result);
-               this.calendars = result.results;
+               this.calendars = result.items;
                // this.users = result.users;
                // this.total_users = result.total;
                // this.total_pages = Math.ceil(result.total / this.limit);

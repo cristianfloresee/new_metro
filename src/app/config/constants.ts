@@ -58,9 +58,9 @@ export const API = {
 
 // User roles
 export const ROLES = [
-   { id_role: 1, name: 'Administrador', url: 'admin' },
-   { id_role: 2, name: 'Profesor', url: 'teacher' },
-   { id_role: 3, name: 'Estudiante', url: 'student' },
+   { role: 1, name: 'Administrador', url: 'admin' },
+   { role: 2, name: 'Profesor', url: 'teacher' },
+   { role: 3, name: 'Estudiante', url: 'student' },
 ];
 
 //RECURSOS

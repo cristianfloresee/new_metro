@@ -144,7 +144,7 @@
                <tr *ngFor="let activity of data_activities; let i=index">
                   <td>{{i+1}}</td>
                   <td class="nowrap">{{activity.name}}</td>
-                  <td>{{activity.mode}}</td>
+                  <td>{{activity.mode == 1 ? 'individual' : 'grupal'}}</td>
                   <td>{{activity.lesson}}</td>
                   <td>{{activity.module}}</td>
                   <td style="text-align: center">

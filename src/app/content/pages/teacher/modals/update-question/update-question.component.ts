@@ -24,6 +24,7 @@ import { DIFFICULTIES, IMAGE_EXTS, API_URL } from 'src/app/config/constants';
 export class UpdateQuestionComponent implements OnInit {
    @Input() question;
    @Input() id_subject;
+   @Input() action; // Título del modal
    @ViewChild('image_upload') image_upload;
    questionForm: FormGroup;
    files: any[];

@@ -38,10 +38,10 @@ const routes: Routes = [
       path: 'login',
       loadChildren: './auth/auth.module#AuthModule'
    },
-   {
+   /*{
       path: 'error',
       //component: ErrorPageComponent
-   },
+   },*/
 ];
 
 @NgModule({

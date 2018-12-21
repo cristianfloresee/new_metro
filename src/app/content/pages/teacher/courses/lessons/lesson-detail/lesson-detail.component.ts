@@ -17,6 +17,7 @@ import { SWAL_DELETE_LESSON_QUESTION, SWAL_SUCCESS_DELETE_LESSON_QUESTION } from
 import { DIFFICULTIES } from 'src/app/config/constants';
 import { QuestionSearchComponent } from '../../../modals/question-search/question-search.component';
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
+import { PlayQuestionComponent } from '../play-question/play-question.component';
 
 
 @Component({
@@ -104,11 +105,11 @@ export class LessonDetailComponent implements OnInit {
       modalRef.componentInstance.id_lesson = this.id_lesson;
       /// Recargar
       modalRef.result.then((result) => {
-         //if (result) this.getActivities({ id_course: this.id_course });
+         if (result) this.getLessonQuestions();
       });
    }
 
-   updateLesson(lesson) {
+   updateLesson(question) {
 
    }
 
@@ -125,6 +126,36 @@ export class LessonDetailComponent implements OnInit {
             error => {
                console.log("error:", error);
             });
+   }
+
+   playQuestion(question) {
+      console.log("ID LESSON: ", this.id_lesson);
+      console.log("quesion: ", question);
+      const modalRef = this.ngModal.open(PlayQuestionComponent, { size: 'lg' });
+      modalRef.componentInstance.question = question;
+      modalRef.componentInstance.id_lesson = this.id_lesson;
+
+      modalRef.result.then((result) => {
+         console.log("RESULTE: ", result);
+         if (result) this.getLessonQuestions();
+      });
+   }
+
+   deleteQuestion(id_question) {
+      console.log("id question: ", id_question);
+      console.log("id class: ", this.id_lesson);
+      this._lessonQuestionSrv.deleteLessonQuestion(this.id_lesson, id_question)
+         .subscribe(
+            result => {
+               console.log("result: ", result);
+               this.successSwal.show();
+               this.getLessonQuestions();
+            },
+            error => {
+               console.log("error:", error);
+               this.toastr.error('La clase no ha sido eliminada porque contiene actividades.', 'Ha ocurrido un error!');
+            });
+
    }
 
 }

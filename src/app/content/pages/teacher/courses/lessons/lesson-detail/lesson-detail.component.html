@@ -153,15 +153,19 @@
                   <td>{{question.difficulty}}</td>
                   <td>{{question.shared}}</td>
                   <td>--</td>
-                  <td>{{question.status}}</td>
-                  <td>--</td>
-                  <td>--</td>
+                  <td>{{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'en juego' : 'terminada' }}</td>
+                  <td>{{question.added_at}}</td>
+                  <td>{{question.updated_at}}</td>
 
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="playQuestion(question)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-play"></i>
+                        </a>
+<!--
                         <a (click)="updateQuestion(question)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
-                        </a>
+                        </a> -->
                         <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
