@@ -37,3 +37,13 @@ export const MENU_ADMIN = [
    { title: 'Asignaturas', url: 'subject', parent: '/admin/' },
    { title: 'Calendario', url: 'calendar', parent: '/admin/' }
 ];
+
+
+export const MENU_ADMIN2 = {
+   home: '',
+   menu: [
+      { title: 'Usuarios', url: 'user', parent: '/admin/' },
+      { title: 'Asignaturas', url: 'subject', parent: '/admin/' },
+      { title: 'Calendario', url: 'calendar', parent: '/admin/' }
+   ]
+}

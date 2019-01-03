@@ -11,6 +11,11 @@ export class CategoryService {
       public http: HttpClient
    ) { }
 
+   getLastCategories(params){
+      // Interface: { id_user, page_size }
+      return this.http.get(API.CATEGORIES_LAST, { params })
+   }
+
    getCategories(params) {
       // + Necesito una interface:
       // + { id_user, id_subject, page, page_size }

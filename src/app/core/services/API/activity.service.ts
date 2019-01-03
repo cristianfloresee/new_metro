@@ -27,7 +27,7 @@ export class ActivityService {
       return this.http.post(API.ACTIVITIES, { id_lesson, name, mode });
    }
 
-   // Actualiza una Actividad
+   // Actualiza una Actividad (arreglar)
    updateActivity(id_activity, id_lesson, name, status, mode, array_participation) {
       return this.http.put(`${API.ACTIVITIES}/${id_activity}`, { id_lesson, name, status, mode, array_participation });
    }

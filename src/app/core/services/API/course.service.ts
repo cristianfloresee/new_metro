@@ -14,38 +14,40 @@ export class CourseService {
       public http: HttpClient,
    ) { }
 
+   getCourses(params) {
+      // + Necesito una interface:
+      // + { id_user, id_course, page, page_size }
+      return this.http.get(API.COURSES, { params })
+   }
+
+   getCoursesByCode(id_user, code) {
+      // + Necesito una interface:
+      // + { id_user, id_course, page, page_size }
+      const params = { id_user, code };
+      return this.http.get(API.COURSES_SEARCH, { params })
+   }
+
+   getCourseDetail(id_course) {
+      return this.http.get(`${API.COURSES}/${id_course}`);
+   }
+
+   // No usado aún...
+   // Interface: { }
+   getCoursesOptions(params) {
+      return this.http.get(API.COURSES_AS_SELECT_OPTION, { params });
+   }
+
    createCourse(course) {
       const { id_calendar, id_user, id_subject, name, course_goal, student_goal } = course;
-      return this.http.post(API.COURSE_CREATE, { id_calendar, id_user, id_subject, name, course_goal, student_goal })
+      return this.http.post(API.COURSES, { id_calendar, id_user, id_subject, name, course_goal, student_goal })
    }
 
    updateCourse(id_course, course) {
-      return this.http.put(`${API.COURSE_UPDATE}${id_course}`, course);
-   }
-
-   getCoursesByTeacherId(id_user) {
-      let params = `?last_by_teacher=${id_user}`;
-      return this.http.get(`${API.COURSE_GET}${params}`);
-   }
-
-   /*
-   getCoursesForSidemenu(id_user) {
-      let params = `?all_courses_by_teacher=${id_user}`;
-      return this.http.get(`${API.COURSE_GET}${params}`)
-   }*/
-
-   getCoursesForSidemenu(id_user) {
-      let params = { all_courses_by_teacher: id_user };
-      return this.http.get(API.COURSE_GET, { params })
-   }
-
-   getCourseById(id_user, id_course) {
-      let params = `?id_user=${id_user}&id_course=${id_course}`;
-      return this.http.get(`${API.COURSE_GET}${params}`)
+      return this.http.put(`${API.COURSES}/${id_course}`, course);
    }
 
    deleteCourse(id_course) {
-      return this.http.delete(`${API.COURSE_DELETE}${id_course}`);
+      return this.http.delete(`${API.COURSES}/${id_course}`);
    }
 
 }

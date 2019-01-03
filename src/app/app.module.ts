@@ -101,6 +101,10 @@ import { PlayQuestionComponent } from './content/pages/teacher/courses/lessons/p
 // Web Socket
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
+import { CreateEnrollmentComponent } from './content/pages/student/modals/create-enrollment/create-enrollment.component';
+import { UpdateCourseComponent } from './content/pages/teacher/modals/update-course/update-course.component';
+import { WinnersComponent } from './content/pages/teacher/modals/winners/winners.component';
+import { QuestionSearch2Component } from './content/pages/teacher/courses/questions/question-search2/question-search2.component';
 const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 @NgModule({
@@ -132,7 +136,11 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       DualListComponent,
       ModalSubcategoryComponent,
       QuestionSearchComponent,
-      PlayQuestionComponent
+      PlayQuestionComponent,
+      CreateEnrollmentComponent,
+      UpdateCourseComponent,
+      WinnersComponent,
+      QuestionSearch2Component
    ],
    imports: [
       //ANGULAR
@@ -208,7 +216,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       TeacherGuard
    ],
    entryComponents: [
-      //MODALS
+      // Modals
       CreateUserComponent,
       EditUserComponent,
       CreateCalendarComponent,
@@ -232,8 +240,11 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       SubjectInitComponent,
       ModalSubcategoryComponent,
       QuestionSearchComponent,
-      PlayQuestionComponent
-
+      PlayQuestionComponent,
+      CreateEnrollmentComponent,
+      UpdateCourseComponent,
+      WinnersComponent,
+      QuestionSearch2Component
    ],
    bootstrap: [AppComponent]
 })

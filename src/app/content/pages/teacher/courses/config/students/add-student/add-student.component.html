@@ -1,6 +1,6 @@
 <div class="modal-header">
    <h4 class="modal-title">Inscripción de Estudiantes</h4>
-   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close(data_updated)">
       <span aria-hidden="true">&times;</span>
    </button>
 </div>
@@ -176,7 +176,7 @@
 
    </div>
    <div class="modal-footer">
-      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="button" class="btn btn-info" (click)="activeModal.close(data_updated)">Cerrar</button>
 
    </div>
 </form>

@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,11 +8,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
 
-// Constants
-import { DIFFICULTIES } from 'src/app/config/constants';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
+import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
+
+// ngx-sweetaler2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
+// Constants
+import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
+import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
+import { QuestionSearchComponent } from '../../modals/question-search/question-search.component';
+import { QuestionSearch2Component } from './question-search2/question-search2.component';
 
 @Component({
    selector: 'cw-questions',
@@ -20,6 +27,16 @@ import { SubcategoryService } from 'src/app/core/services/API/subcategory';
    styleUrls: ['./questions.component.scss']
 })
 export class QuestionsComponent implements OnInit {
+
+
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   // Opciones de los swal
+   SWAL_DELETE_QUESTION = SWAL_DELETE_QUESTION;
+   SWAL_SUCCESS_DELETE_QUESTION = SWAL_SUCCESS_DELETE_QUESTION;
+
+   page_sizes = PAGE_SIZES;
 
    // Form para el filtro y búsqueda
    filterForm: FormGroup;
@@ -43,6 +60,11 @@ export class QuestionsComponent implements OnInit {
    lock_id_subcategory = '';
    lock_difficulty = '';
 
+
+   // Data para la tabla
+   data_questions;
+   total_items = 0;
+   total_pages;
    page_size = 20;
    page = 1;
    from = ((this.page - 1) * this.page_size);
@@ -56,24 +78,32 @@ export class QuestionsComponent implements OnInit {
       private _categorySrv: CategoryService,
       private toastr: ToastrService,
       private _sessionSrv: SessionService,
-      private _subcategorySrv: SubcategoryService
+      private _subcategorySrv: SubcategoryService,
+      private _lessonQuestionSrv: LessonQuestionService
    ) { }
 
    ngOnInit() {
-      // Obtiene los params de la url
-      this.urlParamChanges$ = this.route.params.subscribe(params => {
-         this.id_course = params.idCourse;
-         this.id_subject = params.idSubject;
-      });
-
-      //Init Vars
       this.id_user = this._sessionSrv.userSubject.value.id_user;
-      this.initFormData();
-      this.loadFormOptions();
-      this.checkFormChanges();
+
+
+      // Obtiene los params de la url
+      this.urlParamChanges$ = this.route.paramMap.subscribe(params => {
+         this.id_subject = params.get('idSubject');
+         this.id_course = params.get('idCourse');
+
+         this.initFormData();
+         this.loadFormOptions();
+         this.checkFormChanges();
+         this.getQuestions();
+      });
    }
 
    initFormData() {
+
+      this.lock_difficulty = '';
+      this.lock_id_category = '';
+      this.lock_id_subcategory = '';
+
       this.filterForm = this.fb.group({
          page_size: [this.page_size],
          page: [1],
@@ -127,4 +157,65 @@ export class QuestionsComponent implements OnInit {
       });
    }
 
+   getQuestions() {
+      this._lessonQuestionSrv.getAllQuestionsByCourse(this.id_course, this.filterForm.value)
+         .subscribe(
+            (result: any) => {
+               console.log("QUESTIONS: ", result);
+               this.data_questions = result.items;
+               this.total_items = result.info.total_items;
+               this.total_pages = result.info.total_pages;
+               this.page = (this.from / this.page_size) + 1;
+            },
+            error => {
+               console.log("error:", error);
+            });
+   }
+
+   deleteQuestion(question) {
+      console.log("delete: ", question);
+      this._lessonQuestionSrv.deleteLessonQuestion(question.id_class, question.id_question)
+         .subscribe(
+            result => {
+               this.getQuestions();
+               this.successSwal.show();
+            },
+            error => {
+               console.log("error:", error);
+            });
+   }
+
+   searchQuestion() {
+      const modalRef = this.ngModal.open(QuestionSearch2Component, { size: 'lg' });
+      modalRef.componentInstance.action = 'Añadir';
+      modalRef.componentInstance.id_subject = this.id_subject;
+      modalRef.componentInstance.id_course = this.id_course;
+      //modalRef.componentInstance.id_lesson = this.id_lesson;
+      /// Recargar
+      modalRef.result.then((result) => {
+         if (result) this.getQuestions();
+      });
+   }
+
+
+   filterItems(params) {
+      this.lock_id_category = params.id_category;
+      this.lock_id_subcategory = params.id_subcategory;
+      this.lock_difficulty = params.difficulty;
+      this.from = 0;
+      this.getQuestions();
+   }
+
+   changePage(params) {
+      this.page_size = params.page_size;
+      this.getQuestions();
+   }
+
+   getUsersPage(page) {
+      if (page != 0 && page <= this.total_pages) {
+         this.from = (page - 1) * this.page_size;
+         this.page = page;
+         this.getQuestions();
+      }
+   }
 }

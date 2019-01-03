@@ -17,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Constants
 import { SWAL_DELETE_ACTIVITY, SWAL_SUCCESS_DELETE_ACTIVITY } from 'src/app/config/swal_config';
+import { WinnersComponent } from '../../modals/winners/winners.component';
+import { PAGE_SIZES } from 'src/app/config/constants';
 
 @Component({
    selector: 'cw-activities',
@@ -40,6 +42,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    id_subject;
    id_course;
 
+   page_sizes = PAGE_SIZES;
    // Evita se haga el mismo filtro de búsqueda
    // también se puede manejar con markPristine(), averiguar que opción es mejor.
    // teniendo en cuenta el detectChanges(), usar markPristine limpiaría la plantilla!
@@ -63,19 +66,21 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    ) { }
 
    ngOnInit() {
-      this.initFormData();
-      // Obtiene los params de la url
-      this.urlParamChanges$ = this.route.params.subscribe(params => {
-         this.id_course = params.idCourse;
-         this.id_subject = params.idSubject;
-      });
 
-      // Obtiene las Actividades por ID de Curso
-      this.getActivities({ id_course: this.id_course });
+      this.urlParamChanges$ = this.route.paramMap.subscribe(params => {
+         this.id_subject = params.get('idSubject');
+         this.id_course = params.get('idCourse');
+
+         this.initFormData();
+         // Obtiene las Actividades por ID de Curso
+         this.getActivities();
+      });
    }
 
    // Inicializa el Form
    initFormData() {
+      this.f_mode = '';
+      this.f_status = '';
       this.filterForm = this.fb.group({
          page_size: [this.page_size],
          page: [1],
@@ -93,7 +98,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       const modalRef = this.ngModal.open(CreateActivityComponent);
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.result.then((result) => {
-         if (result) this.getActivities({ id_course: this.id_course })
+         if (result) this.getActivities()
       });
    }
 
@@ -102,13 +107,21 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.activity = activity;
       modalRef.result.then((result) => {
-         if (result) this.getActivities({ id_course: this.id_course });
+         if (result) this.getActivities();
       });
-
    }
 
+   updateWinners(activity) {
+      const modalRef = this.ngModal.open(WinnersComponent);
+      modalRef.componentInstance.id_course = this.id_course;
+      modalRef.componentInstance.activity = activity;
+      modalRef.result.then((result) => {
+         if (result) this.getActivities();
+      });
+   }
 
-   getActivities(params) {
+   getActivities() {
+      let params = Object.assign({}, { id_course: this.id_course }, this.filterForm.value);
       this._activitySrv.getActivities(params)
          .subscribe(
             (result: any) => {
@@ -116,6 +129,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
                this.data_activities = result.items;
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
+               this.page = (this.from / this.page_size) + 1;
             },
             error => {
                console.log("error code:", error);
@@ -130,9 +144,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       // Establece los params de filtro para no repetir la misma búsqueda
       this.f_mode = params.mode;
       this.f_status = params.status;
+      this.from = 0;
       //Interface: { id_course, mode, status, page, page_size}
-      Object.assign(params, { id_course: this.id_course });
-      this.getActivities(params);
+      this.getActivities();
    }
 
 
@@ -148,5 +162,17 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
             });
    }
 
+   changePage(params) {
+      this.page_size = params.page_size;
+      this.getActivities();
+   }
+
+   getUsersPage(page) {
+      if (page != 0 && page <= this.total_pages) {
+         this.from = (page - 1) * this.page_size;
+         this.page = page;
+         this.getActivities();
+      }
+   }
 
 }

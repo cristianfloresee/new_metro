@@ -64,43 +64,57 @@
    <div class="m-portlet__body">
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
-
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-
          <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
-
             <div class="row align-items-center">
-               <div class="col-xl-8 order-2 order-xl-1">
-                  <div class="form-group m-form__group row align-items-center">
-                     <div class="col-md-4">
-                        <div class="m-input-icon m-input-icon--left">
 
-                           <input formControlName="search" type="text" maxLength=15 class="form-control m-input"
-                              placeholder="Buscar asignatura ...">
-
-                           <span class="m-input-icon__icon m-input-icon__icon--left">
-                              <span>
-                                 <i class="la la-search"></i>
-                              </span>
-                           </span>
-                        </div>
-                     </div>
-                  </div>
-
-               </div>
-               <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                  <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+               <div class="col-xl-12" style="margin-bottom: 20px;">
+                  <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                     <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
                      [disabled]="(filterForm.value.search == lock_search) || filterForm.invalid">
                      <span>
                         <span>Filtrar</span>
                      </span>
                   </button>
-                  <div class="m-separator m-separator--dashed d-xl-none"></div>
+                     <button type="button" (click)="createSubject()" style="color: #ffffff; margin-left: 10px;" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Crear Asignatura</span>
+                        </span>
+                     </button>
+                     <div class="m-separator m-separator--dashed d-xl-none"></div>
+                  </div>
+               </div>
+
+               <div class="col-xl-12">
+
+                  <div class="form-group m-form__group row align-items-center">
+                     <div class="col-md-4">
+                        <div class="m-form__group m-form__group--inline">
+
+                              <div class="m-input-icon m-input-icon--left">
+                                    <input formControlName="search" type="text" maxLength=15 class="form-control m-input"
+                                       placeholder="Buscar asignatura ...">
+
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                       <span>
+                                          <i class="la la-search"></i>
+                                       </span>
+                                    </span>
+                                 </div>
+
+                        </div>
+                        <div class="d-md-none m--margin-bottom-10"></div>
+                     </div>
+
+                  </div>
+
                </div>
             </div>
          </form>
       </div>
       <!-- FIN FILTRO/BUSQUEDA -->
+
+
 
       <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
 
@@ -136,5 +150,50 @@
                </tr>
             </tbody>
          </table>
+
+         <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+               <ul class="m-datatable__pager-nav">
+
+                  <li (click)="getUsersPage(1)">
+                     <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
+                        <i class="la la-angle-double-left"></i>
+                     </a>
+                  </li>
+
+                  <li (click)="getUsersPage(page-1)">
+                     <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
+                        <i class="la la-angle-left"></i>
+                     </a>
+                  </li>
+
+                  <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage(_page)">
+                     <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
+                  </li>
+
+                  <li (click)="getUsersPage(page+1)">
+                     <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
+                        <i class="la la-angle-right"></i>
+                     </a>
+                  </li>
+
+                  <li (click)="getUsersPage(total_pages)">
+                     <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
+                        <i class="la la-angle-double-right"></i>
+                     </a>
+                  </li>
+               </ul>
+
+               <!-- INFO DE LA TABLA -->
+               <div class="m-datatable__pager-info">
+                  <form [formGroup]="filterForm" style="display:inline;">
+                     <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage(filterForm.value)">
+                        <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
+                     </select>
+                  </form>
+                  <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}} -
+                     {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
+                     asignaturas</span>
+               </div>
+            </div>
       </div>
    </div>

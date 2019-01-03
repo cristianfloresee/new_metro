@@ -1,14 +1,8 @@
-//ANGULAR
+// Angular
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//CONSTANTES
-import { API, API_URL } from '../../../config/constants';
-//SERVICIOS
-import { SessionService } from './session.service';
-//RXJS
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-
+// Constants
+import { API_URL } from '../../../config/constants';
 
 @Injectable()
 export class LessonService {
@@ -31,6 +25,10 @@ export class LessonService {
       // + Necesito una interface:
       // + { id_module, id_course, status, page, page_size }
       return this.http.get(`${API_URL}lessons`, { params });
+   }
+
+   getClassById(id_class) {
+      return this.http.get(`${API_URL}lessons/${id_class}`);
    }
 
    updateLesson(id_lesson, id_module, description, date, status) {

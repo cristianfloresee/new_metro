@@ -13,21 +13,28 @@ export class LessonQuestionService {
       private socketSrv: SocketService
    ) { }
 
-   // Interface {id_user, id_subject, id_category, id_subcategory, difficulty, id_lesson, page_size, page}
+   // Obtiene las preguntas de la clase.
+   // Interface {id_lesson, id_category, id_subcategory, difficulty, page_size, page}
    getLessonQuestions(params) {
       return this.http.get(API.LESSON_QUESTIONS, { params });
    }
 
-   // Interface {id_lesson, id_question}
+   // Obtiene las preguntas de la biblioteca de la asignatura.
+   // Interface {id_user, id_subject, id_category, id_subcategory, difficulty, id_lesson, page_size, page}
    getAllQuestionsForLesson(params) {
       return this.http.get(`${API.LESSON_QUESTIONS}/all`, { params });
    }
 
-   // Actualiza el estado de la pregunta
+   getAllQuestionsByCourse(id_course, params) {
+      return this.http.get(`${API.LESSON_QUESTIONS}/course/${id_course}`, { params });
+   }
+
+   // Actualiza el estado de una pregunta
    updateLessonQuestion(id_lesson, id_question, status) {
       return this.http.post(`${API.LESSON_QUESTIONS}/${id_lesson}/${id_question}`, { status })
    }
 
+   // Agrega o elimina múltiples preguntas a la clase
    updateLessonQuestions(id_lesson, add_questions, delete_questions) {
       return this.http.post(API.LESSON_QUESTIONS, { id_lesson, add_questions, delete_questions });
    }

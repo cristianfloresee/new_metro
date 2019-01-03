@@ -17,34 +17,27 @@ export class CalendarService {
       public http: HttpClient
    ) {}
 
-   getCalendars(from?, limit?, search?) {
+   getCalendars(params){
+      // + Necesito una interface:
+      // + { year, page, page_size }
+      return this.http.get(API.CALENDARS, { params })
+   }
 
-      let params = '';
-      if (from != undefined && limit) {
-         params = `?from=${from}&limit=${limit}`;
-         if (search) params += `&search=${search}`;
-      }
-
-      /*
-
-
-      */
-
-      return this.http.get(`${API.CALENDAR_ALL}${params}`)
-         .pipe(map((response: any) => response))
-
+   // Interface: {  }
+   getCalendarsOptions(params?) {
+      return this.http.get(API.CALENDARS_AS_SELECT_OPTION, { params });
    }
 
    createCalendar(calendar) {
       const { year, semester } = calendar;
-      return this.http.post(API.CALENDAR_CREATE, { year, semester });
+      return this.http.post(API.CALENDARS, { year, semester });
    }
 
    updateCalendar(calendar, id_calendar) {
 
       const { year, semester } = calendar;
 
-      return this.http.put(`${API.CALENDAR_UPDATE}${id_calendar}`, { year, semester })
+      return this.http.put(`${API.CALENDARS}/${id_calendar}`, { year, semester })
          .pipe(
             map((response: any) => {
                console.log("RESPONSE: ", response);
@@ -58,7 +51,7 @@ export class CalendarService {
    }
 
    deleteCalendar(id_calendar) {
-      return this.http.delete(`${API.CALENDAR_DELETE}${id_calendar}`);
+      return this.http.delete(`${API.CALENDARS}/${id_calendar}`);
    }
 
    countCalendar() {

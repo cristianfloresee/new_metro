@@ -102,7 +102,7 @@ export class UpdateQuestionComponent implements OnInit {
       //console.log("image: ", this.question.image);
       if (this.question.image) this.image_url = API_URL + this.question.image;
       this.questionForm.setValue({
-         subject: this.id_subject,
+         subject: this.question.id_subject,
          category: this.question.id_category,
          subcategory: this.question.id_subcategory,
          description: this.question.description,
@@ -167,8 +167,8 @@ export class UpdateQuestionComponent implements OnInit {
       this.subjectChanges$ = this.questionForm.get('subject').valueChanges.subscribe((changes) => {
          this.questionForm.controls.category.setValue('');
          if (changes) {
-            console.log(`changes: ${changes}, this.question.id_subject: ${this.id_subject}`)
-            if (changes == this.id_subject) this.questionForm.get('subject').markAsPristine();
+            //console.log(`changes: ${changes}, this.question.id_subject: ${this.id_subject}`)
+            if (changes == this.question.id_subject) this.questionForm.get('subject').markAsPristine();
 
             this._categorySrv.getCategoriesOptions({id_user: this.id_user, id_subject: changes})
                .subscribe(

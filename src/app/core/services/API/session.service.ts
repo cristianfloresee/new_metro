@@ -79,6 +79,8 @@ export class SessionService {
          localStorage.removeItem('token');
          localStorage.removeItem('menu');
          localStorage.removeItem('user');
+
+         this._socketSrv.emit('disconnectedUser');
          //DESCONECTA SOCKET.IO
          this._socketSrv.offSocket();
       }, 1000);

@@ -58,6 +58,12 @@ export class CategoriesComponent implements OnInit {
    }
 
    ngOnInit() {
+
+   }
+
+   // Necesario para cuando pasa de la categoría de una asignatura a la categoría de otra asignatura
+   // + En la situación anterior no cambiaría la url completa, solo el parámetro por lo que en ngOnInit no se actualizaría
+   ngOnChanges(){
       this.getCategories();
    }
 

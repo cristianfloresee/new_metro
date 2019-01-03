@@ -64,10 +64,28 @@
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <div class="row align-items-center">
-            <div class="col-xl-9 order-2 order-xl-1">
+         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
+            <div class="row align-items-center">
 
-               <form [formGroup]="userForm" style="display:inline;">
+               <div class="col-xl-12" style="margin-bottom: 20px;">
+                  <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                     <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                        [disabled]="filterForm.value.role == f_role && filterForm.value.status == f_status && filterForm.value.search == f_search">
+                        <span>
+                           <span>Filtrar</span>
+                        </span>
+                     </button>
+                     <button type="button" (click)="openCreateUser()" style="color: #ffffff; margin-left: 10px;" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Crear Usuario</span>
+                        </span>
+                     </button>
+                     <div class="m-separator m-separator--dashed d-xl-none"></div>
+                  </div>
+               </div>
+
+               <div class="col-xl-12">
+
                   <div class="form-group m-form__group row align-items-center">
                      <div class="col-md-4">
                         <div class="m-form__group m-form__group--inline">
@@ -75,7 +93,6 @@
                               <label>Rol:</label>
                            </div>
                            <div class="m-form__control">
-
 
                               <select formControlName="role" class="form-control m-bootstrap-select">
                                  <option value="">Todos</option>
@@ -102,33 +119,11 @@
                         </div>
                         <div class="d-md-none m--margin-bottom-10"></div>
                      </div>
-                     <div class="col-md-4">
-                        <div class="m-input-icon m-input-icon--left">
-
-                           <input formControlName="search" type="text" maxLength="25" class="form-control m-input"
-                              placeholder="nombre, rut, correo, usuario">
-
-                           <span class="m-input-icon__icon m-input-icon__icon--left">
-                              <span>
-                                 <i class="la la-search"></i>
-                              </span>
-                           </span>
-                        </div>
-                     </div>
                   </div>
-               </form>
 
+               </div>
             </div>
-            <div class="col-xl-3 order-1 order-xl-2 m--align-right">
-               <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                  [disabled]="userForm.value.role == f_role && userForm.value.status == f_status && userForm.value.search == f_search">
-                  <span>
-                     <span>Filtrar</span>
-                  </span>
-               </button>
-               <div class="m-separator m-separator--dashed d-xl-none"></div>
-            </div>
-         </div>
+         </form>
       </div>
       <!-- FIN FILTRO/BUSQUEDA -->
 
@@ -154,7 +149,7 @@
             </thead>
             <tbody>
                <tr *ngFor="let user of users; let i=index">
-                  <td>{{i+1}}</td>
+                  <td>{{i+1 + from}}</td>
                   <td class="nowrap">{{user.name}}</td>
                   <td>{{user.last_name}}</td>
                   <td>{{user.middle_name}}</td>
@@ -191,45 +186,42 @@
                            <i class="la la-trash"></i>
                         </a>
                         <swal #deleteSwal (confirm)="deleteUser(user.id_user)" [options]="SWAL_DELETE_USER"></swal>
-                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_USER"></swal>
+
                      </span>
                   </td>
                </tr>
+               <swal #successSwal [options]="SWAL_SUCCESS_DELETE_USER"></swal>
             </tbody>
          </table>
 
 
-
-
          <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
             <ul class="m-datatable__pager-nav">
-               <li (click)="getUsersPage(0)">
-                  <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < limit)}">
+
+               <li (click)="getUsersPage(1)">
+                  <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
                      <i class="la la-angle-double-left"></i>
                   </a>
                </li>
-               <li (click)="getUsersFrom(-limit)">
-                  <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < limit)}">
+
+               <li (click)="getUsersPage(page-1)">
+                  <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
                      <i class="la la-angle-left"></i>
                   </a>
                </li>
-               <!--
-               <li>
-                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active'}">1</a>
+
+               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage(_page)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
                </li>
-               <li>
-                  <a class="m-datatable__pager-link m-datatable__pager-link-number">2</a>
-               </li>-->
-               <li *ngFor="let page of total_pages | fillArray" (click)="getUsersPage((page-1)*limit)">
-                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': page == current_page}">{{page}}</a>
-               </li>
-               <li (click)="getUsersFrom(+limit)">
-                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/limit)+1)==total_pages}">
+
+               <li (click)="getUsersPage(page+1)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
                      <i class="la la-angle-right"></i>
                   </a>
                </li>
-               <li (click)="getUsersPage(limit*(total_pages-1))">
-                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/limit)+1)==total_pages}">
+
+               <li (click)="getUsersPage(total_pages)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
                      <i class="la la-angle-double-right"></i>
                   </a>
                </li>
@@ -237,40 +229,17 @@
 
             <!-- INFO DE LA TABLA -->
             <div class="m-datatable__pager-info">
-               <!--
-               <select class="m-datatable__pager-size" data-width="170px" data-selected="10">
-                  <option value>seleccione tamaño de página</option>
-                  <option value="10">10</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-               </select>-->
-               <form [formGroup]="userForm" style="display:inline;">
-                  <select formControlName="limit" class="m-datatable__pager-size" style="width:160px" (change)="kisa()">>
-                     <option value="5">5</option>
-                     <option value="10">10</option>
-                     <option value="50">50</option>
+               <form [formGroup]="filterForm" style="display:inline;">
+                  <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage(filterForm.value)">
+                     <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
                   </select>
                </form>
-
-               <!-- <div class="dropdown bootstrap-select m-datatable__pager-size dropup" style="width: 70px">
-
-                  <button type="button" class="btn dropdown-toggle btn-light" data-togle="dropdown" role="button" title="Select page size" aria-expanded="false">
-                     <div class="filter-option">
-                        <div class="filter-option-inner">10</div>
-                     </div>
-                     <span class="bs-caret">
-                        <span class="caret"></span>
-                     </span>
-                  </button>
-               </div>
-               <div class="dropdown-menu" role="combobox" x-placement="top-start" style="max-height: 756.318px; overflow: hidden; min-height: 130px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -3px, 0px);">
-                  <div class="inner show" role="listbox"></div>
-               </div> -->
-               <span class="m-datatable__pager-detail">Mostrando {{total_users ? ((current_page-1)*limit + 1) : 0}} -
-                  {{(limit*current_page > total_users) ? total_users : (limit*current_page)}} de {{total_users}}
+               <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}} -
+                  {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
                   usuarios</span>
             </div>
          </div>
+
       </div>
 
    </div>

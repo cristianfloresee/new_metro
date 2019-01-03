@@ -9,14 +9,16 @@
    <div class="modal-body">
       <div class="m-portlet__body">
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.module.invalid && lessonForm.controls.module.touched }">
-            <label class="form-control-label">Modulo:</label>
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : lessonForm.controls.module.invalid && lessonForm.controls.module.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Modulo:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
             <select formControlName="module" class="m-datatable__pager-size" style="width:160px">
                <option value="">Seleccionar</option>
                <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
             </select>
+            </div>
             <!--===================== ERRORES DE PATERNO =====================-->
-            <div class="form-control-feedback" *ngIf="lessonForm.controls['module'].hasError('required') && (lessonForm.controls['module'].dirty || lessonForm.controls['module'].touched)">
+            <div style="margin-left: 40px" class="form-control-feedback" *ngIf="lessonForm.controls['module'].hasError('required') && (lessonForm.controls['module'].dirty || lessonForm.controls['module'].touched)">
                Este campo es requerido.
             </div>
             <!-- FIN ERRORES DE PATERNO -->
@@ -54,13 +56,15 @@
             <!-- FIN ERRORES DE NOMBRE -->
          </div>
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.status.invalid && lessonForm.controls.status.touched }">
-            <label class="form-control-label">Estado:</label>
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : lessonForm.controls.status.invalid && lessonForm.controls.status.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Estado:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
             <select formControlName="status" class="m-datatable__pager-size" style="width:160px">>
                <option [ngValue]="1">No inciada</option>
                <option [ngValue]="2">En Juego</option>
                <option [ngValue]="3">Terminada</option>
             </select>
+            </div>
          </div>
 
       </div>

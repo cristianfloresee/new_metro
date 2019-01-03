@@ -44,11 +44,15 @@ s
 
    ngOnInit() {
       // Obtiene los params de la url
-      this.urlParamChanges$ = this.route.params.subscribe(params => {
+      /*this.urlParamChanges$ = this.route.params.subscribe(params => {
          this.id_subject = params.idSubject;
+      });*/
+      this.urlParamChanges$ = this.route.paramMap.subscribe(params => {
+         this.id_subject = params.get('idSubject');
       });
       this.id_user = this._sessionSrv.userSubject.value.id_user;
    }
+
 
    initFormData() {
       this.filterForm = this.fb.group({

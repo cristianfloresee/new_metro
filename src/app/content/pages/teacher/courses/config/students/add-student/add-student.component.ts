@@ -4,7 +4,7 @@ import { EnrollmentService } from 'src/app/core/services/API/enrollments.service
 // Angular
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//ng-bootstrap
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/core/services/API/user.service';
 // RxJS
@@ -33,8 +33,12 @@ export class AddStudentComponent implements OnInit {
    @Input() course;
    @Input() students;
 
+
+   // Resultados de la búsqueda
    results;
-   private searchChanges$: Subscription;
+   //
+   searchChanges$: Subscription;
+   // Form
    studentForm: FormGroup;
 
    // Estado para indicar si se actualizo data en el modal
@@ -49,7 +53,6 @@ export class AddStudentComponent implements OnInit {
 
    ngOnInit() {
       this.initFormData();
-      //this.getEnrollments();
       console.log("cursito: ", this.course);
       console.log("students: ", this.students);
    }
@@ -98,7 +101,7 @@ export class AddStudentComponent implements OnInit {
          .subscribe(
             (result: any) => {
                this.results = result.items;
-               console.log("usera: ", result)
+               console.log("search results: ", result)
             },
             error => {
                console.log("error:", error);
@@ -119,7 +122,7 @@ export class AddStudentComponent implements OnInit {
                console.log("enrollments: ", result)
                this.getEnrollments();
                this.toastr.success(`El estudiante ha sido inscrito correctamente.`, `Estudiante Inscrito!`);
-
+               this.data_updated = true;
             },
             error => {
                console.log("error:", error);
@@ -129,6 +132,7 @@ export class AddStudentComponent implements OnInit {
    }
 
    deleteEnrollment(student) {
+      console.log("delete: ", student);
 
       this._enrollmentSrv.deleteEnrollment(this.course.id_course, student.id_user)
          .subscribe(
@@ -136,7 +140,12 @@ export class AddStudentComponent implements OnInit {
                console.log("enrollments: ", result)
                student.enrolled = !student.enrolled;
                this.successSwal.show();
-               this.getEnrollments();
+               //this.getEnrollments();
+
+               // Elimino al estudiante de la lista
+               const user_index = this.students.findIndex(_student => _student.id_user == student.id_user);
+               if (user_index >= 0) this.students.splice(user_index, 1);
+
             },
             error => {
                console.log("error:", error);

@@ -80,6 +80,10 @@ export class RoleService {
             }
          }
       }
+      else{
+         // Emitir evento para eliminar al usuario de la lista de usuarios conectados
+         console.log("ELIMINAR USUARIO SOCKET...");
+      }
 
 
    }

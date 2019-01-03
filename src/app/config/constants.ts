@@ -9,7 +9,7 @@ export const API = {
    LOGIN: `${API_URL}login`,
    LOGOUT: ``,
    //USUARIO
-   USER_ALL: `${API_URL}users`,
+   USERS: `${API_URL}users`,
    USER_GET: `${API_URL}/`,
    USER_CREATE: `${API_URL}users/create`,
    USER_UPDATE: `${API_URL}users/update/`,
@@ -20,16 +20,13 @@ export const API = {
    ACTIVITIES: `${API_URL}activities`,
 
    //CALENDARIO
-   CALENDAR_ALL: `${API_URL}calendars`,
-   CALENDAR_CREATE: `${API_URL}calendars/create`,
-   CALENDAR_UPDATE: `${API_URL}calendars/update/`,
-   CALENDAR_DELETE: `${API_URL}calendars/delete/`,
+   CALENDARS: `${API_URL}calendars`,
+   CALENDARS_AS_SELECT_OPTION: `${API_URL}calendars/select_options`,
    CALENDAR_COUNT: `${API_URL}calendars/count`,
    //CURSOS
-   COURSE_GET: `${API_URL}courses`,
-   COURSE_CREATE: `${API_URL}courses/create`,
-   COURSE_UPDATE: `${API_URL}courses/update/`,
-   COURSE_DELETE: `${API_URL}courses/delete/`,
+   COURSES: `${API_URL}courses`,
+   COURSES_SEARCH: `${API_URL}courses/search`,
+   COURSES_AS_SELECT_OPTION: `${API_URL}courses/select_options`,
    //ASIGNATURAS
    SUBJECTS: `${API_URL}subjects`,
    SUBJECTS_AS_SELECT_OPTION: `${API_URL}subjects/select_options`,
@@ -37,11 +34,13 @@ export const API = {
    //CATEGORIAS
    CATEGORIES: `${API_URL}categories`,
    CATEGORIES_AS_SELECT_OPTION: `${API_URL}categories/select_options`,
+   CATEGORIES_LAST: `${API_URL}categories/last`,
    CATEGORY_COUNT: `${API_URL}categories/count`, //elimninar
    //SUBCATEGORÍAS
    SUBCATEGORIES: `${API_URL}subcategories`,
    SUBCATEGORIES_AS_SELECT_OPTION: `${API_URL}subcategories/select_options`,
    SUBCATEGORY_COUNT: `${API_URL}subcategories/count`,
+   SUBCATEGORIES_LAST: `${API_URL}subcategories/last`,
    //PREGUNTAS
    QUESTIONS: `${API_URL}questions`,
 

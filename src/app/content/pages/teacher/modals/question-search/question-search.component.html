@@ -23,10 +23,11 @@
          <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
 
             <div class="row align-items-center">
+
                <div class="col-xl-12">
                   <div class="col-xl-12 order-1 order-xl-2 m--align-right">
                      <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                        [disabled]="filterForm.value.id_category === f_id_category && filterForm.value.id_subcategory === f_id_subcategory">
+                        [disabled]="filterForm.value.id_category === lock_id_category && filterForm.value.id_subcategory === lock_id_subcategory && filterForm.value.difficulty === lock_difficulty">
                         <span>
                            <span>Filtrar</span>
                         </span>
@@ -40,6 +41,7 @@
                   </div>
                   <br>
                </div>
+
                <div class="col-xl-12">
 
                   <div class="form-group m-form__group row align-items-center">
@@ -120,7 +122,7 @@
                   <th>Categoría</th>
                   <th>Subcategoría</th>
                   <th>Dificultad</th>
-                  <th>Fecha de Actualización</th>
+                  <th class="center">Fecha de Actualización</th>
 
                   <th class="center">Añadir</th>
                </tr>
@@ -133,8 +135,13 @@
                   <td class="nowrap">{{question.description}}</td>
                   <td>{{question.category}}</td>
                   <td>{{question.subcategory}}</td>
-                  <td>{{question.difficulty}}</td>
-                  <td>{{question.updated_at}}</td>
+                  <td>
+                     <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide"
+                        [ngClass]="(question.difficulty == 1) ? 'm-badge--success' : (question.difficulty == 2 ? 'm-badge--warning' : 'm-badge--danger')">
+                        {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
+                     </span>
+                  </td>
+                  <td class="center">{{question.updated_at | timeAgo}}</td>
                   <td>
                      <div style="width: 50%; cursor: pointer;" (click)="changeAvailabiltyLessonQuestion(question)">
                         <img *ngIf="question.added; else blank" src="assets/images/checked.svg" alt="">
@@ -143,8 +150,6 @@
                         </ng-template>
                      </div>
                   </td>
-
-
 
                </tr>
                <swal #successSwal [options]="SWAL_SUCCESS_DELETE_QUESTION"></swal>
@@ -156,32 +161,30 @@
 
          <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
             <ul class="m-datatable__pager-nav">
-               <li (click)="getUsersPage(0)">
+
+               <li (click)="getUsersPage(1)">
                   <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
                      <i class="la la-angle-double-left"></i>
                   </a>
                </li>
-               <li (click)="getUsersFrom(-page_size)">
+
+               <li (click)="getUsersPage(page-1)">
                   <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
                      <i class="la la-angle-left"></i>
                   </a>
                </li>
-               <!--
-                        <li>
-                           <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active'}">1</a>
-                        </li>
-                        <li>
-                           <a class="m-datatable__pager-link m-datatable__pager-link-number">2</a>
-                        </li>-->
-               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage((page-1)*page_size)">
+
+               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage(_page)">
                   <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
                </li>
-               <li (click)="getUsersFrom(+page_size)">
+
+               <li (click)="getUsersPage(page+1)">
                   <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
                      <i class="la la-angle-right"></i>
                   </a>
                </li>
-               <li (click)="getUsersPage(page_size*(total_pages-1))">
+
+               <li (click)="getUsersPage(total_pages)">
                   <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
                      <i class="la la-angle-double-right"></i>
                   </a>
@@ -190,33 +193,11 @@
 
             <!-- INFO DE LA TABLA -->
             <div class="m-datatable__pager-info">
-               <!--
-                        <select class="m-datatable__pager-size" data-width="170px" data-selected="10">
-                           <option value>seleccione tamaño de página</option>
-                           <option value="10">10</option>
-                           <option value="50">50</option>
-                           <option value="100">100</option>
-                        </select>-->
                <form [formGroup]="filterForm" style="display:inline;">
-                  <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage()">>
+                  <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage(filterForm.value)">
                      <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
                   </select>
                </form>
-
-               <!-- <div class="dropdown bootstrap-select m-datatable__pager-size dropup" style="width: 70px">
-
-                           <button type="button" class="btn dropdown-toggle btn-light" data-togle="dropdown" role="button" title="Select page size" aria-expanded="false">
-                              <div class="filter-option">
-                                 <div class="filter-option-inner">10</div>
-                              </div>
-                              <span class="bs-caret">
-                                 <span class="caret"></span>
-                              </span>
-                           </button>
-                        </div>
-                        <div class="dropdown-menu" role="combobox" x-placement="top-start" style="max-height: 756.318px; overflow: hidden; min-height: 130px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -3px, 0px);">
-                           <div class="inner show" role="listbox"></div>
-                        </div> -->
                <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}} -
                   {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
                   preguntas</span>

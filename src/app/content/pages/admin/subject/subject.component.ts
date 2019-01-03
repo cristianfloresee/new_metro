@@ -13,6 +13,7 @@ import { CreateSubjectComponent } from './create-subject/create-subject.componen
 import { SWAL_DELETE_SUBJECT, SWAL_SUCCESS_DELETE_SUBJECT } from 'src/app/config/swal_config';
 // ngx-sweetalert2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
+import { PAGE_SIZES } from 'src/app/config/constants';
 
 @Component({
    selector: 'cw-subject',
@@ -46,9 +47,12 @@ export class SubjectComponent implements OnInit {
 
    // Data para la tabla
    data_subjects;
+
+   // Pagination
    total_items = 0;
    total_pages;
    page_size = 20;
+   page_sizes = PAGE_SIZES;
    page = 1;
    from = ((this.page - 1) * this.page_size);
 
@@ -98,6 +102,11 @@ export class SubjectComponent implements OnInit {
       });
    }
 
+   changePage(params) {
+      this.page_size = params.page_size;
+      this.getSubjects(params);
+   }
+
    createSubject() {
       const modalRef = this.ngModal.open(CreateSubjectComponent);
       modalRef.result.then((result) => {
@@ -124,6 +133,14 @@ export class SubjectComponent implements OnInit {
       this.lock_search = params.search;
       //Realiza el filtro con los nuevos params
       this.getSubjects(params);
+   }
+
+   getUsersPage(page) {
+      if (page != 0 && page <= this.total_pages) {
+         this.from = (page - 1) * this.page_size;
+         this.page = page;
+         this.getSubjects({ page: this.page });
+      }
    }
 
 }

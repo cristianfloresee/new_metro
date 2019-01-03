@@ -53,7 +53,11 @@ export class SubcategoriesComponent implements OnInit {
    ) { }
 
    ngOnInit() {
-      this.getSubcategories()
+      //this.getSubcategories()
+   }
+
+   ngOnChanges(){
+      this.getSubcategories();
    }
 
    getSubcategories(params?) {

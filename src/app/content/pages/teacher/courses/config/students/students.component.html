@@ -35,8 +35,8 @@
                <th>Apellido Paterno</th>
                <th>Apellido Materno</th>
                <th>Correo Electrónico</th>
-               <th>Deshabilitado</th>
-               <th>Fecha de Inscripción</th>
+               <th>Estado</th>
+               <th class="center">Fecha de Inscripción</th>
                <th class="center">Acciones</th>
             </tr>
          </thead>
@@ -50,8 +50,16 @@
                <td>{{student.last_name}}</td>
                <td>{{student.middle_name}}</td>
                <td>{{student.email}}</td>
-               <td>{{student.active}}</td>
-               <td class="nowrap">{{student.enrolled_at }}</td>
+               <td class="nowrap">
+
+                  <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="(student.active)?'m-badge--success':'m-badge--danger'"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="(student.active)?'m--font-success':'m--font-danger'">
+                           {{student.active ? 'Activo': 'Inactivo'}}</span>
+                     </span>
+               </td>
+               <td class="nowrap center">{{student.enrolled_at | timeAgo}}</td>
                <td>
                   <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                      <a (click)="changeStatus(student)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">

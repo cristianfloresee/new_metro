@@ -34,7 +34,6 @@ import { CategoriesComponent } from './subjects/subject-config/categories/catego
 import { SubcategoriesComponent } from './subjects/subject-config/subcategories/subcategories.component';
 import { LessonDetailComponent } from './courses/lessons/lesson-detail/lesson-detail.component';
 
-
 @NgModule({
    imports: [
       NgxEchartsModule,

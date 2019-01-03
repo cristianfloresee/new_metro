@@ -23,6 +23,11 @@ export class SubcategoryService {
       return this.http.get(API.SUBCATEGORIES, { params })
    }
 
+   getLastSubcategories(params){
+      // Interface: { id_user, page_size }
+      return this.http.get(API.SUBCATEGORIES_LAST, { params })
+   }
+
    createSubcategory(id_category, name) {
       return this.http.post(API.SUBCATEGORIES, { id_category, name })
    }

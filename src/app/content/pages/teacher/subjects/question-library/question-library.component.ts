@@ -81,18 +81,24 @@ export class QuestionLibraryComponent implements OnInit {
    ) { }
 
    ngOnInit() {
-      // Obtiene los params de la url
-      this.urlParamChanges$ = this.route.params.subscribe(params => {
-         this.id_subject = params.idSubject;
-      });
-
       //Init Vars
       this.id_user = this._sessionSrv.userSubject.value.id_user;
+      // Obtiene los params de la url
+      /*this.urlParamChanges$ = this.route.params.subscribe(params => {
+         this.id_subject = params.idSubject;
+      });*/
       this.initFormData();
-      this.loadFormOptions();
+
+      this.urlParamChanges$ = this.route.paramMap.subscribe(params => {
+         this.id_subject = params.get('idSubject');
+         console.log("YOUR MAM: ", this.id_subject);
+         this.loadFormOptions();
+         this.getQuestions();
+         this.resetForm();
+      });
+
       this.checkFormChanges();
 
-      this.getQuestions();
    }
 
    initFormData() {
@@ -191,18 +197,31 @@ export class QuestionLibraryComponent implements OnInit {
    }
 
    // Obtiene los items de la página correspondiente
-   changePage() {
-      console.log(this.filterForm.value);
-      this.getQuestions(this.filterForm.value);
+   changePage(params) {
+      this.page_size = params.page_size;
+      this.getQuestions();
    }
 
    filterItems(params) {
-      console.log("params: ", params);
       this.lock_id_category = params.id_category;
       this.lock_id_subcategory = params.id_subcategory;
       this.lock_difficulty = params.difficulty;
-
-      Object.assign(params); // necesario??
+      this.from = 0;
       this.getQuestions(params);
+   }
+
+   resetForm(){
+      this.lock_id_category = '';
+      this.lock_id_subcategory = '';
+      this.lock_difficulty = '';
+      this.initFormData()
+   }
+
+   getUsersPage(page) {
+      if (page != 0 && page <= this.total_pages) {
+         this.from = (page - 1) * this.page_size;
+         this.page = page;
+         this.getQuestions();
+      }
    }
 }

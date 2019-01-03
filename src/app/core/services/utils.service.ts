@@ -3,20 +3,20 @@ import { Injectable, } from '@angular/core';
 @Injectable()
 export class utilService {
 
-   formatR(workspaces, courses){
+   formatR(workspaces, courses) {
 
       let group_of_courses = this.groupCoursesBySubjectAndYear(courses);
 
-      return workspaces.map(workspace =>{
+      return workspaces.map(workspace => {
          let group = [];
          // Busca grupos de cursos para el 'workspace' actual
          let index_found = group_of_courses.findIndex(group => group.id_subject == workspace.id_subject);
          // Si encuentra un grupo de cursos lo extrae
          if (index_found >= 0) {
             let temp = group_of_courses.splice(index_found, 1);
-            if(temp[0].years) group = temp[0].years;
+            if (temp[0].years) group = temp[0].years;
          }
-         return { id_subject: workspace.id_subject, subject: workspace.name, years: group}
+         return { id_subject: workspace.id_subject, subject: workspace.name, years: group }
       });
    }
 
@@ -44,13 +44,13 @@ export class utilService {
    }
 
    // Agrupa los cursos por año
-   private groupCoursesByYears(data) {
+   groupCoursesByYears(data) {
       let round1 = JSON.parse(JSON.stringify(data));
       round1 = round1.reduce((object, item) => {
          object[item.year] = object[item.year] || [];
          object[item.year].push(item);
          return object;
-      }, {})
+      }, {});
 
       let round2 = Object.keys(round1).map(key => {
          let semesters = this.groupCoursesBySemesters(round1[key]);
@@ -70,6 +70,23 @@ export class utilService {
 
       let round2 = Object.keys(round1).map(key => {
          return { semester: key, courses: round1[key] }
+      })
+      return round2;
+   }
+
+
+   //////////////////////////////////////
+   groupCoursesStudent(data) {
+      let round1 = JSON.parse(JSON.stringify(data));
+      round1 = round1.reduce((object, item) => {
+         object[item.year] = object[item.year] || [];
+         object[item.year].push(item);
+         return object;
+      }, {});
+
+      let round2 = Object.keys(round1).map(key => {
+         let semesters = this.groupCoursesBySemesters(round1[key]);
+         return { year: key, semesters: semesters }
       })
       return round2;
    }

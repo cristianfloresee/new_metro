@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Constants
 import { SWAL_DELETE_USER, SWAL_SUCCESS_DELETE_USER } from 'src/app/config/swal_config';
+import { PAGE_SIZES } from 'src/app/config/constants';
 
 
 
@@ -27,30 +28,35 @@ export class UserComponent implements OnInit {
    SWAL_DELETE_USER = SWAL_DELETE_USER;
    SWAL_SUCCESS_DELETE_USER = SWAL_SUCCESS_DELETE_USER;
 
+   page_sizes = PAGE_SIZES;
+
    users: any[] = [];
 
    f_role = '';
    f_status = '';
    f_search = '';
 
-   from = 0;
-   limit = 5;
-   total_users = 0;
+   total_items = 0;
    total_pages;
-   current_page = 1;
+   page_size = 20;
+   page = 1;
+   from = ((this.page - 1) * this.page_size);
 
-   userForm: FormGroup;
+
+   filterForm: FormGroup;
 
    constructor(
       private fb: FormBuilder,
       private _userSrv: UserService,
       private ngModal: NgbModal
    ) {
-      this.userForm = fb.group({
-         limit: [this.limit],
-         role: [this.f_role],
-         status: [this.f_status],
-         search: [this.f_search]
+      this.filterForm = this.fb.group({
+         page_size: [this.page_size],
+         page: [1],
+         // Ver si se puede dejar de depender de los locks
+         role: this.f_role,
+         status: this.f_status,
+         search: this.f_search
       });
    }
 
@@ -58,17 +64,16 @@ export class UserComponent implements OnInit {
       this.getUsers();
    }
 
-   getUsers() {
-      this._userSrv.getUsers(this.from, this.limit)
+   getUsers(params?) {
+      params = Object.assign({}, params);
+      this._userSrv.getUsers(params)
          .subscribe(
-            result => {
+            (result: any) => {
                console.log("result: ", result);
-               this.users = result.users;
-               console.log("NOOOO: ", this.users[0].active);
-               this.total_users = result.total;
-               this.total_pages = Math.ceil(result.total / this.limit);
-               this.current_page = (this.from / this.limit) + 1;
-               console.log("current page: ", this.current_page)
+               this.users = result.items;
+               this.total_items = result.info.total_items;
+               this.total_pages = result.info.total_pages;
+               this.page = (this.from / this.page_size) + 1;
             },
             error => {
                console.log("error:", error);
@@ -76,21 +81,20 @@ export class UserComponent implements OnInit {
    }
 
    filter() {
-
-      this.f_role = this.userForm.value.role;
-      this.f_status = this.userForm.value.status;
-      this.f_search = this.userForm.value.search;
+      this.f_role = this.filterForm.value.role;
+      this.f_status = this.filterForm.value.status;
+      this.f_search = this.filterForm.value.search;
       this.from = 0;
 
-      this._userSrv.getUsers(this.from, this.limit, this.f_role, this.f_status, this.f_search)
+      this._userSrv.getUsers(this.filterForm.value)
          .subscribe(
-            result => {
+            (result: any) => {
+               this.users = result.items;
+               this.total_items = result.info.total_items;
+               this.total_pages = result.info.total_pages;
                console.log("result: ", result);
-               this.users = result.users;
-               this.total_users = result.total;
-               this.total_pages = Math.ceil(result.total / this.limit);
-               this.current_page = (this.from / this.limit) + 1;
-               console.log("current page: ", this.current_page)
+               this.page = (this.from / this.page_size) + 1;
+               console.log("current page: ", this.page)
             },
             error => {
                console.log("error:", error);
@@ -98,31 +102,26 @@ export class UserComponent implements OnInit {
 
    }
 
-   getUsersFrom(value) {
-      console.log("value: ", value);
-      let from = this.from + value;
-
-      if (from >= this.total_users) return;
-      else if (from < 0) return;
-
-      this.from += value;
-      this.getUsers();
-   }
-
-   getUsersPage(value) {
-      console.log("BUU: ", value);
-      this.from = value;
-      this.getUsers();
+   getUsersPage(page) {
+      if (page != 0 && page <= this.total_pages) {
+         this.from = (page - 1) * this.page_size;
+         this.page = page;
+         this.getUsers({ page: this.page });
+      }
    }
 
    kisa() {
-      this.limit = this.userForm.value.limit;
+      this.page_size = this.filterForm.value.limit;
       this.from = 0;
       this.getUsers();
    }
 
-   deleteUser(id_user) {
+   changePage(params) {
+      this.page_size = params.page_size;
+      this.getUsers(params);
+   }
 
+   deleteUser(id_user) {
       this._userSrv.deleteUser(id_user)
          .subscribe(
             result => {

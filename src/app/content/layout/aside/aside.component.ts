@@ -1,13 +1,12 @@
-//ANGULAR
+// Angular
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-//RXJS
+// RxJS
 import { filter } from 'rxjs/operators';
-//CONSTANTES
-import { MENU, MENU_ADMIN } from '../../../config/menu';
-//SERVICIOS
+// Services
 import { RoleService } from '../../../core/services/role.service';
 import { SidemenuService } from 'src/app/core/services/sidemenu.service';
+import { SessionService } from 'src/app/core/services/API/session.service';
 
 
 @Component({
@@ -19,15 +18,13 @@ export class AsideComponent implements OnInit {
    currentRouteUrl: string = '';
    current_role;
 
-   menu: any = MENU;
-   admin = MENU_ADMIN;
-
    my_menu;
 
    constructor(
       private router: Router,
       private roleSrv: RoleService,
-      private _sidemenuSrv: SidemenuService
+      private _sidemenuSrv: SidemenuService,
+      private _sessionSrv: SessionService
    ) { }
 
    ngOnInit() {
@@ -35,14 +32,14 @@ export class AsideComponent implements OnInit {
       this.getCurrentUrl();
       this.roleSrv.role$.subscribe((role) => {
          this.current_role = role; //{role, index, name, url}
-         this._sidemenuSrv.changeSidemenuByRole(this.current_role.role)
-
-
+         console.log("BOLBA: ", role);
+         this._sidemenuSrv.changeSidemenuByRole(this.current_role.role);
          //SI SOY PROFESOR DEBO OBTENER LOS CURSOS........-----------------------------------------
          //console.log("MI ROLEEE: ", this.current_role);
       });
 
-      this._sidemenuSrv.sidemenu$.subscribe((menu) =>{
+
+      this._sidemenuSrv.sidemenu$.subscribe((menu: any) =>{
          this.my_menu = menu;
          console.log("MY MENUCITO: ", this.my_menu);
       })
@@ -57,10 +54,19 @@ export class AsideComponent implements OnInit {
          .subscribe(() => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]); //QUITA LOS PARÁMETROS DE LA URL (EJEMPLO: ?id=2)
    }
 
-   //PERMITE IDENTIFICAR SI EL ITEM RECIBIDO DEL MENU ES LA PÁGINA ACTIVA
+   // Identifica si el item recibido del menú es la página activa
    isItemActive(item) {
-      if (item.url !== '/' && this.currentRouteUrl.startsWith(`${item.parent}(${item.url})`)) return true;
+
+      // En inicio
+      // Recibe vacío siempre, debe retonar true o false y pera en el else if
+      // Si la url no es '/' y inicia con '/admin/(user)'
+      if(!item && (this.currentRouteUrl === `/${this.current_role.url}`)) return true;
+      else if (item && item.url !== '/' && this.currentRouteUrl.startsWith(`${item.parent}(${item.url})`)) return true;
       return false;
+   }
+
+   logout(){
+      this._sessionSrv.logout();
    }
 
 }

@@ -30,8 +30,8 @@
             <tr>
                <th class="center">#</th>
                <th>Modulo</th>
-               <th>Creado</th>
-               <th>Actualizado</th>
+               <th class="center">Creado</th>
+               <th class="center">Actualizado</th>
                <th class="center">Acciones</th>
             </tr>
          </thead>
@@ -40,8 +40,8 @@
             <tr *ngFor="let module of modules; let i=index">
                <td>{{i+1}}</td>
                <td class="nowrap">{{module.name}}</td>
-               <td class="nowrap">{{module.created_at}}</td>
-               <td class="nowrap">{{module.updated_at}}</td>
+               <td class="nowrap center">{{module.created_at | timeAgo}}</td>
+               <td class="nowrap center">{{module.updated_at | timeAgo}}</td>
                <td>
                   <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                      <a (click)="updateModule(module)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">

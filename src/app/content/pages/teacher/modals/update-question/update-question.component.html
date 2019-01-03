@@ -19,41 +19,45 @@
          <div class="m-portlet__body">
             <div class="form-group m-form__group row">
                <div class="col-lg-6">
-                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.subject.invalid && questionForm.controls.subject.touched }">
-                     <label class="form-control-label">Asignatura:</label>
-                     <select formControlName="subject" class="m-datatable__pager-size" style="width:160px">
-                        <option value="">Seleccionar</option>
-                        <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
-                     </select>
 
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.subject.invalid && questionForm.controls.subject.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Asignatura:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                        <select formControlName="subject" class="m-datatable__pager-size" style="width:260px">
+                           <option value="">Seleccionar</option>
+                           <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+                        </select>
+                     </div>
                      <div class="form-control-feedback" *ngIf="questionForm.controls['subject'].hasError('required') && (questionForm.controls['subject'].dirty || questionForm.controls['subject'].touched)">
                         Este campo es requerido.
                      </div>
 
                   </div>
 
-                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.category.invalid && questionForm.controls.category.touched }">
-                     <label class="form-control-label">Categoría:</label>
-                     <select formControlName="category" class="m-datatable__pager-size" style="width:160px">
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.category.invalid && questionForm.controls.category.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Categoría:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="category" class="m-datatable__pager-size" style="width:260px">
                         <option value="">Seleccionar</option>
                         <option *ngFor="let category of options_category" [value]="category.id_category">{{category.name}}</option>
                      </select>
-
+                     </div>
                      <div class="form-control-feedback" *ngIf="questionForm.controls['category'].hasError('required') && (questionForm.controls['category'].dirty || questionForm.controls['category'].touched)">
                         Este campo es requerido.
                      </div>
 
                   </div>
 
-                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.subcategory.invalid && questionForm.controls.subcategory.touched }">
-                     <label class="form-control-label">Subcategoría:</label>
-                     <select formControlName="subcategory" class="m-datatable__pager-size" style="width:160px">
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.subcategory.invalid && questionForm.controls.subcategory.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Subcategoría:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="subcategory" class="m-datatable__pager-size" style="width:260px">
                         <option value="">Seleccionar</option>
                         <ng-container *ngIf="questionForm.value.category">
                            <option *ngFor="let subcategory of options_subcategory" [value]="subcategory.id_subcategory">{{subcategory.name}}</option>
                         </ng-container>
                      </select>
-
+                     </div>
                      <div class="form-control-feedback" *ngIf="questionForm.controls['subcategory'].hasError('required') && (questionForm.controls['subcategory'].dirty || questionForm.controls['subcategory'].touched)">
                         Este campo es requerido.
                      </div>
@@ -61,36 +65,38 @@
                   </div>
 
                   <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.description.invalid && questionForm.controls.description.touched }">
-                     <label class="form-control-label">Pregunta:</label>
-                     <input type="text" class="form-control m-input" formControlName="description" maxLength="15"
-                        autocomplete="nope">
+                        <label class="form-control-label">Pregunta:</label>
+                        <input type="text" class="form-control m-input" formControlName="description" maxLength="15"
+                           autocomplete="nope">
 
-                     <div class="form-control-feedback" *ngIf="questionForm.controls['description'].hasError('required') && (questionForm.controls['description'].dirty || questionForm.controls['description'].touched)">
-                        Este campo es requerido.
+                        <div class="form-control-feedback" *ngIf="questionForm.controls['description'].hasError('required') && (questionForm.controls['description'].dirty || questionForm.controls['description'].touched)">
+                           Este campo es requerido.
+                        </div>
+
                      </div>
 
-                  </div>
-
-                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.difficulty.invalid && questionForm.controls.difficulty.touched }">
-                     <label class="form-control-label">Dificultad:</label>
-                     <select formControlName="difficulty" class="m-datatable__pager-size" style="width:160px">
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.difficulty.invalid && questionForm.controls.difficulty.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Dificultad:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="difficulty" class="m-datatable__pager-size" style="width:260px">
                         <option value="">Seleccionar</option>
                         <option *ngFor="let difficulty of options_difficulties" [value]="difficulty.difficulty">{{difficulty.name}}</option>
                      </select>
-
+                     </div>
                      <div class="form-control-feedback" *ngIf="questionForm.controls['difficulty'].hasError('required') && (questionForm.controls['difficulty'].dirty || questionForm.controls['difficulty'].touched)">
                         Este campo es requerido.
                      </div>
                   </div>
 
-                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.shared.invalid && questionForm.controls.shared.touched }">
-                     <label class="form-control-label">Compartida:</label>
-                     <select formControlName="shared" class="m-datatable__pager-size" style="width:160px">
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.shared.invalid && questionForm.controls.shared.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Compartida:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="shared" class="m-datatable__pager-size" style="width:260px">
                         <option value="">Seleccionar</option>
                         <option [ngValue]="true">Si</option>
                         <option [ngValue]="false">No</option>
                      </select>
-
+                     </div>
                      <div class="form-control-feedback" *ngIf="questionForm.controls['shared'].hasError('required') && (questionForm.controls['shared'].dirty || questionForm.controls['shared'].touched)">
                         Este campo es requerido.
                      </div>

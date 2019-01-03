@@ -18,8 +18,8 @@ export class ActivityParticipationService {
    // }
 
    // Obtiene las Participaciones en la Actividad
-   getActivityParticipation(id_activity){
-      let params = { id_activity}
+   getActivityParticipation(id_activity) {
+      let params = { id_activity }
       return this.http.get(`${API_URL}activity_participation`, { params });
    }
 
@@ -33,6 +33,10 @@ export class ActivityParticipationService {
       return this.http.put(`${API_URL}activity_participation/${id_activity}/${id_user}`, { status });
    }
 
+   // Actualiza múltiples participaciones
+   updateActivityParticipations(id_activity, array_participation) {
+      return this.http.post(`${API_URL}activity_participation/${id_activity}`, { array_participation });
+   }
    // // Elimina una Actividad (eliminaría todas las participaciones de esa actividad)
    // deleteActivity(id_activity) {
    //    return this.http.delete(`${API.ACTIVITIES}/${id_activity}`);

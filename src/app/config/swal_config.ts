@@ -31,6 +31,8 @@ export const SWAL_DELETE_SUBJECT = Object.assign({}, SWAL_QUESTION, SWAL_DELETE,
 export const SWAL_DELETE_QUESTION = Object.assign({}, SWAL_QUESTION, SWAL_DELETE, { text: '¿seguro desea eliminar la pregunta?' });
 export const SWAL_DELETE_CATEGORY = Object.assign({}, SWAL_QUESTION, SWAL_DELETE, { text: '¿seguro desea eliminar la categoría?' });
 export const SWAL_DELETE_SUBCATEGORY = Object.assign({}, SWAL_QUESTION, SWAL_DELETE, { text: '¿seguro desea eliminar la subcategoría?' });
+export const SWAL_DELETE_ENROLLMENT = Object.assign({}, SWAL_QUESTION, SWAL_DELETE, { text: '¿seguro desea eliminar la inscripción?' });
+export const SWAL_DELETE_COURSE = Object.assign({}, SWAL_QUESTION, SWAL_DELETE, { text: '¿seguro desea eliminar el curso?' });
 
 // Opciones Swal al completarse la eliminación
 export const SWAL_SUCCESS_DELETE_ACTIVITY = Object.assign({}, SWAL_SUCCESS, { text: 'La actividad ha sido eliminada' });
@@ -42,7 +44,10 @@ export const SWAL_SUCCESS_DELETE_CALENDAR = Object.assign({}, SWAL_SUCCESS, { te
 export const SWAL_SUCCESS_DELETE_USER = Object.assign({}, SWAL_SUCCESS, { text: 'El usuario ha sido eliminado' });
 export const SWAL_SUCCESS_DELETE_SUBJECT = Object.assign({}, SWAL_SUCCESS, { text: 'La asignatura ha sido eliminada' });
 export const SWAL_SUCCESS_DELETE_QUESTION = Object.assign({}, SWAL_SUCCESS, { text: 'La pregunta ha sido eliminada' });
+export const SWAL_SUCCESS_DELETE_COURSE = Object.assign({}, SWAL_SUCCESS, { text: 'El curso ha sido eliminado' });
 export const SWAL_SUCCESS_DELETE_CATEGORY = Object.assign({}, SWAL_SUCCESS, { text: 'La categoría ha sido eliminada' });
 export const SWAL_SUCCESS_DELETE_SUBCATEGORY = Object.assign({}, SWAL_SUCCESS, { text: 'La subcategoría ha sido eliminada' });
+export const SWAL_SUCCESS_DELETE_ENROLLMENT = Object.assign({}, SWAL_SUCCESS, { text: 'La inscripción ha sido eliminada' });
+
 
 

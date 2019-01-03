@@ -9,12 +9,14 @@
    <div class="modal-body">
       <div class="m-portlet__body">
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : categoryForm.controls.subject.invalid && categoryForm.controls.subject.touched }">
-            <label class="form-control-label">Asignatura (Workspace):</label>
-            <select formControlName="subject" class="m-datatable__pager-size" style="width:160px">
-               <option value="">Seleccionar</option>
-               <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
-            </select>
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : categoryForm.controls.subject.invalid && categoryForm.controls.subject.touched }">
+            <label class="col-xl-4 col-lg-4 col-form-label nowrap">Asignatura:</label>
+            <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+               <select formControlName="subject" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+               </select>
+            </div>
             <!--===================== ERRORES DE PATERNO =====================-->
             <div class="form-control-feedback" *ngIf="categoryForm.controls['subject'].hasError('required') && (categoryForm.controls['subject'].dirty || categoryForm.controls['subject'].touched)">
                Este campo es requerido.

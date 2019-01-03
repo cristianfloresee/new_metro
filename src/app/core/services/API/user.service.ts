@@ -49,15 +49,14 @@ export class UserService {
    }
 
 
-   getUsers(from, limit, role?, status?, search?) {
+   //getUsers(from, limit, role?, status?, search?) {
+   getUsers(params) {
 
-      let filter = '';
-      if (role) filter += `&role=${role}`;
-      if (status) filter += `&status=${status}`;
-      if (search) filter += `&search=${search}`;
 
-      return this.http.get(`${API.USER_ALL}?from=${from}&limit=${limit}${filter}`)
-         .pipe(map((response: any) => response))
+      //return this.http.get(`${API.USERS}?from=${from}&limit=${limit}${filter}`)
+      // + Necesito una interface:
+      // + { role, status, search, page, page_size }
+      return this.http.get(API.USERS, { params })
    }
 
    deleteUser(id_user) {
@@ -70,12 +69,12 @@ export class UserService {
 
    getUsersByCourse(id_course) {
       const params = { id_course };
-      return this.http.get(API.USER_ALL, { params })
+      return this.http.get(API.USERS, { params })
    }
 
    getUsersByDocumentId(document, id_course) {
       const params = { document, id_course };
-      return this.http.get(`${API.USER_ALL}/students`, { params })
+      return this.http.get(`${API.USERS}/students`, { params })
    }
 
 }

@@ -1,5 +1,5 @@
 <div class="modal-header">
-   <h4 class="modal-title">{{question.description}}</h4>
+   <h4 class="modal-title">Participación en Pregunta</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(update)">
       <span aria-hidden="true">&times;</span>
    </button>
@@ -15,6 +15,10 @@
          <div class="alert m-alert m-alert--default" role="alert">
             A continuación se presentan los estudiantes que han decidido participar en responder la pregunta.
          </div>
+
+         <div class="alert m-alert m-alert--default" style="background-color: #c4c5d6">
+            <b>Pregunta:</b> {{question.description}}
+         </div>
       </div>
 
 
@@ -23,12 +27,67 @@
          <div class="row align-items-center">
             <div class="col-xl-12">
                <div class="col-xl-12 order-1 order-xl-2 m--align-right">
-                  <button type="button" (click)="initParticipation(question_status)" style="color: #ffffff; margin-left: 10px;" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+
+                  <!-- 4 estados: (1 no iniciada), 2: en juego, 3: detenida, 4: -finalizada -->
+                  <!-- 1, 3 -->
+
+                  <ng-container [ngSwitch]="question.status">
+                     <p *ngSwitchCase="1">Estado: No iniciada</p>
+                     <p *ngSwitchCase="2">Estado: Iniciada</p>
+                     <p *ngSwitchCase="3">Estado: Detenida</p>
+                     <p *ngSwitchCase="4">Estado: Terminada</p>
+                  </ng-container>
+
+                  <ng-container *ngIf="question" [ngSwitch]="question.status">
+
+                     <button *ngSwitchDefault type="button" (click)="changeStatus(2)" style="color: #ffffff; margin-left: 10px;"
+                        class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Iniciar Participación</span>
+                        </span>
+                     </button>
+
+                     <!-- <button *ngSwitchCase="'3'" type="button" (click)="changeStatus(1)" style="color: #ffffff; margin-left: 10px;"
+                        class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Iniciar Participación</span>
+                        </span>
+                     </button> -->
+
+                     <button *ngSwitchCase="'2'" type="button" (click)="changeStatus(3)" style="color: #ffffff; margin-left: 10px;"
+                        class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Detener Participación</span>
+                        </span>
+                     </button>
+
+                     <button *ngSwitchCase="'4'" type="button" (click)="changeStatus(1)" style="color: #ffffff; margin-left: 10px;"
+                        class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Reiniciar Participación</span>
+                        </span>
+                     </button>
+                  </ng-container>
+
+                  <button *ngIf="question.status == 3" type="button" (click)="changeStatus(4)" style="color: #ffffff; margin-left: 10px;" class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
                      <span>
-                        <span> {{ question_status  == 1 ? 'Iniciar' : question_status == 2 ? 'Detener' : 'Volver a Abrir'}} Participación</span>
+                        <span>Finalizar</span>
                      </span>
                   </button>
-                  <div class="m-separator m-separator--dashed d-xl-none"></div>
+
+
+
+
+                  <!--
+                  <button type="button" (click)="initParticipation(question_status)" style="color: #ffffff; margin-left: 10px;"
+                     class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                     <span>
+                        <span> {{ question_status == 1 ? 'Iniciar' : question_status == 2 ? 'Detener' : 'Volver a
+                           Abrir'}} Participación</span>
+                     </span>
+                  </button>
+               -->
+
                </div>
                <br>
             </div>
@@ -132,5 +191,6 @@
 
 <div class="modal-footer">
    <button type="button" class="btn btn-info" (click)="activeModal.close(update)">Cerrar</button>
-   <button type="submit" (click)="updateLessonQuestions()" class="btn btn-info" [disabled]="question_status == 1">Finalizar Pregunta</button>
+   <button type="submit" (click)="updateLessonQuestions()" class="btn btn-info" [disabled]="question_status == 1">Finalizar
+      Pregunta</button>
 </div>

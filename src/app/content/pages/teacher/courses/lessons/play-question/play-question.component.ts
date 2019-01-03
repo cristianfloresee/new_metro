@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
 import { SocketService } from 'src/app/core/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
    selector: 'cw-play-question',
@@ -14,7 +15,8 @@ export class PlayQuestionComponent implements OnInit {
    constructor(
       public activeModal: NgbActiveModal,
       private _lessonQuestionSrv: LessonQuestionService,
-      private socketSrv: SocketService
+      private socketSrv: SocketService,
+      private toastr: ToastrService
    ) { }
 
    // Indica si se actualizo el estado de la clase
@@ -44,6 +46,21 @@ export class PlayQuestionComponent implements OnInit {
 
             });
    }
+
+   changeStatus(status) {
+      console.log("CHANGE: ", status);
+
+      this._lessonQuestionSrv.updateLessonQuestion(this.id_lesson, this.question.id_question, status)
+         .subscribe(
+            (result: any) => {
+               this.question.status = status;
+               this.toastr.success('El estado de la clase ha sido actualizado correctamente.', 'Acción realizada!');
+            },
+            error => {
+               console.log("error:", error);
+            });
+   }
+
 
    endParticipation(){
 

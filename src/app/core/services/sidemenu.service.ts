@@ -13,6 +13,7 @@ import { SessionService } from './API/session.service';
 import { map, catchError } from 'rxjs/operators';
 import { utilService } from './utils.service';
 import { WorkspaceService } from './API/workspace.service';
+import { EnrollmentService } from './API/enrollments.service';
 
 
 @Injectable()
@@ -27,7 +28,8 @@ export class SidemenuService {
       private _courseSrv: CourseService,
       private _sessionSrv: SessionService,
       private _utilSrv: utilService,
-      private _workspaces: WorkspaceService
+      private _workspaces: WorkspaceService,
+      private _enrollmentSrv: EnrollmentService
    ) {
       this.id_user = this._sessionSrv.userSubject.value.id_user;
    }
@@ -48,10 +50,11 @@ export class SidemenuService {
                // {id_subject, name}
                // Formatea los cursos agrupandolos por asignatura
                console.log("workspaces: ", workspaces);
-               this._courseSrv.getCoursesForSidemenu(this.id_user)
-                  .subscribe(result => {
+
+               this._courseSrv.getCourses({id_user: this.id_user})
+                  .subscribe((result: any) => {
                      // Formatea los cursos agrupandolos por asignatura
-                     let menu_formatted = this._utilSrv.formatR(workspaces, result);
+                     let menu_formatted = this._utilSrv.formatR(workspaces, result.items);
                      console.log("kikasilva: ", menu_formatted);
 
                      this.sidemenuSubject.next(menu_formatted);
@@ -59,6 +62,14 @@ export class SidemenuService {
             })
          // Obtengo los cursos creados por el profesor
 
+      }
+      else if (role == 3) {
+         this._enrollmentSrv.getEnrollmentsByUserId(this.id_user)
+            .subscribe(data => {
+               let menu_formatted = this._utilSrv.groupCoursesByYears(data);
+               console.log("FORMATTED ENROLLMENTS: ", menu_formatted);
+               this.sidemenuSubject.next(menu_formatted);
+            })
       }
       else this.sidemenuSubject.next(MENU);
    }
@@ -73,4 +84,19 @@ export class SidemenuService {
       this.sidemenuSubject.next(null);
    }
 
+   /* [ {
+         year: 2017,
+         semesters: [
+            { semester,
+               courses: [
+                  { id_course }
+               ]
+            }
+         ]
+      }
+   ]
+   */
+   formatStudentMenu(data) {
+      return data;
+   }
 }

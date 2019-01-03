@@ -3,9 +3,9 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//MODALS
+// Modals
 import { AddStudentComponent } from './add-student/add-student.component';
-//SERVICIOS
+// Services
 import { UserService } from 'src/app/core/services/API/user.service';
 import { EnrollmentService } from 'src/app/core/services/API/enrollments.service';
 // ngx-toastr
@@ -38,7 +38,6 @@ export class StudentsComponent implements OnInit, OnDestroy {
    constructor(
       private ngModal: NgbModal,
       public fb: FormBuilder,
-      private _userSrv: UserService,
       private _enrollmentSrv: EnrollmentService,
       private toastr: ToastrService,
    ) { }
@@ -59,9 +58,9 @@ export class StudentsComponent implements OnInit, OnDestroy {
       modalRef.componentInstance.course = this.course;
       modalRef.componentInstance.students = this.students;
 
-      // modalRef.result.then((result) => {
-      //    if (result) this.getModules()
-      // });
+      modalRef.result.then((result) => {
+          if (result) this.getEnrollments();
+       });
    }
 
    getEnrollments() {
@@ -102,27 +101,25 @@ export class StudentsComponent implements OnInit, OnDestroy {
             result => {
                console.log("enrollments: ", result)
                this.successSwal.show();
+               this.getEnrollments();
             },
             error => {
                console.log("error:", error);
             });
    }
 
-   initIoConnection(){
-      //No enviaré data por socket, solo me servirá para dar una señal y traer nueva data paginada desde el server.
-      //Me llegaran todos los emits de todas los cursos. ¿Cómo solucionar esto?
+   initIoConnection() {
+      // No enviaré data por socket, solo me servirá para dar una señal y traer nueva data paginada desde el server.
+      // Me llegaran todos los emits de todas los cursos. ¿Cómo solucionar esto?
       this.enrollment$ = this._enrollmentSrv.listenEnrollments()
-      .subscribe((data)=>{
-         console.log("enrollment socket: ", data);
-      })
-      /*this._socketSrv.onCreateEnrollment()
-      .subscribe((data) => {
-         this.getEnrollments();
-      })*/
+         .subscribe((data) => {
+            console.log("enrollment socket: ", data);
+
+         })
 
    }
 
-   ngOnDestroy(){
+   ngOnDestroy() {
       this.enrollment$.unsubscribe();
    }
 

@@ -56,7 +56,7 @@ export class CreateActivityComponent implements OnInit {
    initFormData() {
       this.activityForm = this.fb.group({
          module: ['', Validators.required],
-         lesson: [''],
+         lesson: ['', Validators.required],
          name: ['', [Validators.required]],
          mode: ['', Validators.required]
       });

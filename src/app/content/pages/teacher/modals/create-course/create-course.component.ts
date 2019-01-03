@@ -1,13 +1,13 @@
-//ANGULAR
+// Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//RXJS
+// RxJS
 import { Subscription } from 'rxjs';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-//SERVICIOS
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
 import { CourseService } from 'src/app/core/services/API/course.service';
@@ -22,7 +22,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
 
    courseForm: FormGroup;
    id_user;
-   //SELECT OPTIONS
+   // Select Options
    options_subject;
    options_calendar;
    //DETECCIÓN DE CAMBIOS EN EL FORM
@@ -87,11 +87,11 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
                console.log("error:", error);
             });
 
-      this._calendarSrv.getCalendars()
+      this._calendarSrv.getCalendarsOptions()
          .subscribe(
             result => {
                console.log("pika: ", result);
-               this.options_calendar = this.formatCalendarOptions(result.items);
+               this.options_calendar = this.formatCalendarOptions(result);
                // console.log("option_calendar: ", this.options_calendar);
             },
             error => {

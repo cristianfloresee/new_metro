@@ -4,6 +4,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 // ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+// ng-bootstrap
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
 import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
@@ -15,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
 import { TOAST_SUCCESS_UPDATE_QUESTIONS, TOAST_ERROR_UPDATE_QUESTIONS } from 'src/app/config/toastr_config';
+import { CreateQuestionComponent } from '../create-question/create-question.component';
 @Component({
    selector: 'cw-question-search',
    templateUrl: './question-search.component.html',
@@ -72,7 +75,19 @@ export class QuestionSearchComponent implements OnInit {
       private _questionSrv: QuestionService,
       private _lessonQuestionSrv: LessonQuestionService,
       public activeModal: NgbActiveModal,
+      private ngModal: NgbModal,
    ) { }
+
+   createQuestion(){
+      const modalRef = this.ngModal.open(CreateQuestionComponent, {
+         size: "lg"
+      });
+
+      // Actualizar tabla
+      modalRef.result.then((result) => {
+         if (result) this.getQuestions();
+      });
+   }
 
    ngOnInit() {
       console.log("id_subject: ", this.id_subject);
@@ -83,8 +98,6 @@ export class QuestionSearchComponent implements OnInit {
       this.checkFormChanges();
 
       this.getQuestions();
-      //this.getLessonQuestions();
-      console.log("id user: ", this.id_user);
    }
 
    initFormData() {
@@ -99,7 +112,6 @@ export class QuestionSearchComponent implements OnInit {
    }
 
    loadFormOptions() {
-
       // Obtiene las categorías por id de usuario y id de asignatura
       this._categorySrv.getCategoriesOptions({ id_user: this.id_user, id_subject: this.id_subject })
          .subscribe(
@@ -135,9 +147,9 @@ export class QuestionSearchComponent implements OnInit {
       });
    }
 
-   getQuestions(params?) {
-      params = Object.assign({}, params, { id_user: this.id_user, id_subject: this.id_subject, id_lesson: this.id_lesson });
-
+   getQuestions() {
+      let params = Object.assign({}, this.filterForm.value, { id_user: this.id_user, id_subject: this.id_subject, id_lesson: this.id_lesson });
+      //let params = Object.assign({ id_course: this.id_course }, this.filterForm.value);
       this._lessonQuestionSrv.getAllQuestionsForLesson(params)
          .subscribe(
             (result: any) => {
@@ -145,6 +157,7 @@ export class QuestionSearchComponent implements OnInit {
                this.data_questions = this.formatQuestionLessonArray(result.items);
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
+               this.page = (this.from / this.page_size) + 1;
             },
             error => {
                console.log("error:", error);
@@ -156,27 +169,22 @@ export class QuestionSearchComponent implements OnInit {
          question.original_added = question.added;
       });
       return lesson_questions;
-
    }
 
-
-
    filterItems(params) {
-      console.log("params: ", params);
       this.lock_id_category = params.id_category;
       this.lock_id_subcategory = params.id_subcategory;
       this.lock_difficulty = params.difficulty;
+      this.from = 0;
 
-      Object.assign(params);
-      this.getQuestions(params);
+      this.getQuestions();
    }
 
    // Obtiene los items de la página correspondiente
-   changePage() {
-      console.log(this.filterForm.value);
-      this.getQuestions(this.filterForm.value);
+   changePage(params) {
+      this.page_size = params.page_size;
+      this.getQuestions();
    }
-
 
    changeAvailabiltyLessonQuestion(question) {
       console.log("question: ", question);
@@ -207,9 +215,6 @@ export class QuestionSearchComponent implements OnInit {
       array.splice(index, 1);
    }
 
-
-
-
    updateLessonQuestions() {
       this._lessonQuestionSrv.updateLessonQuestions(this.id_lesson, this.add_questions, this.delete_questions)
          .subscribe(
@@ -223,5 +228,12 @@ export class QuestionSearchComponent implements OnInit {
             });
    }
 
+   getUsersPage(page) {
+      if (page != 0 && page <= this.total_pages) {
+         this.from = (page - 1) * this.page_size;
+         this.page = page;
+         this.getQuestions();
+      }
+   }
 
 }

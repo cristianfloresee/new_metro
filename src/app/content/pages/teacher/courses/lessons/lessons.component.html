@@ -34,9 +34,26 @@
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
          <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
             <div class="row align-items-center">
-               <div class="col-xl-9 order-2 order-xl-1">
 
-                  <!-- <form [formGroup]="filterForm" style="display:inline;"> -->
+               <div class="col-xl-12" style="margin-bottom: 20px;">
+                  <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                     <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                        [disabled]="filterForm.value.id_module === lock_id_module && filterForm.value.status === lock_status">
+                        <span>
+                           <span>Filtrar</span>
+                        </span>
+                     </button>
+                     <button type="button" (click)="createLesson()" style="color: #ffffff; margin-left: 10px;" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Crear Clase</span>
+                        </span>
+                     </button>
+                     <div class="m-separator m-separator--dashed d-xl-none"></div>
+                  </div>
+               </div>
+
+               <div class="col-xl-12">
+
                   <div class="form-group m-form__group row align-items-center">
                      <div class="col-md-4">
                         <div class="m-form__group m-form__group--inline">
@@ -68,37 +85,8 @@
                         </div>
                         <div class="d-md-none m--margin-bottom-10"></div>
                      </div>
-
-                     <!--
-                     <div class="col-md-4">
-                        <div class="m-input-icon m-input-icon--left">
-
-                           <input formControlName="search" type="text" maxLength="25" class="form-control m-input"
-                              placeholder="">
-
-                           <span class="m-input-icon__icon m-input-icon__icon--left">
-                              <span>
-                                 <i class="la la-search"></i>
-                              </span>
-                           </span>
-                        </div>
-                     </div>
-                     -->
                   </div>
-               </div>
-               <div class="col-xl-3 order-1 order-xl-2 m--align-right">
-                  <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
-                     [disabled]="filterForm.value.id_module === f_module && filterForm.value.status === f_status">
-                     <span>
-                        <span>Filtrar</span>
-                     </span>
-                  </button>
-                  <button type="button" (click)="createLesson()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
-                     <span>
-                        <span>Crear Clase</span>
-                     </span>
-                  </button>
-                  <div class="m-separator m-separator--dashed d-xl-none"></div>
+
                </div>
             </div>
          </form>
@@ -128,16 +116,25 @@
                   <td>{{i+1}}</td>
                   <td class="nowrap">{{lesson.description}}</td>
                   <td>{{lesson.module}}</td>
-                  <td>{{lesson.status == 1 ? 'no iniciada' : lesson.status == 2 ? 'en juego' : 'terminada' }}</td>
-                  <td>{{lesson.date}}</td>
-                  <td>{{lesson.created_at}}</td>
-                  <td>{{lesson.updated_at}}</td>
+                  <td class="nowrap">
+                     <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="(lesson.status == 1) ? 'm-badge--warning': (lesson.status == 2 ? 'm-badge--success' : 'm-badge--danger')"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="(lesson.status == 2) ? 'm--font-success' : (lesson.status == 1 ? 'm--font-warning' : 'm--font-danger')">
+                           {{lesson.status == 1 ? 'no iniciada' : lesson.status == 2 ? 'en juego' : 'terminada' }}
+                        </span>
+                     </span>
+                  </td>
+                  <td class="center">{{lesson.date | date:"MM/dd/yy"}}</td>
+                  <td class="center">{{lesson.created_at | timeAgo}}</td>
+                  <td class="center">{{lesson.updated_at | timeAgo}}</td>
 
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                         <!-- (click)="startLesson(lesson)" -->
-                        <a (click)="lessonDetail(lesson)"  class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
-                           <i class="la la-play"></i>
+                        <a (click)="lessonDetail(lesson)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <!-- <i class="la la-play"></i> -->
+                           <i class="la la-sign-in"></i>
                         </a>
 
                         <a (click)="updateLesson(lesson)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
@@ -147,11 +144,12 @@
                            <i class="la la-trash"></i>
                         </a>
                         <swal #deleteSwal (confirm)="deleteLesson(lesson.id_class)" [options]="SWAL_DELETE_LESSON"></swal>
-                        <swal #successSwal [options]="SWAL_SUCCESS_DELETE_LESSON"></swal>
+
                      </span>
                   </td>
                </tr>
             </tbody>
+            <swal #successSwal [options]="SWAL_SUCCESS_DELETE_LESSON"></swal>
          </table>
 
 
@@ -159,72 +157,46 @@
 
          <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
             <ul class="m-datatable__pager-nav">
-               <li (click)="getUsersPage(0)">
+
+               <li (click)="getUsersPage(1)">
                   <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
                      <i class="la la-angle-double-left"></i>
                   </a>
                </li>
-               <li (click)="getUsersFrom(-page_size)">
+
+               <li (click)="getUsersPage(page-1)">
                   <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
                      <i class="la la-angle-left"></i>
                   </a>
                </li>
-               <!--
-                     <li>
-                        <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active'}">1</a>
-                     </li>
-                     <li>
-                        <a class="m-datatable__pager-link m-datatable__pager-link-number">2</a>
-                     </li>-->
-               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage((page-1)*page_size)">
+
+               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage(_page)">
                   <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
                </li>
-               <li (click)="getUsersFrom(+page_size)">
+
+               <li (click)="getUsersPage(page+1)">
                   <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
                      <i class="la la-angle-right"></i>
                   </a>
                </li>
-               <li (click)="getUsersPage(page_size*(total_pages-1))">
+
+               <li (click)="getUsersPage(total_pages)">
                   <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
                      <i class="la la-angle-double-right"></i>
                   </a>
                </li>
             </ul>
 
-            <!-- INFO DE LA TABLA -->
             <div class="m-datatable__pager-info">
-               <!--
-                     <select class="m-datatable__pager-size" data-width="170px" data-selected="10">
-                        <option value>seleccione tamaño de página</option>
-                        <option value="10">10</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                     </select>-->
-               <!-- <form [formGroup]="filterForm" style="display:inline;">
-                        <select formControlName="limit" class="m-datatable__pager-size" style="width:160px" (change)="kisa()">>
-                           <option value="5">5</option>
-                           <option value="10">10</option>
-                           <option value="50">50</option>
-                        </select>
-                     </form> -->
-
-               <!-- <div class="dropdown bootstrap-select m-datatable__pager-size dropup" style="width: 70px">
-
-                        <button type="button" class="btn dropdown-toggle btn-light" data-togle="dropdown" role="button" title="Select page size" aria-expanded="false">
-                           <div class="filter-option">
-                              <div class="filter-option-inner">10</div>
-                           </div>
-                           <span class="bs-caret">
-                              <span class="caret"></span>
-                           </span>
-                        </button>
-                     </div>
-                     <div class="dropdown-menu" role="combobox" x-placement="top-start" style="max-height: 756.318px; overflow: hidden; min-height: 130px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -3px, 0px);">
-                        <div class="inner show" role="listbox"></div>
-                     </div> -->
-               <span class="m-datatable__pager-detail">Mostrando {{total_lessons ? ((page-1)*page_size + 1) : 0}} -
-                  {{(page_size*page > total_lessons) ? total_lessons : (page_size*page)}} de {{total_lessons}}
-                  clases</span>
+               <form [formGroup]="filterForm" style="display:inline;">
+                  <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage(filterForm.value)">
+                     <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
+                  </select>
+               </form>
+               <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}} -
+                  {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
+                  clases
+               </span>
             </div>
          </div>
       </div>

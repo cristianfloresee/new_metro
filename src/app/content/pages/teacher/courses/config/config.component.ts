@@ -46,7 +46,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
          this.id_subject = params.get('idSubject');
          this.id_course = params.get('idCourse');
          this.getCourse();
-      })
+      });
    }
 
    ngOnDestroy() {
@@ -54,8 +54,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
    }
 
    getCourse() {
-      this._courseSrv.getCourseById(this.id_user, this.id_course)
+      console.log("ID WN: ", this.id_user);
+      //this._courseSrv.getCourseById(this.id_user, this.id_course)
+      this._courseSrv.getCourseDetail(this.id_course)
          .subscribe(value => {
+            console.log("DETA: ", value)
             this.course = value;
          })
    }

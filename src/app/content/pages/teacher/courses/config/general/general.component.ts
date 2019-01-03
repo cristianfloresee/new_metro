@@ -1,15 +1,15 @@
-//ANGULAR
+// Angular
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//RXJS
+// RxJS
 import { Subscription } from 'rxjs';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-//MODALS
+// Modals
 import { DeleteCourseComponent } from '../../../modals/delete-course/delete-course.component';
-//SERVICIOS
+// Services
 import { CourseService } from 'src/app/core/services/API/course.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubjectService } from 'src/app/core/services/API/subject.service';
@@ -66,7 +66,7 @@ export class GeneralComponent implements OnInit {
    }
 
    getCourses() {
-      this._courseSrv.getCourseById(this.id_user, this.id_course)
+      this._courseSrv.getCourseDetail(this.id_course)
          .subscribe(value => {
             console.log("value: ", value);
             this.course = value;
@@ -136,11 +136,11 @@ export class GeneralComponent implements OnInit {
                console.log("error:", error);
             });
       //CARGA LOS AÑOS Y SEMESTRES (CALENDARIO)
-      this._calendarSrv.getCalendars()
+      this._calendarSrv.getCalendarsOptions()
          .subscribe(
             result => {
                console.log("calendars: ", result);
-               this.options_calendar = this.formatCalendarOptions(result.items);
+               this.options_calendar = this.formatCalendarOptions(result);
                // console.log("option_calendar: ", this.options_calendar);
             },
             error => {

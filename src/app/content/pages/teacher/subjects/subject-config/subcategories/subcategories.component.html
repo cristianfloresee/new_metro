@@ -1,6 +1,6 @@
 <div class="form-group m-form__group m--margin-top-10">
    <div class="alert m-alert m-alert--default" role="alert">
-      Los modulos representan una forma de separar las clases para indicar el tipo de clase que se realizará.
+         En esta sección se encuentran las subcategorías para organizar las preguntas.
    </div>
 </div>
 
@@ -31,8 +31,8 @@
                <th class="center">#</th>
                <th>Categoría</th>
                <th>Subcategoría</th>
-               <th>Fecha de Creación</th>
-               <th>Fecha de Actualización</th>
+               <th class="center">Fecha de Creación</th>
+               <th class="center">Fecha de Actualización</th>
                <th class="center">Acciones</th>
             </tr>
          </thead>
@@ -40,11 +40,11 @@
          <tbody>
 
             <tr *ngFor="let subcategory of data_subcategories; let i=index">
-               <td>{{subcategory.id_subcategory}}</td>
+               <td>{{i+1}}</td>
                <td class="nowrap">{{subcategory.category}}</td>
                <td class="nowrap">{{subcategory.name}}</td>
-               <td class="nowrap">{{subcategory.created_at}}</td>
-               <td class="nowrap">{{subcategory.updated_at}}</td>
+               <td class="nowrap center">{{subcategory.created_at | timeAgo}}</td>
+               <td class="nowrap center">{{subcategory.updated_at | timeAgo}}</td>
                <td>
                   <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                      <a (click)="updateSubcategory(subcategory)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
