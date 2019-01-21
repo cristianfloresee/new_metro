@@ -210,11 +210,12 @@
 
                   </td>
                   <td class="nowrap">
-                     <span style="width: 100%">
-                        <span class="m-badge m-badge--dot" [ngClass]="(question.status == 1) ? 'm-badge--warning': (question.status == 2 ? 'm-badge--success' : 'm-badge--danger')"></span>
+
+                      <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="(question.status == 1) ? 'm-badge--warning': (question.status == 2 || question.status == 3) ? 'm-badge--success' : 'm-badge--danger'"></span>
                         &nbsp;
-                        <span class="m--font-bold" [ngClass]="(question.status == 2) ? 'm--font-success' : (question.status == 1 ? 'm--font-warning' : 'm--font-danger')">
-                           {{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'en juego' : 'terminada' }}
+                        <span class="m--font-bold" [ngClass]="(question.status == 1) ? 'm--font-warning': (question.status == 2) ? 'm--font-success' : (question.status == 3) ? 'm--font-success' : 'm--font-danger'">
+                           {{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'en juego' : question.status == 3 ? 'detenida': 'terminada' }}
                         </span>
                      </span>
                   </td>

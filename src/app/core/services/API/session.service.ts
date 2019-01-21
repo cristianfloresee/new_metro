@@ -6,18 +6,18 @@
 //INTERCEPTOR CON JWT
 // + https://ryanchenkie.com/angular-authentication-using-the-http-client-and-http-interceptors
 
-//ANGULAR
+// Angular
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Router } from '@angular/router';
-//CONSTANTES
+// Constants
 import { API } from '../../../config/constants';
-//RXJS
+// RxJS
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-//MODELOS
+// Models
 import { User } from '../../models/user.model';
-//SERVICIOS
+// Services
 import { RoleService } from '../role.service';
 import { SocketService } from '../socket.service';
 
@@ -27,22 +27,30 @@ export class SessionService {
    private http: HttpClient;
    token: string;
    menu;
+
    userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
    user$: Observable<User> = this.userSubject.asObservable();
 
+   private _roleSrv: any;
    constructor(
       public handler: HttpBackend,
       public router: Router,
-      private _roleSrv: RoleService,
+      //private _roleSrv: RoleService,
       private _socketSrv: SocketService
    ) {
+
       this.http = new HttpClient(handler);
       this.loadStorage();
+      //this._roleSrv.setSessionService(this);
    }
 
    //
    changeUser(user: User) {
       this.userSubject.next(user);
+   }
+
+   setRoleService(service){
+      this._roleSrv = service;
    }
 
    //
@@ -51,18 +59,25 @@ export class SessionService {
       return this.http.post(API.LOGIN, { email, password })
          .pipe(
             map((response: any) => {  //token, user
-               this._roleSrv.changeAvailableRoles(response.user.roles);
+
+               // KIRS: CAMBIE EL ORDEN DE LOS 2 DE ABAJO..
                this.saveStorage(response.user, response.token)
+               this.changeUser(response.user);
+
+               // Actualiza el array observable de roles disponibles para el usuario logueado
+               this._roleSrv.changeAvailableRoles(response.user.roles);
+
                //this._socketSrv.initSocket();
-               console.log("TU MAMA: ", response.user);
+
                let user = {
                   'id_user': response.user.id_user,
                   'username': response.user.username,
                   'role': response.user.roles[0]
                }
+               console.log("KRRISSSS: ", user.role);
                // Emite evento para
                this._socketSrv.emit('connectedUser', user)
-               return true;
+               return user.role;
             })
          )
    }
@@ -75,13 +90,15 @@ export class SessionService {
          this.menu = [];
          this.userSubject.next(null);
          this._roleSrv.cleanRoles();
-         //LIMPIA EL LOCALSTORAGE:
+
+         // Limpia el locaStorage
          localStorage.removeItem('token');
          localStorage.removeItem('menu');
          localStorage.removeItem('user');
 
          this._socketSrv.emit('disconnectedUser');
-         //DESCONECTA SOCKET.IO
+
+         // Desconecta socket.io (Con el método de Fernando Herrera no se puede hacer de momento)
          this._socketSrv.offSocket();
       }, 1000);
 
@@ -91,12 +108,11 @@ export class SessionService {
    // + Si esta logueado debería actualizar datos desde el servidor?
    // + Verificar expiración del token.
    isLogged() {
-      console.log("TOKEN: ", this.token);
+      //console.log("TOKEN: ", this.token);
       return (this.token.length > 5) ? true : false;
    }
 
    loadStorage() {
-
 
       if (localStorage.getItem('token')) {
          const user = JSON.parse(localStorage.getItem('user'));
@@ -121,7 +137,8 @@ export class SessionService {
    }
 
    saveStorage(user: User, token?: string) {
-      this.changeUser(user);
+      console.log(" + saveStorage()")
+      //this.changeUser(user);
       localStorage.setItem('user', JSON.stringify(user));
       if (token) {
          localStorage.setItem('token', token);

@@ -37,9 +37,7 @@
                            <span class="tags" style="top: 5px;" [ngClass]="(result.enrolled) ? 'm--font-success':'m--font-danger'">{{
                               result.enrolled ? 'Inscrito' : 'No Inscrito'}}</span>
 
-
                            <ng-container *ngIf="!result.enrolled; else delete">
-
                               <a class="btn btn-success m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;"
                                  (click)="createEnrollment(result)">
                                  <i class="la la-plus"></i>
@@ -47,7 +45,6 @@
                            </ng-container>
 
                            <ng-template #delete>
-
                               <a [swal]="deleteSwal" class="btn btn-danger m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;">
                                  <i class="la la-times"></i>
                               </a>

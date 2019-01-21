@@ -13,11 +13,18 @@
 
       <div class="form-group m-form__group m--margin-top-10">
          <div class="alert m-alert m-alert--default" role="alert">
-            A continuación se presentan los estudiantes que han decidido participar en responder la pregunta.
-         </div>
-
-         <div class="alert m-alert m-alert--default" style="background-color: #c4c5d6">
-            <b>Pregunta:</b> {{question.description}}
+           En esta sección se presentan los estudiantes que han decidido participar en responder la pregunta. A continuación información general de la sección.
+            <br><br>
+            <ul>
+               <li><b>Pregunta: </b>{{question.description}}
+               <li><b>Estado: </b> {{
+                  (question.status == 1) ? 'No Iniciada' :
+                  (question.status == 2 ) ? 'Iniciada' :
+                  (question.status == 3) ? 'Detenida' :
+                  'Terminada'
+               }}
+               <!-- Esperando pregunta, esperando participantes, participación detenida, estudiante seleccionado, participación finalizada -->
+            </ul>
          </div>
       </div>
 
@@ -31,45 +38,97 @@
                   <!-- 4 estados: (1 no iniciada), 2: en juego, 3: detenida, 4: -finalizada -->
                   <!-- 1, 3 -->
 
-                  <ng-container [ngSwitch]="question.status">
+                  <!-- <ng-container [ngSwitch]="question.status">
                      <p *ngSwitchCase="1">Estado: No iniciada</p>
                      <p *ngSwitchCase="2">Estado: Iniciada</p>
                      <p *ngSwitchCase="3">Estado: Detenida</p>
                      <p *ngSwitchCase="4">Estado: Terminada</p>
-                  </ng-container>
+                  </ng-container> -->
+
+
+
+
+
+
+
+
+
+
+
+                  <!-- <ng-container *ngIf="question" [ngSwitch]="question.status">
+                        <button *ngSwitchCase="'1'" type="button" (click)="updateClassQuestionStatus(2)" style="color: #ffffff; margin-left: 10px;"
+                           class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
+                           <span>
+                              <span>Iniciar Clase</span>
+                           </span>
+                        </button>
+
+                        <button *ngSwitchCase="'3'" type="button" (click)="updateClassQuestionStatus(1)" style="color: #ffffff; margin-left: 10px;"
+                           class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
+                           <span>
+                              <span>Reiniciar Clase</span>
+                           </span>
+                        </button>
+
+                        <button *ngSwitchCase="'2'" type="button" (click)="updateClassQuestionStatus(3)" style="color: #ffffff; margin-left: 10px;"
+                           class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
+                           <span>
+                              <span>Finalizar Clase</span>
+
+                           </span>
+                        </button>
+                     </ng-container>
+ -->
+
+
 
                   <ng-container *ngIf="question" [ngSwitch]="question.status">
 
-                     <button *ngSwitchDefault type="button" (click)="changeStatus(2)" style="color: #ffffff; margin-left: 10px;"
+                     <button *ngSwitchDefault type="button" (click)="updateClassQuestionStatus(2)" style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Iniciar Participación</span>
                         </span>
                      </button>
 
-                     <!-- <button *ngSwitchCase="'3'" type="button" (click)="changeStatus(1)" style="color: #ffffff; margin-left: 10px;"
+                     <!-- <button *ngSwitchCase="'3'" type="button" (click)="updateClassQuestionStatus(1)" style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Iniciar Participación</span>
                         </span>
                      </button> -->
 
-                     <button *ngSwitchCase="'2'" type="button" (click)="changeStatus(3)" style="color: #ffffff; margin-left: 10px;"
+
+                     <button *ngSwitchCase="'2'" type="button" (click)="updateClassQuestionStatus(3)" style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Detener Participación</span>
                         </span>
                      </button>
 
-                     <button *ngSwitchCase="'4'" type="button" (click)="changeStatus(1)" style="color: #ffffff; margin-left: 10px;"
+                     <button *ngSwitchCase="'3'" type="button" (click)="updateClassQuestionStatus(2)" style="color: #ffffff; margin-left: 10px;"
+                        class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
+                        <span>
+                           <span>Reanudar Participación</span>
+                        </span>
+                     </button>
+
+                     <button *ngSwitchCase="'4'" type="button"
+                     [swal]="deleteSwal" style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Reiniciar Participación</span>
                         </span>
                      </button>
-                  </ng-container>
 
-                  <button *ngIf="question.status == 3" type="button" (click)="changeStatus(4)" style="color: #ffffff; margin-left: 10px;" class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
+                     <swal #deleteSwal (confirm)="updateClassQuestionStatus(1)" [options]="SWAL_DELETE_PARTICIPATION"></swal>
+
+                     <!-- (click)="updateClassQuestionStatus(1)" -->
+                  </ng-container>
+                  <swal #successSwal [options]="SWAL_SUCCESS_DELETE_PARTICIPATION"></swal>
+
+                  <button *ngIf="question.status == 3" type="button" (click)="updateClassQuestionStatus(4)" style="color: #ffffff; margin-left: 10px;"
+                     class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
                      <span>
                         <span>Finalizar</span>
                      </span>
@@ -114,19 +173,22 @@
                </tr>
             </thead>
             <tbody>
-               <ng-container>
-                  <tr class="student">
-                     <td>1</td>
-                     <td class="nowrap">Cristian Flores</td>
+               <ng-container *ngFor="let student of data_participants; let i=index">
+                  <tr class="student" >
+                     <td>{{i+1}}</td>
+                     <td class="nowrap">{{student.name}} {{student.last_name}} {{student.middle_name}}</td>
                      <td colspan="6"></td>
                      <td>
                         <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                           <a (click)="playQuestion(question)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <button (click)="selectStudentToAnswer(student)" [ngClass]="{'btn-success': question.status == 3}"
+                              class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+                              [disabled]="question.status != 3">
                               <i class="la la-play"></i>
-                           </a>
+                           </button>
                         </span>
                      </td>
                   </tr>
+
                   <tr>
                      <td></td>
                      <td>Semestre</td>

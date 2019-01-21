@@ -69,11 +69,11 @@
                         <i class="la la-trash"></i>
                      </a>
                      <swal #deleteSwal (confirm)="deleteStudent(student.id_user)" [options]="SWAL_DELETE_STUDENT"></swal>
-                     <swal #successSwal [options]="SWAL_SUCCESS_DELETE_STUDENT"></swal>
                   </span>
                </td>
             </tr>
          </tbody>
+         <swal #successSwal [options]="SWAL_SUCCESS_DELETE_STUDENT"></swal>
       </table>
    </div>
 </div>

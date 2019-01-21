@@ -25,7 +25,6 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION, SWAL_SUCCESS_DELETE_COURSE, SWAL_DELETE_COURSE, SWAL_DELETE_CATEGORY, SWAL_SUCCESS_DELETE_CATEGORY, SWAL_SUCCESS_DELETE_SUBCATEGORY, SWAL_DELETE_SUBCATEGORY } from 'src/app/config/swal_config';
 import { UpdateQuestionComponent } from './modals/update-question/update-question.component';
 import { TOAST_ERROR_DELETE_QUESTIONS, TOAST_ERROR_DELETE_COURSES, TOAST_ERROR_DELETE_CATEGORIES, TOAST_ERROR_DELETE_SUBCATEGORIES } from 'src/app/config/toastr_config';
-import { UpdateCourseComponent } from './modals/update-course/update-course.component';
 import { UpdateCategoryComponent } from './modals/modal-category/update-category.component';
 import { ModalSubcategoryComponent } from './modals/modal-subcategory/modal-subcategory.component';
 
@@ -217,6 +216,8 @@ export class TeacherComponent implements OnInit {
 
    openCreateCourse() {
       const modalRef = this.ngModal.open(CreateCourseComponent);
+      modalRef.componentInstance.action = 'Crear';
+
    }
 
    openCreateAnswer() {
@@ -394,7 +395,6 @@ export class TeacherComponent implements OnInit {
       this._categorySrv.getLastCategories({ id_user: this.id_user, page_size: 5 })
          .subscribe(
             (result: any) => {
-               console.log("miamal: ", result);
                this.categories = result;
             },
             error => {
@@ -491,16 +491,15 @@ export class TeacherComponent implements OnInit {
          .catch(reason => reason);
    }
 
-
-   updateCourse(course){
-      console.log("UQET: ", course);
-      const modalRef = this.ngModal.open(UpdateCourseComponent);
-      modalRef.componentInstance.course = course; //##### DIFERENTE
-      modalRef.componentInstance.action = 'Actualizar'; //##### DIFERENTE
-      modalRef.result
-         .then((result) => { if (result) this.getLastQuestions() })
-         .catch(reason => reason);
+   updateCourse(course) {
+      const modalRef = this.ngModal.open(CreateCourseComponent);
+      modalRef.componentInstance.course = course;
+      modalRef.componentInstance.action = 'Actualizar';
+      modalRef.result.then((result) => {
+         if (result) this.getLastCourses()
+      });
    }
+
 
    updateCategory(category) {
       const modalRef = this.ngModal.open(UpdateCategoryComponent);

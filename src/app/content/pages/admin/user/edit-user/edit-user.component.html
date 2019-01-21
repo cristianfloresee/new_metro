@@ -99,12 +99,14 @@
             </span>
          </div>
 
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.active.invalid && userForm.controls.active.touched }">
-            <label class="form-control-label">Estado:</label>
-            <select formControlName="active" class="m-datatable__pager-size" style="width:160px">>
-               <option [ngValue]="true">Activo</option>
-               <option [ngValue]="false">Inactivo</option>
-            </select>
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : userForm.controls.active.invalid && userForm.controls.active.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Estado:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="active" class="m-datatable__pager-size" style="width:260px">>
+                  <option [ngValue]="true">Activo</option>
+                  <option [ngValue]="false">Inactivo</option>
+               </select>
+            </div>
          </div>
 
       </div>

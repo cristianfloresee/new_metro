@@ -92,8 +92,8 @@ export class UserComponent implements OnInit {
                this.users = result.items;
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
-               console.log("result: ", result);
                this.page = (this.from / this.page_size) + 1;
+               console.log("result: ", result);
                console.log("current page: ", this.page)
             },
             error => {

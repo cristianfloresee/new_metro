@@ -16,6 +16,7 @@ import { SWAL_DELETE_STUDENT, SWAL_SUCCESS_DELETE_STUDENT } from 'src/app/config
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { SocketService } from 'src/app/core/services/socket.service';
 import { Subscription } from 'rxjs';
+import { SessionService } from 'src/app/core/services/API/session.service';
 
 
 @Component({
@@ -35,20 +36,24 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
    enrollment$: Subscription;
 
+   id_user;
    constructor(
       private ngModal: NgbModal,
       public fb: FormBuilder,
       private _enrollmentSrv: EnrollmentService,
       private toastr: ToastrService,
+      private _sessionSrv: SessionService
    ) { }
 
    ngOnInit() {
       //this._userSrv.getUsersByCourseId(this.id_course)
       console.log("CURSITO: ", this.course);
+      this.id_user = this._sessionSrv.userSubject.value.id_user;
 
       this.getEnrollments();
       //this._socketSrv.onCreateEnrollment();
       this.initIoConnection();
+      this.enterToCourseRoom();
    }
 
 
@@ -57,6 +62,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
       const modalRef = this.ngModal.open(AddStudentComponent, { size: 'lg' });
       modalRef.componentInstance.course = this.course;
       modalRef.componentInstance.students = this.students;
+      modalRef.componentInstance.id_user = this.id_user;
 
       modalRef.result.then((result) => {
           if (result) this.getEnrollments();
@@ -114,14 +120,26 @@ export class StudentsComponent implements OnInit, OnDestroy {
       this.enrollment$ = this._enrollmentSrv.listenEnrollments()
          .subscribe((data) => {
             console.log("enrollment socket: ", data);
-
+            this.getEnrollments();
          })
 
+      this._enrollmentSrv.listenEnrollmentDeleted()
+         .subscribe((data) => {
+            console.log("enrollment socket deleted: ", data);
+            this.getEnrollments();
+         })
    }
 
    ngOnDestroy() {
       this.enrollment$.unsubscribe();
+      this.exitToCourseRoom();
    }
 
+   enterToCourseRoom(){
+      this._enrollmentSrv.enterToCourseRoom({id_user: this.id_user, id_course: this.course.id_course})
+   }
 
+   exitToCourseRoom(){
+      this._enrollmentSrv.exitToCourseRoom({id_user: this.id_user, id_course: this.course.id_course})
+   }
 }

@@ -155,6 +155,7 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
          .subscribe(
             result => {
                console.log("nowa: ", result);
+               this.getActivities();
                this.successSwal.show();
             },
             error => {

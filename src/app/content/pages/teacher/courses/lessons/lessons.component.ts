@@ -70,11 +70,6 @@ export class LessonsComponent implements OnInit {
    }
 
    ngOnInit() {
-      // Obtiene los params de la url
-      /*this.urlParamChanges$ = this.route.params.subscribe(params => {
-         this.id_course = params.idCourse;
-         this.id_subject = params.idSubject;
-      });*/
 
       this.urlParamChanges$ = this.route.paramMap.subscribe(params => {
          this.id_subject = params.get('idSubject');

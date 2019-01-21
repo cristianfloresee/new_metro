@@ -17,8 +17,8 @@ export const TOAST_ERROR_UPDATE_WORKSPACES = Object.assign({}, TOAST_ERROR, { me
 export const TOAST_SUCCESS_UPDATE_QUESTIONS = Object.assign({}, TOAST_SUCCESS, { message: 'Las preguntas se han actualizado correctamente.' });
 export const TOAST_ERROR_UPDATE_QUESTIONS = Object.assign({}, TOAST_ERROR, { message: 'Las preguntas no se han podido ser actualizadas.' });
 
-export const TOAST_SUCCESS_UPDATE_WINNERS = Object.assign({}, TOAST_SUCCESS, { message: 'Los estaods de participación se han actualizado correctamente.' });
-export const TOAST_ERROR_UPDATE_WINNERS = Object.assign({}, TOAST_ERROR, { message: 'Los estados de participación no se han podido ser actualizadas.' });
+export const TOAST_SUCCESS_UPDATE_WINNERS = Object.assign({}, TOAST_SUCCESS, { message: 'La participación se ha actualizado correctamente.' });
+export const TOAST_ERROR_UPDATE_WINNERS = Object.assign({}, TOAST_ERROR, { message: 'La participación no ha podido ser actualizada.' });
 
 // Opciones toastr de las subcategorías
 export const TOAST_SUCCESS_CREATE_SUBCATEGORY = Object.assign({}, TOAST_SUCCESS, { message: 'La subcategoría ha sido creada correctamente.' });

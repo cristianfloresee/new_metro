@@ -175,6 +175,7 @@ export class QuestionLibraryComponent implements OnInit {
                this.data_questions = result.items;
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
+               this.page = (this.from / this.page_size) + 1;
             },
             error => {
                console.log("error:", error);

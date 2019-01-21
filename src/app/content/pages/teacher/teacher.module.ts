@@ -33,6 +33,7 @@ import { SubjectConfigComponent } from './subjects/subject-config/subject-config
 import { CategoriesComponent } from './subjects/subject-config/categories/categories.component';
 import { SubcategoriesComponent } from './subjects/subject-config/subcategories/subcategories.component';
 import { LessonDetailComponent } from './courses/lessons/lesson-detail/lesson-detail.component';
+import { Courses2Component } from './subjects/subject-config/courses2/courses2.component';
 
 @NgModule({
    imports: [
@@ -60,6 +61,7 @@ import { LessonDetailComponent } from './courses/lessons/lesson-detail/lesson-de
       CategoriesComponent,
       SubcategoriesComponent,
       LessonDetailComponent,
+      Courses2Component,
    ]
 })
 export class TeacherModule { }

@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class DeleteCourseComponent implements OnInit {
    @Input() course;
+   @Input() reedirect;
    courseForm: FormGroup;
 
    constructor(
@@ -43,7 +44,7 @@ export class DeleteCourseComponent implements OnInit {
                this.toastr.success('El curso ha sido eliminado correctamente.', 'Curso eliminado!');
                //Reedireccionar al inicio del profe
                //http://localhost:4200/teacher
-               this.router.navigate(['/teacher']);
+               if(this.reedirect) this.router.navigate(['/teacher']);
             },
             error => {
                console.log("error:", error);

@@ -66,14 +66,19 @@ export class LoginComponent implements OnInit {
    ngOnInit() { }
 
 
-   submit() {
+   login() {
       this.loaderSrv.show();
       return this.sessionSrv.login(this.loginForm.value.email, this.loginForm.value.password)
          .subscribe(
             result => {
-               console.log("result: ", result);
+               console.log("sessionSrv.login(", result, ") (result)");
                this.error_response.show = false;
-               this.router.navigate(['/']);
+
+               if(result == 1) this.router.navigate(['/admin']);
+               else if(result == 2) this.router.navigate(['/teacher']);
+               else if(result == 3) this.router.navigate(['/student']);
+               else this.router.navigate(['/']);
+
                this.loaderSrv.hide();
             },
             error => {
@@ -98,11 +103,4 @@ export class LoginComponent implements OnInit {
       this.actionChange.next(this.action);
    }
 
-   sumot() {
-      this.toastr.error('Hello world!', 'Toastr fun!', {
-         closeButton: true,
-         progressBar: true,
-         progressAnimation: 'increasing'
-      });
-   }
 }

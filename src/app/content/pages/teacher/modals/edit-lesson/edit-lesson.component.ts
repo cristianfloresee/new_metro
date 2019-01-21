@@ -76,8 +76,14 @@ export class EditLessonComponent implements OnInit, OnDestroy {
       this._lessonSrv.updateLesson(this.lesson.id_class, lesson.module, lesson.description, dateISO, lesson.status)
          .subscribe(
             result => {
-               this.activeModal.close(true);
+               if (!result) {
+                  this.toastr.error('Asegúrate de no tener otra clase iniciada.', 'Ha ocurrido un error!');
+               }
+               else {
+                  this.activeModal.close(true);
                this.toastr.success('La clase ha sido actualizada correctamente.', 'Clase actualizada!');
+               }
+
             },
             error => {
                console.log("error:", error);

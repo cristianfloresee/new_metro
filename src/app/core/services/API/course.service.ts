@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../../../config/constants';
 //SERVICIOS
 import { SessionService } from './session.service';
+import { SocketService } from '../socket.service';
 
 
 @Injectable()
@@ -12,11 +13,12 @@ export class CourseService {
 
    constructor(
       public http: HttpClient,
+      private _socketSrv: SocketService
    ) { }
 
    getCourses(params) {
       // + Necesito una interface:
-      // + { id_user, id_course, page, page_size }
+      // + { id_user, id_subject, id_course, page, page_size }
       return this.http.get(API.COURSES, { params })
    }
 
@@ -49,5 +51,13 @@ export class CourseService {
    deleteCourse(id_course) {
       return this.http.delete(`${API.COURSES}/${id_course}`);
    }
+
+
+
+
+   /*
+   listenEnrollmentDeleted(){
+      return this.socketSrv.listen('studentEnrollmentDeleted');
+   }*/
 
 }

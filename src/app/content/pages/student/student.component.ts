@@ -9,6 +9,7 @@ import { SidemenuService } from 'src/app/core/services/sidemenu.service';
 // Modals
 import { CreateEnrollmentComponent } from './modals/create-enrollment/create-enrollment.component';
 import { SessionService } from 'src/app/core/services/API/session.service';
+import { Subscription } from 'rxjs';
 
 @Component({
    selector: 'cw-student',
@@ -18,6 +19,7 @@ import { SessionService } from 'src/app/core/services/API/session.service';
 export class StudentComponent implements OnInit {
 
    id_user;
+   socket$: Subscription;
 
    constructor(
       private _enrollmentSrv: EnrollmentService,
@@ -25,7 +27,8 @@ export class StudentComponent implements OnInit {
       private _sidemenuSrv: SidemenuService,
       private ngModal: NgbModal,
       private _sessionSrv: SessionService
-   ) { }
+   ) {
+   }
 
    ngOnInit() {
       this.id_user = this._sessionSrv.userSubject.value.id_user;
@@ -38,7 +41,7 @@ export class StudentComponent implements OnInit {
             this.toastr.success(`Has sido inscrito en un curso para la asignatura ${data.subject}`, 'Inscrito en un Curso!');
          })
 
-         this._enrollmentSrv.listenEnrollmentDeleted()
+         this.socket$ = this._enrollmentSrv.listenEnrollmentDeleted()
          .subscribe((data: any) => {
             console.log("data socket deleted: ", data);
             // Actualiza el sidemenu del estudiante
@@ -60,9 +63,8 @@ export class StudentComponent implements OnInit {
    }
 
    ngOnDestroy(){
-
+      this.socket$.unsubscribe();
    }
-
 
 
 }

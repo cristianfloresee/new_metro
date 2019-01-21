@@ -20,13 +20,15 @@
             </div>
             <!-- FIN ERRORES DE NOMBRE -->
          </div>
-         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : calendarForm.controls.semester.invalid && calendarForm.controls.semester.touched }">
-            <label class="form-control-label">Semestre:</label>
-            <select formControlName="semester" class="m-datatable__pager-size" style="width:160px">
-               <option value="">Seleccionar</option>
-               <option value="1">1</option>
-               <option value="2">2</option>
-            </select>
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : calendarForm.controls.semester.invalid && calendarForm.controls.semester.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Semestre:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="semester" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <option [ngValue]="1">1</option>
+                  <option [ngValue]="2">2</option>
+               </select>
+            </div>
             <!--===================== ERRORES DE PATERNO =====================-->
             <div class="form-control-feedback" *ngIf="calendarForm.controls['semester'].hasError('required') && (calendarForm.controls['semester'].dirty || calendarForm.controls['semester'].touched)">
                Este campo es requerido.
@@ -36,7 +38,7 @@
 
       </div>
 
-<!--
+      <!--
       <cw-year-datepicker [date]="calendarForm.value" formControlName="year"></cw-year-datepicker>
       INVALID: {{calendarForm.invalid}}
       PRISTINE: {{calendarForm.pristine}}-->

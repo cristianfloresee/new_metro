@@ -143,11 +143,17 @@ export class LessonDetailComponent implements OnInit {
    }
 
    searchQuestion() {
-      const modalRef = this.ngModal.open(QuestionSearchComponent, { size: 'lg' });
+      const modalRef = this.ngModal.open(QuestionSearchComponent, {
+         windowClass: 'xlModal'
+      });
       modalRef.componentInstance.action = 'Añadir';
+      // Sería bueno tener todo el subject en vez de solo el id_subject
       modalRef.componentInstance.id_subject = this.id_subject;
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.id_lesson = this.id_lesson;
+      modalRef.componentInstance.class = this.class_detail;
+      modalRef.componentInstance.subject = this.class_detail.subject;
+      modalRef.componentInstance.course = this.class_detail.course;
       /// Recargar
       modalRef.result.then((result) => {
          if (result) this.getLessonQuestions();
@@ -164,8 +170,15 @@ export class LessonDetailComponent implements OnInit {
       this._lessonSrv.updateLesson(this.id_lesson, this.class_detail.id_module, this.class_detail.description, this.class_detail.date, status)
          .subscribe(
             (result: any) => {
-               this.class_detail.status = status;
-               this.toastr.success('El estado de la clase ha sido actualizado correctamente.', 'Acción realizada!');
+
+               if (!result) {
+                  this.toastr.error('Asegúrate de no tener otra clase iniciada.', 'Ha ocurrido un error!');
+               }
+               else {
+                  this.class_detail.status = status;
+                  this.toastr.success('El estado de la clase ha sido actualizado correctamente.', 'Acción realizada!');
+               }
+
             },
             error => {
                console.log("error:", error);
@@ -176,7 +189,7 @@ export class LessonDetailComponent implements OnInit {
       this._lessonSrv.getClassById(this.id_lesson)
          .subscribe(
             (result: any) => {
-               console.log("tue hermana: ", result)
+               console.log("getClassById(): ", result)
                this.class_detail = result;
             },
             error => {
@@ -190,11 +203,11 @@ export class LessonDetailComponent implements OnInit {
 
    // Interface:
    getLessonQuestions() {
-      let params = Object.assign( { id_lesson: this.id_lesson }, this.filterForm.value);
+      let params = Object.assign({ id_lesson: this.id_lesson }, this.filterForm.value);
       this._lessonQuestionSrv.getLessonQuestions(params)
          .subscribe(
             (result: any) => {
-               console.log("LESSON_QUESTIONS: ", result);
+               console.log(" + getLessonQuestions(): ", result);
                this.data_lesson_questions = result.items;
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
@@ -208,7 +221,9 @@ export class LessonDetailComponent implements OnInit {
    playQuestion(question) {
       console.log("ID LESSON: ", this.id_lesson);
       console.log("quesion: ", question);
-      const modalRef = this.ngModal.open(PlayQuestionComponent, { size: 'lg' });
+      const modalRef = this.ngModal.open(PlayQuestionComponent, {
+         windowClass: 'xlModal'
+      });
       modalRef.componentInstance.question = question;
       modalRef.componentInstance.id_lesson = this.id_lesson;
 

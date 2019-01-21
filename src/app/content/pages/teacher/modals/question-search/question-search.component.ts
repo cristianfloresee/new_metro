@@ -1,23 +1,30 @@
 
 // Angular
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+// RxJS
+import { Subscription } from 'rxjs';
 // ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// ngx-sweetaler2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
+// Constants
 import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
+import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
+import { SWAL_DELETE_LESSON_QUESTION, SWAL_SUCCESS_DELETE_LESSON_QUESTION } from 'src/app/config/swal_config';
+import { TOAST_SUCCESS_UPDATE_QUESTIONS, TOAST_ERROR_UPDATE_QUESTIONS } from 'src/app/config/toastr_config';
+// Services
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { QuestionService } from 'src/app/core/services/API/question.service';
-import { Subscription } from 'rxjs';
-import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
-import { TOAST_SUCCESS_UPDATE_QUESTIONS, TOAST_ERROR_UPDATE_QUESTIONS } from 'src/app/config/toastr_config';
 import { CreateQuestionComponent } from '../create-question/create-question.component';
+
 @Component({
    selector: 'cw-question-search',
    templateUrl: './question-search.component.html',
@@ -25,10 +32,18 @@ import { CreateQuestionComponent } from '../create-question/create-question.comp
 })
 export class QuestionSearchComponent implements OnInit {
 
+   // Hace referencia al template 'successSwal'
+   @ViewChild('successSwal') private successSwal: SwalComponent;
+
+   SWAL_DELETE_LESSON_QUESTION = SWAL_DELETE_LESSON_QUESTION;
+   SWAL_SUCCESS_DELETE_LESSON_QUESTION = SWAL_SUCCESS_DELETE_LESSON_QUESTION;
 
    @Input() id_subject;
    @Input() id_course;
    @Input() id_lesson;
+   @Input() subject;
+   @Input() course;
+   @Input() class;
 
    // Opciones de los swal
    SWAL_DELETE_QUESTION = SWAL_DELETE_QUESTION;
@@ -78,7 +93,7 @@ export class QuestionSearchComponent implements OnInit {
       private ngModal: NgbModal,
    ) { }
 
-   createQuestion(){
+   createQuestion() {
       const modalRef = this.ngModal.open(CreateQuestionComponent, {
          size: "lg"
       });
@@ -91,6 +106,7 @@ export class QuestionSearchComponent implements OnInit {
 
    ngOnInit() {
       console.log("id_subject: ", this.id_subject);
+      console.log("CAMI: ", this.class);
       //Init Vars
       this.id_user = this._sessionSrv.userSubject.value.id_user;
       this.initFormData();
@@ -148,12 +164,17 @@ export class QuestionSearchComponent implements OnInit {
    }
 
    getQuestions() {
-      let params = Object.assign({}, this.filterForm.value, { id_user: this.id_user, id_subject: this.id_subject, id_lesson: this.id_lesson });
+      //let params = Object.assign({}, this.filterForm.value, { id_user: this.id_user, id_subject: this.id_subject, id_lesson: this.id_lesson });
+      let params = Object.assign({}, this.filterForm.value, { id_user: this.id_user, id_subject: this.id_subject, id_course: this.id_course });
       //let params = Object.assign({ id_course: this.id_course }, this.filterForm.value);
-      this._lessonQuestionSrv.getAllQuestionsForLesson(params)
+
+      // Obtiene las preguntas de la biblioteca de la asignatura e indica que preguntas ya han sido agregadas a otras clases del curso.
+      //this._lessonQuestionSrv.getAllQuestionsForLesson(params)
+      this._lessonQuestionSrv.getCourseQuestions(params)
+
          .subscribe(
             (result: any) => {
-               console.log("QUEST: ", result);
+               console.log(" + getCourseQuestions: ", result);
                this.data_questions = this.formatQuestionLessonArray(result.items);
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
@@ -166,7 +187,7 @@ export class QuestionSearchComponent implements OnInit {
 
    formatQuestionLessonArray(lesson_questions) {
       lesson_questions.forEach(question => {
-         question.original_added = question.added;
+         question.original_id_class = question.id_class;
       });
       return lesson_questions;
    }
@@ -187,25 +208,55 @@ export class QuestionSearchComponent implements OnInit {
    }
 
    changeAvailabiltyLessonQuestion(question) {
-      console.log("question: ", question);
+
+      if(question.id_class && question.id_class != this.id_lesson){
+         return;
+      }
+      console.log("changeAvailabiltyLessonQuestion: ", question);
+
       // Cambia el estado añadido/no añadido
-      question.added = !question.added;
+      // + Arreglar esto....
+      if (question.id_class) {
+         question.id_class = null;
+         question.class = null;
+      }
+      else {
+         question.id_class = this.id_lesson;
+         question.class = this.class.description;
+      }
+      //question.added = !question.added;
 
       // Si el nuevo estado 'added' (añadida/no añadida) es diferente al estado original 'original_added'
       // Si es un nuevo estado entonces debo insertar una petición
-      if (question.added != question.original_added) {
-         // Si ya estaba añadido entonces corresponde a una eliminación
-         if (question.original_added) this.delete_questions.push(question.id_question);
-         else this.add_questions.push(question.id_question);
-
-
-      } else {
-         if (question.add) this.deleteFromArray(question.id_question, this.delete_questions);
-         else this.deleteFromArray(question.id_question, this.add_questions);
-         // Elimina el cambio de estado en el array de peticiones
+      if(question.id_class != question.original_id_class){
+         if(question.original_id_class) this.delete_questions.push(question.id_question);
+         else this.add_questions.push(question.id_question)
       }
+      else{
+         if(question.id_class) this.deleteFromArray(question.id_question, this.delete_questions);
+         else this.deleteFromArray(question.id_question, this.add_questions)
+      }
+
+
+      // if (question.added != question.original_added) {
+      //    // Si ya estaba añadido entonces corresponde a una eliminación
+      //    if (question.original_added) this.delete_questions.push(question.id_question);
+      //    else this.add_questions.push(question.id_question);
+
+
+      // } else {
+      //    if (question.add) this.deleteFromArray(question.id_question, this.delete_questions);
+      //    else this.deleteFromArray(question.id_question, this.add_questions);
+      //    // Elimina el cambio de estado en el array de peticiones
+      // }
+
+
+
       console.log("add_question: ", this.add_questions);
       console.log("delete_question: ", this.delete_questions);
+
+
+
    }
 
    deleteFromArray(id_question, array) {
@@ -234,6 +285,28 @@ export class QuestionSearchComponent implements OnInit {
          this.page = page;
          this.getQuestions();
       }
+   }
+
+   deleteQuestion(question) {
+      console.log("deleteQuestion: ", question);
+
+      // question.id_question, question.id_class
+      this._lessonQuestionSrv.deleteLessonQuestion(question.id_class, question.id_question)
+         .subscribe(
+            (result: any) => {
+               console.log(" + deleteLessonQuestion(): ", result);
+               this.toastr.success('La pregunta ha sido desvinculada de su clase.', 'Pregunta Desvinculada');
+               question.id_class = null;
+               question.class = null;
+               question.original_id_class = null;
+               //this.data_questions = this.formatQuestionLessonArray(result.items);
+               //this.total_items = result.info.total_items;
+               //this.total_pages = result.info.total_pages;
+               //this.page = (this.from / this.page_size) + 1;
+            },
+            error => {
+               console.log("error:", error);
+            });
    }
 
 }

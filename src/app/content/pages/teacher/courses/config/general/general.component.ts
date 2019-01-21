@@ -81,6 +81,7 @@ export class GeneralComponent implements OnInit {
    deleteCourse() {
       const modalRef = this.ngModal.open(DeleteCourseComponent);
       modalRef.componentInstance.course = this.course;
+      modalRef.componentInstance.reedirect = true;
    }
 
    initFormData() {
@@ -242,7 +243,6 @@ export class GeneralComponent implements OnInit {
    }
 
    updateCourse(course) {
-      //console.log("update: ", course);
 
       let _course = { id_calendar: course.semester, id_subject: course.subject, name: course.name, active: course.active, course_goal: course.goalsForm.course_goal, student_goal: course.goalsForm.student_goal }
       this._courseSrv.updateCourse(this.id_course, _course)
@@ -255,8 +255,6 @@ export class GeneralComponent implements OnInit {
                this.toastr.error('No se ha podido crear el curso.', 'Ha ocurrido un error!');
             }
          )
-      //console.log("nepe: ", _course);
-
    }
 
 }

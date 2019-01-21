@@ -31,12 +31,20 @@ export class SidemenuService {
       private _workspaces: WorkspaceService,
       private _enrollmentSrv: EnrollmentService
    ) {
-      this.id_user = this._sessionSrv.userSubject.value.id_user;
+
    }
 
 
-   // Actualiza el menú ante un cambio de rol
+   // Actualiza el sidemenu ante un cambio en la variable global 'role'
    changeSidemenuByRole(role: number) {
+
+      console.log(` + changeSidemenuByRole(${role}).`);
+
+      let id_user;
+      if(role) {
+         id_user = this._sessionSrv.userSubject.value.id_user;
+      }
+
 
       // Si se selecciono el rol '1' (rol de administrador)
       if (role == 1) this.sidemenuSubject.next(MENU_ADMIN)
@@ -44,18 +52,20 @@ export class SidemenuService {
       // Si se selecciono el rol '2' (rol de profesor)
       else if (role == 2) {
 
-         // Obtengo los workspaces del profesor
-         this._workspaces.getWorkspaces({ id_user: this.id_user })
+         // Obtiene los workspaces del profesor
+         this._workspaces.getWorkspaces({ id_user: id_user })
             .subscribe(workspaces => {
                // {id_subject, name}
                // Formatea los cursos agrupandolos por asignatura
-               console.log("workspaces: ", workspaces);
+               //console.log("getWorkspaces(): ", workspaces);
 
-               this._courseSrv.getCourses({id_user: this.id_user})
+               // Obtiene los cursos del profesor
+
+               this._courseSrv.getCourses({ id_user: id_user })
                   .subscribe((result: any) => {
+                     console.log(" + getCourses(", id_user, "): ", result);
                      // Formatea los cursos agrupandolos por asignatura
                      let menu_formatted = this._utilSrv.formatR(workspaces, result.items);
-                     console.log("kikasilva: ", menu_formatted);
 
                      this.sidemenuSubject.next(menu_formatted);
                   })
@@ -64,14 +74,15 @@ export class SidemenuService {
 
       }
       else if (role == 3) {
-         this._enrollmentSrv.getEnrollmentsByUserId(this.id_user)
+         this._enrollmentSrv.getEnrollmentsByUserId(id_user)
             .subscribe(data => {
+               console.log(" + getEnrollmentsByUserId(", id_user, "): ", data);
                let menu_formatted = this._utilSrv.groupCoursesByYears(data);
                console.log("FORMATTED ENROLLMENTS: ", menu_formatted);
                this.sidemenuSubject.next(menu_formatted);
             })
       }
-      else this.sidemenuSubject.next(MENU);
+      else this.sidemenuSubject.next(null);
    }
 
 

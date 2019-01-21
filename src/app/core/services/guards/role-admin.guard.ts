@@ -16,9 +16,11 @@ export class AdminGuard implements CanLoad {
 
    canLoad() {
       let roles = objectPath.get(this._sessionSrv.userSubject.value, 'roles');
+      console.log(" + AdminGuard: ", roles);
+
       if (roles && roles.length != 0) {
          if (roles.find(role => role == 1)) return true;
-         console.log(`url bloqued by admin guard...`);
+         console.log(" + url bloqued by admin guard...");
          switch (roles[0]) {
             case 2:
                this.router.navigate(['/teacher']);
@@ -28,6 +30,7 @@ export class AdminGuard implements CanLoad {
                return false;
          }
       }
+
       console.log(`url bloqued by admin guard...`);
       this.router.navigate(['/login']);
       return false;

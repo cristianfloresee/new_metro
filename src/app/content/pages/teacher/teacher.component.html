@@ -244,7 +244,7 @@
       <div class="m-portlet__head-caption">
          <div class="m-portlet__head-title">
             <h3 class="m-portlet__head-text">
-               Últimos Actualizaciones en Cursos
+               Últimas Actualizaciones en Cursos
             </h3>
          </div>
       </div>
@@ -271,6 +271,7 @@
                   <th class="center">Meta por Estudiante</th>
                   <th class="center">Año</th>
                   <th class="center">Semestre</th>
+                  <th>Estado</th>
                   <th class="center">Creado</th>
                   <th class="center">Última Actualización</th>
                   <th class="center">Acciones</th>
@@ -287,6 +288,14 @@
                   <td class="center">{{course.student_goal}}</td>
                   <td class="center">{{course.year}}</td>
                   <td class="center">{{course.semester}}</td>
+                  <td class="nowrap">
+                     <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="course.active ? 'm-badge--success' : 'm-badge--danger'"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="course.active ? 'm--font-success' : 'm--font-danger'">
+                           {{course.active ? 'Activo': 'Inactivo'}}</span>
+                     </span>
+                  </td>
                   <td class="nowrap center">{{course.created_at | timeAgo}}</td>
                   <td class="nowrap center">{{course.updated_at | timeAgo}}</td>
                   <td>

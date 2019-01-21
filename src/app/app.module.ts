@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//RUTAS
+// Angular Router
 import { AppRoutingModule } from './app-routing.module';
 
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -105,6 +105,8 @@ import { CreateEnrollmentComponent } from './content/pages/student/modals/create
 import { UpdateCourseComponent } from './content/pages/teacher/modals/update-course/update-course.component';
 import { WinnersComponent } from './content/pages/teacher/modals/winners/winners.component';
 import { QuestionSearch2Component } from './content/pages/teacher/courses/questions/question-search2/question-search2.component';
+import { SessionService } from './core/services/API/session.service';
+import { PlayQuestion2Component } from './content/pages/student/modals/play-question2/play-question2.component';
 const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 @NgModule({
@@ -140,7 +142,8 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       CreateEnrollmentComponent,
       UpdateCourseComponent,
       WinnersComponent,
-      QuestionSearch2Component
+      QuestionSearch2Component,
+      PlayQuestion2Component
    ],
    imports: [
       //ANGULAR
@@ -155,6 +158,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       NgbModule.forRoot(),
       //NGX-TOASTR
       ToastrModule.forRoot({
+         timeOut: 10000,
          closeButton: true,
          progressBar: true,
          progressAnimation: 'increasing'
@@ -194,6 +198,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       SubjectService,
       LoaderService,
       RoleService,
+      SessionService,
       ModuleService,
       PageService,
       SubheaderService,
@@ -244,7 +249,8 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       CreateEnrollmentComponent,
       UpdateCourseComponent,
       WinnersComponent,
-      QuestionSearch2Component
+      QuestionSearch2Component,
+      PlayQuestion2Component
    ],
    bootstrap: [AppComponent]
 })

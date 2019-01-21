@@ -13,8 +13,9 @@
 
       <div class="form-group m-form__group m--margin-top-10">
          <div class="alert m-alert m-alert--default" role="alert">
-            Esta pregunta se almacenará en la <b>biblioteca</b> y posteriormente podrás vincularla a
-            tus cursos.
+            En esta sección se muestran todas las preguntas que estan en la biblioteca de la asignatura <b>{{subject}}</b>.
+            <br>
+            También se encuentran marcadas las preguntas que ya han sido añadidas a alguna clase del curso <b>{{course}}</b>.
          </div>
       </div>
 
@@ -119,12 +120,14 @@
                   <th class="center">#</th>
 
                   <th>Pregunta</th>
+                  <th>Clase</th>
                   <th>Categoría</th>
                   <th>Subcategoría</th>
                   <th>Dificultad</th>
                   <th class="center">Fecha de Actualización</th>
 
                   <th class="center">Añadir</th>
+                  <th class="center">Desvincular</th>
                </tr>
             </thead>
 
@@ -132,7 +135,8 @@
             <tbody>
                <tr *ngFor="let question of data_questions; let i=index">
                   <td>{{i+1}}</td>
-                  <td class="nowrap">{{question.description}}</td>
+                  <td class="nowrap">{{question.question}}</td>
+                  <td>{{question.class ? question.class : '--'}}</td>
                   <td>{{question.category}}</td>
                   <td>{{question.subcategory}}</td>
                   <td>
@@ -142,13 +146,37 @@
                      </span>
                   </td>
                   <td class="center">{{question.updated_at | timeAgo}}</td>
-                  <td>
-                     <div style="width: 50%; cursor: pointer;" (click)="changeAvailabiltyLessonQuestion(question)">
-                        <img *ngIf="question.added; else blank" src="assets/images/checked.svg" alt="">
+                  <td class="center">
+                     <div [ngClass]="{'pointer': !(question.id_class && question.id_class != id_lesson)}" style="width: 50%; text-align: center; margin: auto" (click)="changeAvailabiltyLessonQuestion(question)">
+
+                        <img *ngIf="question.id_class == id_lesson; else blocked" src="assets/images/checked.svg" alt="">
+
+                        <ng-template #blocked>
+                           <img *ngIf="question.id_class; else blank" src="assets/images/bloqued_checked.svg" alt="">
+                        </ng-template>
+
                         <ng-template #blank>
                            <img src="assets/images/blank.svg" alt="">
                         </ng-template>
+
                      </div>
+                  </td>
+
+                  <td class="center">
+                     <!-- <a  class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                     </a>
+                     <swal #deleteSwal (confirm)="deleteQuestion(question)" [options]="SWAL_DELETE_LESSON_QUESTION"></swal> -->
+
+
+                     <span style="overflow:visible;position:relative;width:80px;display:block;text-align:center">
+                        <button style="height: 30px; width: 30px" [swal]="deleteSwal" [ngClass]="{'btn-danger': (question.id_class && question.id_class != id_lesson)}" class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+
+                        [disabled]="!question.id_class || (question.id_class == id_lesson)">
+                              <i class="la la-trash"></i>
+                        </button>
+                     </span>
+                     <swal #deleteSwal (confirm)="deleteQuestion(question)" [options]="SWAL_DELETE_LESSON_QUESTION"></swal>
                   </td>
 
                </tr>

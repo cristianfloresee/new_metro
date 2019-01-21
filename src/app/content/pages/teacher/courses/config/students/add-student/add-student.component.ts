@@ -32,6 +32,7 @@ export class AddStudentComponent implements OnInit {
 
    @Input() course;
    @Input() students;
+   @Input() id_user;
 
 
    // Resultados de la búsqueda
@@ -55,6 +56,7 @@ export class AddStudentComponent implements OnInit {
       this.initFormData();
       console.log("cursito: ", this.course);
       console.log("students: ", this.students);
+      this.initIoConnection();
    }
 
 
@@ -165,6 +167,20 @@ export class AddStudentComponent implements OnInit {
             });
    }
 
+   initIoConnection() {
+      // No enviaré data por socket, solo me servirá para dar una señal y traer nueva data paginada desde el server.
+      // Me llegaran todos los emits de todas los cursos. ¿Cómo solucionar esto?
+      this._enrollmentSrv.listenEnrollments()
+         .subscribe((data) => {
+            console.log("enrollment socket: ", data);
+            this.getEnrollments();
+         })
 
+      this._enrollmentSrv.listenEnrollmentDeleted()
+         .subscribe((data) => {
+            console.log("enrollment socket deleted: ", data);
+            this.getEnrollments();
+         })
+   }
 
 }

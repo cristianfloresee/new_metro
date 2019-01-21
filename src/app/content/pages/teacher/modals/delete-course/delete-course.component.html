@@ -9,9 +9,8 @@
    <div class="modal-body">
       <div class="m-portlet__body">
 
-         <p>Cosas malas inesperadas sucederán si no lees esto!</p>
-         <p>Esta acción <b>no se puede</b> deshacer. Esto eliminará permanentemente el curso <b>{{course.subject}}/{{course.name}}</b>,problemas
-            y comentarios, y eliminará todas las asociaciones de colaboradores.</p>
+         <p>Cosas inesperadas pueden suceder si no lees esto!</p>
+         <p>Esta acción <b>no se puede</b> deshacer. Esto eliminará permanentemente el curso <b>{{course.subject}}/{{course.name}}</b>, sus estudiantes, y las preguntas asociadas.</p>
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
             <label class="form-control-label">Escriba el nombre del curso para confirmar:</label>

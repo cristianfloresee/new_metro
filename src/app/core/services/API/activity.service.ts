@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 //CONSTANTES
 import { API } from '../../../config/constants';
+import { SocketService } from '../socket.service';
 
 @Injectable()
 export class ActivityService {
 
    constructor(
       public http: HttpClient,
+      private socketSrv: SocketService
    ) { }
 
    // Necesito una interface:
@@ -36,6 +38,34 @@ export class ActivityService {
    deleteActivity(id_activity) {
       return this.http.delete(`${API.ACTIVITIES}/${id_activity}`);
    }
+
+
+   enterToActivitySectionRoomAsStudent(params){
+      return this.socketSrv.emit('enterToActivitySectionRoomAsStudent', params)
+   }
+
+   exitToActivitySectionRoomAsStudent(params){
+      return this.socketSrv.emit('exitToActivitySectionRoomAsStudent', params)
+   }
+
+   listenActivityCreated() {
+      return this.socketSrv.listen('activityCreated');
+   }
+
+   listenActivityUpdated(){
+      console.log("cuchando activityUpdated");
+      return this.socketSrv.listen('activityUpdated');
+   }
+
+   listenActivityDeleted(){
+      return this.socketSrv.listen('activityDeleted');
+   }
+
+    // Escucha los eventos con Web Socket
+    listenActivityStartedToStudents() {
+      return this.socketSrv.listen('activityStarted');
+   }
+
 
 
 

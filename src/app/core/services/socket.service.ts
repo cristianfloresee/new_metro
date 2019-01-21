@@ -36,9 +36,13 @@ export class SocketService {
    }
 
 
-   // Cierra la conexión de lWeb Socket
+   // Cierra la conexión de socket.io (no funciona con el método de Fernando Herrera)
    public offSocket() {
       console.log("DESCONECTA EL SOCKET...")
+
+      this.socket.emit('logout');
+
+      // Solucionar lo de abajo
       //if (this.socket) this.socket.disconnect();
    }
 

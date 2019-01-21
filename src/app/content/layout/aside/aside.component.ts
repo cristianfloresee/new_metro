@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { RoleService } from '../../../core/services/role.service';
 import { SidemenuService } from 'src/app/core/services/sidemenu.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class AsideComponent implements OnInit {
 
    my_menu;
 
+   roleChanges$: Subscription;
+
    constructor(
       private router: Router,
       private roleSrv: RoleService,
@@ -28,17 +31,32 @@ export class AsideComponent implements OnInit {
    ) { }
 
    ngOnInit() {
+      //console.log("SE INICIA EL SIDEMENU...");
 
       this.getCurrentUrl();
-      this.roleSrv.role$.subscribe((role) => {
+
+      // Detecta los cambios de la variable global 'role' (después usar redux en vez de servicios)
+      this.roleChanges$ = this.roleSrv.role$.subscribe((role) => {
          this.current_role = role; //{role, index, name, url}
-         console.log("BOLBA: ", role);
-         this._sidemenuSrv.changeSidemenuByRole(this.current_role.role);
+
+         console.log(" + role$(", role, ") (on aside.component)");
+         // Actualiza el sidemenú de acuerdo al 'role'
+         if(role) {
+            // Si recibe el objeto role envía el número de rol
+            this._sidemenuSrv.changeSidemenuByRole(this.current_role.role);
+         }
+         else {
+            // Si no recibe el objeto role envía null (sucede desde logout)
+            console.log("changeSidemenu Null");
+            this._sidemenuSrv.changeSidemenuByRole(null);
+         }
+
          //SI SOY PROFESOR DEBO OBTENER LOS CURSOS........-----------------------------------------
          //console.log("MI ROLEEE: ", this.current_role);
       });
 
-
+      // Detecta los cambios del sidemenu que a su vez cambia de acuerdo al role
+      // + Analizar esto. Es necesario suscribirse a ambos?
       this._sidemenuSrv.sidemenu$.subscribe((menu: any) =>{
          this.my_menu = menu;
          console.log("MY MENUCITO: ", this.my_menu);
@@ -67,6 +85,11 @@ export class AsideComponent implements OnInit {
 
    logout(){
       this._sessionSrv.logout();
+   }
+
+   ngOnDestroy(){
+      //console.log("SE DESTRUYE LA WEA DE SIDEMENU...");
+      this.roleChanges$.unsubscribe();
    }
 
 }

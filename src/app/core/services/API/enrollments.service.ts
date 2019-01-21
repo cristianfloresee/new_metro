@@ -52,4 +52,13 @@ export class EnrollmentService {
       return this.socketSrv.listen('studentEnrollmentDeleted');
    }
 
+   // params: {id_course, id_user}
+   enterToCourseRoom(params){
+      return this.socketSrv.emit('enterToCourseRoom', params)
+   }
+
+   exitToCourseRoom(params){
+      return this.socketSrv.emit('exitToCourseRoom', params)
+   }
+
 }
