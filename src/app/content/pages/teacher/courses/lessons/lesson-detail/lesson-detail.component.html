@@ -195,6 +195,8 @@
                            {{question.shared ? 'Si': 'No'}}</span>
                      </span>
                   </td>
+
+                  <!-- ARREGLAR -->
                   <td style="text-align: center">
 
                      <div style="width: 30%; margin: auto;">
@@ -209,13 +211,17 @@
                      </a>
 
                   </td>
+
+
+
+
                   <td class="nowrap">
 
                       <span style="width: 100%">
                         <span class="m-badge m-badge--dot" [ngClass]="(question.status == 1) ? 'm-badge--warning': (question.status == 2 || question.status == 3) ? 'm-badge--success' : 'm-badge--danger'"></span>
                         &nbsp;
                         <span class="m--font-bold" [ngClass]="(question.status == 1) ? 'm--font-warning': (question.status == 2) ? 'm--font-success' : (question.status == 3) ? 'm--font-success' : 'm--font-danger'">
-                           {{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'en juego' : question.status == 3 ? 'detenida': 'terminada' }}
+                           {{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'activa' : question.status == 3 ? 'detenida': 'terminada' }}
                         </span>
                      </span>
                   </td>

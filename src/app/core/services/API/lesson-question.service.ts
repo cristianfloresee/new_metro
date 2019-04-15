@@ -74,6 +74,11 @@ export class LessonQuestionService {
       return this.socketSrv.listen('aStudentHasLeft');
    }
 
+   listenStudentHasLeftTheClassroom(){
+      return this.socketSrv.listen('studentHasLeftTheClassroom');
+   }
+
+
    // Escucha cuando el estudiante es seleccionado para participar
    listenStudentSelectedToParticipate(){
       return this.socketSrv.listen('studentSelectedToParticipate');
@@ -114,12 +119,24 @@ export class LessonQuestionService {
       return this.socketSrv.emit('exitToParticipantsToPlayQuestionSectionRoomAsStudent', params);
    }
 
+   // + params: { user, id_class }
    selectStudentToParticipate(params){
       return this.socketSrv.emit('selectStudentToParticipate', params);
    }
 
+     // + params: { user, id_class }
+   cancelSelectedStudent(params){
+      return this.socketSrv.emit('cancelSelectedStudentAsTeacher', params)
+   }
 
+   // + params: { participant_student }
+   setStudentParticipationStatus(winner_student, id_class, id_question ){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/winner_student`, { winner_student, id_class, id_question } )
+   }
 
+   setLoserStudent(loser_student, id_class, id_question ){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/loser_student`, { loser_student, id_class, id_question } )
+   }
    /*
    // Elimina una pregunta (eliminaría todas las participaciones de esa actividad)
    deleteQuestion(id_question) {

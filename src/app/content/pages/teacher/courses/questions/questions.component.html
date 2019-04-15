@@ -148,7 +148,7 @@
                         <span class="m-badge m-badge--dot" [ngClass]="(question.status == 1) ? 'm-badge--warning': (question.status == 2 ? 'm-badge--success' : 'm-badge--danger')"></span>
                         &nbsp;
                         <span class="m--font-bold" [ngClass]="(question.status == 2) ? 'm--font-success' : (question.status == 1 ? 'm--font-warning' : 'm--font-danger')">
-                           {{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'en juego' : 'terminada' }}
+                           {{question.status == 1 ? 'no iniciada' : question.status == 2 ? 'activa' : 'terminada' }}
                         </span>
                      </span>
                   </td>

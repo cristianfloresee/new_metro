@@ -22,6 +22,7 @@ import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
+import { WinnersComponent } from '../../../modals/winners/winners.component';
 
 
 @Component({
@@ -229,7 +230,9 @@ export class LessonDetailComponent implements OnInit {
 
       modalRef.result.then((result) => {
          console.log("RESULTE: ", result);
-         if (result) this.getLessonQuestions();
+         //if (result)
+            this.getLessonQuestions();
+
       });
    }
 
@@ -283,6 +286,21 @@ export class LessonDetailComponent implements OnInit {
          this.page = page;
          this.getLessonQuestions();
       }
+   }
+
+   updateWinners(question) {
+
+      console.log("question: ", question);
+      const modalRef = this.ngModal.open(WinnersComponent, {
+         windowClass: 'xlModal'
+      });
+      modalRef.componentInstance.id_course = this.id_course;
+      modalRef.componentInstance.id_class = this.id_lesson;
+      modalRef.componentInstance.question = question;
+      // modalRef.componentInstance.activity = activity;
+      modalRef.result.then((result) => {
+         //if (result) this.getActivities();
+      });
    }
 
 }

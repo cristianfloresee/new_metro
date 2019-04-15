@@ -44,6 +44,8 @@ export const API = {
    //PREGUNTAS
    QUESTIONS: `${API_URL}questions`,
 
+   USER_QUESTION_CLASS: `${API_URL}user_question_class`,
+
    LESSON_QUESTIONS: `${API_URL}lesson_questions`,
    //MODULOS
    MODULE_GET: `${API_URL}modules`,

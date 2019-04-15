@@ -78,7 +78,7 @@
                               <select formControlName="status" class="form-control m-bootstrap-select" id="m_form_type">
                                  <option value="">Todos</option>
                                  <option [ngValue]="1">no iniciada</option>
-                                 <option [ngValue]="2">en juego</option>
+                                 <option [ngValue]="2">activa</option>
                                  <option [ngValue]="3">terminada</option>
                               </select>
                            </div>
@@ -121,7 +121,7 @@
                         <span class="m-badge m-badge--dot" [ngClass]="(lesson.status == 1) ? 'm-badge--warning': (lesson.status == 2 ? 'm-badge--success' : 'm-badge--danger')"></span>
                         &nbsp;
                         <span class="m--font-bold" [ngClass]="(lesson.status == 2) ? 'm--font-success' : (lesson.status == 1 ? 'm--font-warning' : 'm--font-danger')">
-                           {{lesson.status == 1 ? 'no iniciada' : lesson.status == 2 ? 'en juego' : 'terminada' }}
+                           {{lesson.status == 1 ? 'no iniciada' : lesson.status == 2 ? 'activa' : 'terminada' }}
                         </span>
                      </span>
                   </td>

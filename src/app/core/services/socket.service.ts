@@ -29,6 +29,7 @@ export class SocketService {
 
    // PENDIENTES!!!!
    // Inicia la conexión del Web Socket
+   // +connect()
    public initSocket() {
       console.log("INICIA EL WEBSOCKET...")
       //this.socket = io(API_URL);
@@ -37,6 +38,7 @@ export class SocketService {
 
 
    // Cierra la conexión de socket.io (no funciona con el método de Fernando Herrera)
+   // +disconnect()
    public offSocket() {
       console.log("DESCONECTA EL SOCKET...")
 
@@ -46,6 +48,7 @@ export class SocketService {
       //if (this.socket) this.socket.disconnect();
    }
 
+   // +getSocket()
    checkStatus() {
       this.socket.on('connect', () => {
          console.log('connected to server');
@@ -82,10 +85,12 @@ export class SocketService {
       })
    }*/
 
+   // +emit()
    emit(event: string, payload?: any, callback?: Function) {
       this.socket.emit(event, payload, callback);
    }
 
+   // +on()
    listen(event: string) {
       return this.socket.fromEvent(event)
    }

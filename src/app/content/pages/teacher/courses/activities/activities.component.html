@@ -92,7 +92,7 @@
                               <select formControlName="status" class="form-control m-bootstrap-select" id="m_form_type">
                                  <option value="">Todos</option>
                                  <option [ngValue]="1">no iniciada</option>
-                                 <option [ngValue]="2">en juego</option>
+                                 <option [ngValue]="2">activa</option>
                                  <option [ngValue]="3">terminada</option>
                               </select>
                            </div>
@@ -136,6 +136,8 @@
                   <td>{{activity.mode == 1 ? 'individual' : 'grupal'}}</td>
                   <td>{{activity.lesson}}</td>
                   <td>{{activity.module}}</td>
+
+                  <!-- ARREGLAR -->
                   <td style="text-align: center">
 
                      <div style="width: 30%; margin: auto;">
@@ -150,12 +152,15 @@
                      </a>
 
                   </td>
+
+
+
                   <td class="nowrap">
                      <span style="width: 100%">
                         <span class="m-badge m-badge--dot" [ngClass]="(activity.status == 1) ? 'm-badge--warning': (activity.status == 2 ? 'm-badge--success' : 'm-badge--danger')"></span>
                         &nbsp;
                         <span class="m--font-bold" [ngClass]="activity.status == 2 ? 'm--font-success' : (activity.status == 1 ? 'm--font-warning' : 'm--font-danger')">
-                           {{activity.status == 1 ? 'no iniciada': (activity.status == 2 ? 'en juego' : 'terminada')}}
+                           {{activity.status == 1 ? 'no iniciada': (activity.status == 2 ? 'activa' : 'terminada')}}
                         </span>
                      </span>
 

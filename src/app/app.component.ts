@@ -2,10 +2,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NavigationEnd, Router } from '@angular/router';
-
 // RxJS
 import { filter } from 'rxjs/operators';
-
 // Services
 import { LoaderService } from './core/services/loader.service';
 import { PageService } from './core/services/page.service';
@@ -66,12 +64,18 @@ export class AppComponent implements OnInit {
       private toastr: ToastrService
    ) {
 
+      // @JorgeCano
+      // Intento trabajar el ruteo de forma reactiva con asyncpipes en el template pero tuvo problemas.
+      // Para hacerlo con async pipes habría que borrar el suscribe.
+
+
+
       // Obtiene el nombre de la página actual
       this.router.events
          .pipe(filter(event => event instanceof NavigationEnd))
          .subscribe((event) => {
             // Obtiene la url después de todas la reedirecciones
-            console.log(" + router.events() (on app.component)");
+            console.log(' + router.events() (on app.component)');
             let url = event['urlAfterRedirects']
             //let url = event['urlAfterRedirects'];
             this._roleSrv.checkUrlRole(url);
@@ -85,6 +89,11 @@ export class AppComponent implements OnInit {
 
 
    ngOnInit() {
+
+
+
+
+
       // Detecta los cambios del loader
       // + Si el status es true muestra el loader
       // + Si el status es false oculta el loader

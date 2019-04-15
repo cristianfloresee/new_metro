@@ -5,6 +5,7 @@ import { ActivityService } from 'src/app/core/services/API/activity.service';
 import { ToastrService } from 'ngx-toastr';
 import { TOAST_SUCCESS_UPDATE_WINNERS, TOAST_ERROR_UPDATE_WINNERS } from 'src/app/config/toastr_config';
 import { ActivityParticipationService } from 'src/app/core/services/API/activity_participation.service';
+import { UserQuestionClassService } from 'src/app/core/services/API/user_question_class.service';
 
 @Component({
    selector: 'cw-winners',
@@ -14,6 +15,8 @@ import { ActivityParticipationService } from 'src/app/core/services/API/activity
 export class WinnersComponent implements OnInit {
    @Input() id_course;
    @Input() activity;
+   @Input() id_class;
+   @Input() question;
 
    data_students;
 
@@ -30,13 +33,16 @@ export class WinnersComponent implements OnInit {
       private _enrollmentSrv: EnrollmentService,
       private _activitySrv: ActivityService,
       private toastr: ToastrService,
-      private _activityParticipationsSrv: ActivityParticipationService
+      private _activityParticipationsSrv: ActivityParticipationService,
+      private _userQuestionClassSrv: UserQuestionClassService
+
    ) { }
 
    ngOnInit() {
       console.log("ID COURSE: ", this.id_course);
       console.log("ACTIVITY: ", this.activity);
       this.getStudents();
+
    }
 
 
@@ -44,21 +50,43 @@ export class WinnersComponent implements OnInit {
    // necesito obtener los ganadores de la actividad
    getStudents() {
 
-      this._activitySrv.getStudentsByActivityID(this.activity.id_activity)
-         .subscribe(
-            result => {
-               console.log("students: ", result);
-               // Formatea el array de estudiantes con un campo 'original_status' que contendrá el estado original ganador/perdedor
+      if (this.activity) {
+         this._activitySrv.getStudentsByActivityID(this.activity.id_activity)
+            .subscribe(
+               result => {
+                  console.log("students: ", result);
+                  // Formatea el array de estudiantes con un campo 'original_status' que contendrá el estado original ganador/perdedor
 
-               this.data_students = this.formatActivityParticipationArray(result);
-               console.log("participacion formateada: ", this.data_students);
-               this.getTotalWinners(this.data_students);
-            },
-            error => {
-               console.log("error:", error);
-            });
+                  this.data_students = this.formatActivityParticipationArray(result);
+                  console.log("participacion formateada: ", this.data_students);
+                  this.getTotalWinners(this.data_students);
+               },
+               error => {
+                  console.log("error:", error);
+               });
+      }
+      else if (this.question) {
+         let params = {
+            id_question: this.question.id_question,
+            id_class: this.id_class
+         };
+         this._userQuestionClassSrv.getStudentAssistants(params)
+            .subscribe(
+               result => {
+                  console.log("students: ", result);
+                  // Formatea el array de estudiantes con un campo 'original_status' que contendrá el estado original ganador/perdedor
+                  this.data_students = this.formatActivityParticipationArray(result);
+                  //console.log("participacion formateada: ", this.data_students);
+                  this.getTotalWinners(this.data_students);
+               },
+               error => {
+                  console.log("error:", error);
+               });
+      }
+
    }
 
+   // Crea un estado original para cada registro.
    formatActivityParticipationArray(activity_participation) {
       activity_participation.forEach(participation => {
          participation.original_status = participation.status;
@@ -66,10 +94,10 @@ export class WinnersComponent implements OnInit {
       return activity_participation;
    }
 
-   getTotalWinners(array){
+   getTotalWinners(array) {
       this.total_winners = 0;
-      array.forEach(item=> {
-         if(item.status == 2) this.total_winners++;
+      array.forEach(item => {
+         if (item.status == 2) this.total_winners++;
          console.log("TOTAL WINNERS: ", this.total_winners);
       })
    }

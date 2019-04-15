@@ -1,9 +1,9 @@
 //https://github.com/angular/angular/issues/20203
-//ANGULAR
+// Angular
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
 import { Router } from '@angular/router';
-//RXJS
+// RxJS
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 

@@ -6,33 +6,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Angular Router
 import { AppRoutingModule } from './app-routing.module';
-
-import { NgxEchartsModule } from 'ngx-echarts';
-
-//COMPONENTES
+// Components
 import { AppComponent } from './app.component';
-
-//NG-BOOTSTRAP
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-//ANGULAR MATERIAL
+// Angular Material
 import 'hammerjs';
 import { GestureConfig, MatProgressSpinnerModule } from '@angular/material';
-
-//MODULOS
+// Modules
 import { LayoutModule } from './content/layout/layout.module';
 import { PartialsModule } from './content/partials/partials.module';
 import { CoreModule } from './core/core.module';
 import { AuthenticationModule } from './core/authentication/authentication.module';
-
-//NGX-PERFECT-SCROLLBAR
+// ngx-perfect-scrollbar
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
    // suppressScrollX: true
 };
 
-//SERVICIOS
+// Services
 import { UserService } from './core/services/API/user.service';
 import { CourseService } from './core/services/API/course.service';
 import { CalendarService } from './core/services/API/calendar.service';
@@ -43,6 +34,10 @@ import { SubheaderService } from './core/services/layout/subheader.service';
 
 import { InterceptorService } from './core/services/interceptor.service';
 
+// ng-bootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// ngx-echarts
+import { NgxEchartsModule } from 'ngx-echarts';
 // ngx-toastr
 import { ToastrModule } from 'ngx-toastr';
 // ngx-sweetalert2
@@ -107,6 +102,7 @@ import { WinnersComponent } from './content/pages/teacher/modals/winners/winners
 import { QuestionSearch2Component } from './content/pages/teacher/courses/questions/question-search2/question-search2.component';
 import { SessionService } from './core/services/API/session.service';
 import { PlayQuestion2Component } from './content/pages/student/modals/play-question2/play-question2.component';
+import { UserQuestionClassService } from './core/services/API/user_question_class.service';
 const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
 
 @NgModule({
@@ -214,6 +210,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       ActivityParticipationService,
       WorkspaceService,
       LessonQuestionService,
+      UserQuestionClassService,
       //WebSocketService,
       //GUARDS
       LoginGuard,

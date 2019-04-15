@@ -19,10 +19,14 @@
                <li><b>Módulo: </b>{{class.module}}
                </li>
                <li><b>Clase: </b>{{class.description}}
-               <li><b>Estado: </b>{{
-                  (!current_question || (current_question?.status == 1)) ? 'Esperando Pregunta...' :
-                  (current_question && current_question.status == 2) ? 'Esperando Participantes...' :
-                  (current_question && current_question.status == 3) ? 'Participación Detenida. Seleccionando estudiante...':
+               <li><b>Estado: </b>
+                  {{current_question?.status}} -
+                  {{
+                  (!current_question || (current_question?.status == 1)) ? 'Esperando Pregunta.' :
+                  (current_question && current_question.status == 2) ? 'Pregunta Iniciada. Esperando Participantes.' :
+                  (current_question && current_question.status == 3) ? 'Participación Detenida. Seleccionando
+                  Participante.':
+                  (current_question && current_question.status == 4) ? 'Estudiante seleccionado para responder.':
                   'Participación Finalizada'
                   }} </li>
                <!-- Esperando pregunta, esperando participantes, participación detenida, estudiante seleccionado, participación finalizada -->
@@ -37,7 +41,7 @@
 
             <div class="col-lg-8">
 
-              <div *ngIf="!current_question || (current_question?.status == 1); else question" class="container" style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
+               <div *ngIf="!current_question || (current_question?.status == 1); else question" class="container" style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
                   <p style="margin-top: -210px; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">Por
                      favor espera mientrás se realiza la pregunta.</p>
                   <div class="outer-circle">
@@ -59,23 +63,23 @@
                      </button>
                   </div>
                   <ng-template #participant>
-                        <button (click)="cancelParticipateOnQuestion(current_question)" type="button" class="btn m-btn--pill m-btn--air btn-primary">
-                              Cancelar Participación
-                           </button>
+                     <button (click)="cancelParticipateOnQuestion(current_question)" type="button" class="btn m-btn--pill m-btn--air btn-primary">
+                        Cancelar Participación
+                     </button>
                   </ng-template>
                </div>
 
                <div *ngIf="current_question && current_question.status == 3" class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;">
-                     <!-- <div class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;"> -->
+                  <!-- <div class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;"> -->
                   <p style="margin: 0; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
                      {{current_question?.description}}
 
                   </p>
 
-                     <!-- <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide m-badge--warning">
+                  <!-- <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide m-badge--warning">
                         Detenida
                      </span> -->
-                     <!-- <button (click)="participateOnQuestion(current_question)" type="button" class="btn m-btn--pill m-btn--air btn-primary">
+                  <!-- <button (click)="participateOnQuestion(current_question)" type="button" class="btn m-btn--pill m-btn--air btn-primary">
                            Detenida
                         </button> -->
 
@@ -84,6 +88,10 @@
                <div *ngIf="current_question && current_question.status == 4" class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;">
                   <p style="margin: 0; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
                      Ganador!
+
+                  </p>
+                  <p *ngIf="counter != 5">
+                     Finalizando Pregunta en {{counter}}
                   </p>
                </div>
 
@@ -92,7 +100,7 @@
             <!-- {{current_question | json}} -->
             <!-- BODY 2 -->
             <div class="col-lg-4">
-               <label class="form-control-label">Estudiantes en la Sala:</label>
+               <label class="form-control-label">Estudiantes en la Sala: {{total_participants}}</label>
 
                <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
 
@@ -134,7 +142,7 @@
                               </td>
 
                            </tr> -->
-                        <tr *ngFor="let participant of data_participants; let i=index">
+                        <tr *ngFor="let student of data_participants; let i=index">
                            <td class="center">{{i+1}}</td>
 
                            <td class="nowrap">
@@ -142,12 +150,12 @@
 
                                  <div class="m-widget4__info">
                                     <span class="m-widget4__title">
-                                       <!-- {{student.name}} {{student.last_name}} {{student.middle_name}} -->
-                                       Cristian Flores Sandoval
+                                       {{student.name}} {{student.last_name}} {{student.middle_name}}
+
                                     </span><br>
                                     <span class="m-widget4__sub" style="font-size: .8rem;">
-                                       <!-- {{student.document}} -->
-                                       18.313.961-4
+                                       {{student.document}}
+
                                     </span>
                                  </div>
 
@@ -155,18 +163,24 @@
                            </td>
 
                            <td class="center">
-                              <div style="width: 50%; cursor: pointer; text-align: center; margin:auto">
+                              <!-- <div style="width: 50%; cursor: pointer; text-align: center; margin:auto">
                                  <img *ngIf="true; else blank" src="assets/images/checked.svg" alt="">
                                  <ng-template #blank>
                                     <img src="assets/images/blank.svg" alt="">
                                  </ng-template>
-                              </div>
+                              </div> -->
+                              {{(student.participation_status == 1) ? 'en espera' :
+                              (student.participation_status == 2) ? 'desea responder' :
+                              (student.participation_status == 3) ? 'seleccionado para responder':
+                              (student.participation_status == 4) ? 'perdedor':
+                              (student.participation_status == 5) ? 'ganador':
+                              'error' }}
                            </td>
 
                         </tr>
                      </tbody>
                   </table>
-                  <p style="margin-top: 1rem">Total de Participantes: {{total_participants}}</p>
+                  <!-- <p style="margin-top: 1rem">Total de Participantes: {{total_participants}}</p> -->
                </div>
 
             </div>

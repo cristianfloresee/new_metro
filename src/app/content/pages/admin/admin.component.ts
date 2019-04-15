@@ -1,5 +1,6 @@
+// Angular
 import { Component, OnInit } from '@angular/core';
-//SERVICIOS
+// Services
 import { UserService } from 'src/app/core/services/API/user.service';
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
 import { SubjectService } from 'src/app/core/services/API/subject.service';
@@ -35,7 +36,7 @@ export class AdminComponent implements OnInit {
       this._calendarSrv.countCalendar()
          .subscribe(
             (response: any) => {
-               console.log(response);
+               console.log("total calendars: ", response);
                this.total_calendars = response.result;
             },
             error => {
